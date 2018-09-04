@@ -1,0 +1,4 @@
+Name: Iniciar semviz (browser)
+Description: Inicia SEMVIZ en el default browser
+Binding: launchApp
+Interactive: true

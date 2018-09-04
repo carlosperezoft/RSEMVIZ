@@ -1,0 +1,30 @@
+Package: semviz
+Type: Package
+Title: Visualizacion de alto nivel para el analisis e interpretacion de Modelos de Ecuaciones Estructurales
+Version: 0.1.0
+Date: 2018-8-21
+Authors@R: c(
+    person("Carlos Alberto", "Perez Moncada", , "carlos.perez7@udea.edu.co", c("aut", "cre")),
+    person(family = "Facultad de Ingenieria. Universidad de Antioquia.", role = "cph")
+    )    
+Description: Visualizacion de alto nivel (interaccion de usuario final)
+    para el analisis e interpretacion de Modelos de Ecuaciones Estructurales 
+    (Structured Ecuation Models, SEM por sus siglas en ingles)
+Depends:
+    R (>= 3.4.0)
+Imports:
+    lavaan (>= 0.5),
+    shiny (>= 1.0.5),
+    shinydashboard (>= 0.6.1),
+    shinycssloaders (>= 0.2.0),
+    dplyr (>= 0.7.6),
+    parcoords (>= 0.5.0),
+    htmlwidgets (>= 1.2),
+    jsonlite (>= 1.5),
+    RColorBrewer (>= 1.1),
+    dygraphs (>= 1.1.1),
+    streamgraph (>= 0.8.1)
+License: GPL-3 + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Suggests: testthat
