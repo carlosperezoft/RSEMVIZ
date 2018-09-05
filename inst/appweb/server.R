@@ -33,7 +33,11 @@ shinyServer(function(input, output, session) {
   source('include_server/modelo_sem_server.R', local=TRUE)
   # FIN MODELO SEM LAVAAN
 
-  # FINALIZACION DE SESION WEB ----------------------------------------------
+  # vISNETWORK PARA MODELO SEM BASADO EN LAVAAN
+  source('include_server/dashbas_subm_server.R', local=TRUE)
+  # FIN vISNETWORK MODELO SEM
+
+    # FINALIZACION DE SESION WEB ----------------------------------------------
   # Finaliza la ejecucion de la APP en R-Studio al cerrar la Ventana PPAL:
   session$onSessionEnded(function() {
     stopApp()

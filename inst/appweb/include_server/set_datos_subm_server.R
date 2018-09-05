@@ -24,6 +24,7 @@ datasetInput <- reactive({
 })
 
 # Asignacion del SET de DATOS a la tabla dinamica:
+# NOTA: se usa el atrubuto scrollX para activar la barra horizontal.
 output$semDataDTOut = renderDT({
    datasetInput()
 }, options = list(scrollX = TRUE))

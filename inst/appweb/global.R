@@ -5,22 +5,27 @@
 # Inclusion de la librerias propias para la ejecucion de la aplicacion
 # Shiny WEB semviz:
 #
-library(markdown)
-library(shinydashboard)
-library(shinycssloaders)
-library(shinyhelper)
-library(DT)
-library(dplyr)
-library(htmlwidgets)
-library(jsonlite)
-library(RColorBrewer)
-library(dygraphs)
-library(streamgraph)
-library(qgraph)
-library(psych)
-library(plotly)
-library(forecast)
-library(lavaan)
+suppressPackageStartupMessages({
+  library(markdown, quietly=TRUE)
+  library(shinydashboard, quietly=TRUE)
+  library(shinycssloaders, quietly=TRUE)
+  library(shinyhelper, quietly=TRUE)
+  library(DT, quietly=TRUE)
+  library(dplyr, quietly=TRUE)
+  library(htmlwidgets, quietly=TRUE)
+  library(jsonlite, quietly=TRUE)
+  library(RColorBrewer, quietly=TRUE)
+  library(dygraphs, quietly=TRUE)
+  library(streamgraph, quietly=TRUE)
+  library(qgraph, quietly=TRUE)
+  library(psych, quietly=TRUE)
+  library(ggplot2, quietly=TRUE)
+  library(plotly, quietly=TRUE)
+  library(forecast, quietly=TRUE)
+  library(lavaan, quietly=TRUE)
+  library(visNetwork, quietly=TRUE)
+  library(formattable, quietly=TRUE)
+})
 
 # autor -------------------------------------------------------------------
 # carlos.perez7@udea.edu.co
@@ -31,3 +36,8 @@ library(lavaan)
 for (file in list.files(system.file("R", package = "semviz"), pattern = "\\.(r|R)$", full.names = TRUE)) {
   source(file, local = TRUE)
 }
+#
+# Se especifica el numero de digitos por defecto al visualizar datos numericos
+# NOTA: El valor de 4 conserva el estandar de lavaan en los datos numericos.
+options(digits=4)
+#
