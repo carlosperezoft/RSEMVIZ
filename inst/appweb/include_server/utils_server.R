@@ -41,31 +41,44 @@ nodosModeloSEM <- function(fitModel) {
   return(param_edges)
 }
 
+# Las propiedades aqui especificadas aplican SOLO al nodo de forma individual.
+# Para que sea de aplicacion a todos los NODOS debe usarse: visNodes(..) al crear el grafo con visNetwork(..)
+#
 nodosGrafoSEM <- function(fitModel) {
   param_nodes <- nodosModeloSEM(fitModel)
   nodesVis <- data.frame(
     id = param_nodes$metric,
     label = param_nodes$metric,
     group = if_else(param_nodes$latent, "LATENTE", "OBSERVADA"),
+    # La figura escala con el "value" del nodo, varficar que valor usar en cada caso LAT/OBS?
     value = param_nodes$e,
+    # title equivale a un TOOLTIP !
+    title = paste0("<p><b>", param_nodes$metric,"</b><br>Err:",format(round(param_nodes$e, 3), nsmall=3),"</p>")
     # SHAPE aqui tiene prioridad sobre el visGroups(..)
-    shape = if_else(param_nodes$latent, "ellipse", "box"),
-    title = paste0("<p><b>", param_nodes$metric,"</b><br>VAL:",param_nodes$e,"</p>"),
-    # COLOR aqui tiene prioridad sobre el visGroups(..)
-    color = if_else(param_nodes$latent, "orange", "grey"),
-    shadow = param_nodes$latent
+    #shape = if_else(param_nodes$latent, "dot", "square"),
+    # COLOR aqui tiene prioridad sobre el visGroups(..), el atributo color por Nodo debe ser solo un valor.
+    #color = if_else(param_nodes$latent, "orange", "lightblue")
+    #shadow = param_nodes$latent
   )
   return(nodesVis)
 }
 
+# Las propiedades aqui especificadas aplican SOLO a la ruta de forma individual.
+# Para que sea de aplicacion a todos las RUTAS debe usarse: visEdges(..) al crear el grafo con visNetwork(..)
+#
 rutasGrafoSEM <- function(fitModel) {
   param_edges <- rutasModeloSEM(fitModel)
   edgesVis <- data.frame(
     from = param_edges$from,
     to = param_edges$to,
     # NO es recomendable el LABEL, pues oculta mucho la "flecha"
-    #label = paste("VAL", format(round(param_edges$val, 2), nsmall=2)),
-    title = paste("VAL", format(round(param_edges$val, 2), nsmall=2)),
+    #label = paste("PAR", format(round(param_edges$val, 2), nsmall=2)),
+    #title = paste("PAR:", format(round(param_edges$val, 3), nsmall=3)),
+    title = dplyr::case_when(
+      param_edges$type == "loading" ~ paste("lamda:", format(round(param_edges$val, 3), nsmall=3)),
+      param_edges$type == "regression"  ~ paste("beta:", format(round(param_edges$val, 3), nsmall=3)),
+      param_edges$type == "correlation" ~ paste("phi:", format(round(param_edges$val, 3), nsmall=3))
+    ),
     arrows = dplyr::case_when(
       param_edges$type == "loading" ~ "from",
       param_edges$type == "regression"  ~ "to",
