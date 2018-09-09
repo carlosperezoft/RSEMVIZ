@@ -33,7 +33,7 @@ tabItem(tabName = "modeloSEMTab",
       # Main panel for displaying outputs ----
       mainPanel(
         wellPanel(
-          h2("General Tabular (Estimaci\u00F3n del Modelo)"),
+          h3("General Tabular (Estimaci\u00F3n del Modelo)"),
           # Input: Indica el uso de datos estandarizados ----
           checkboxInput("modSEMStandChk", "Estandarizado", TRUE),
           verbatimTextOutput("modeloSEMLavaanTxtOut") %>% withSpinner()

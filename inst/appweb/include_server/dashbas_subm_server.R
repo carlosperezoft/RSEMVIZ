@@ -8,7 +8,7 @@ paramsSemFit <- function() {
 
 output$grafoModeloSEMOut <- renderVisNetwork({
   fitModel <- paramsSemFit()
-  visNetwork(nodosGrafoSEM(fitModel), rutasGrafoSEM(fitModel), main = "MODELO SEM", width = "100%") %>%
+  visNetwork(nodosGrafoSEM(fitModel), rutasGrafoSEM(fitModel), main = "Graphical Analysis Driven SEM", width = "100%") %>%
     # darkblue square with shadow for group "LATENTE" (la figura es un "circulo" que escala con el "value" del nodo)
     visGroups(groupname = "LATENTE", color = "orange", shape = "dot") %>%
     # red triangle for group "OBSERVADA" (la figura es un "cuadrado" que escala con el "value" del nodo)
@@ -16,8 +16,9 @@ output$grafoModeloSEMOut <- renderVisNetwork({
     # OPCIONES PARA TEMAS DE RENDIMIENTO AL GRAFICAR:
     visLayout(randomSeed = 1409) %>%
     visPhysics(stabilization = FALSE) %>%
-    # Opciones generales para las rutas (smooth, controla el procesamiento de las flechas, activo puede ser lento)
-    visEdges(smooth = FALSE) %>%
+    # Opciones generales para las rutas
+    # NOTA: "smooth", controla el procesamiento elastico de las flechas, "activo" puede ser lento en grafos de muchos nodos!
+    visEdges(smooth = TRUE) %>%
     # Opciones generales para los nodos:
     visNodes(shadow = TRUE) %>%
     # OPCIONES DE INTERACCION PARA USO DE TECLADO (multiselect=TRUE para seleccionar nodos uno a uno con CTRL-CLIC sostenido):

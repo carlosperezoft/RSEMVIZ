@@ -21,16 +21,16 @@ semFitLocal <- eventReactive(input$runSEMBtn, {
     # mimic: aplica para la presentacion de los resultados
     # * En estimadorList: Se debe usar un entero como indice.El input$tipoEstimacionSEM tiene valor tipo String.
     #
-    lavaanFit <- lavaan::sem(model = input$modeloSEMTxt, data=PoliticalDemocracy, mimic = "lavaan",
+    lavaanFit <- lavaan::sem(model = input$modeloSEMTxt, data = datasetInput(), mimic = "lavaan",
                              estimator = estimadorList[as.integer(input$tipoEstimacionSEM)])
     },
     error = function(e) {
-      # sprintf("Inner error: %s", e)
       print("NO fue posible estimar el MODELO SEM.* Favor verificar la sint\u00E1xis o los DATOS asociados. *")
+      print(sprintf("[ERROR_INFO]: %s", e))
     },
     warning = function(e) {
-      # sprintf("Inner warning: %s", e)
       print("NO fue posible estimar el MODELO SEM.* Favor verificar la sint\u00E1xis o los DATOS asociados. *")
+      print(sprintf("[WARNING_INFO]: %s", e))
     },
     finally = {
       print("* ESTIMACION DEL MODELO FINALIZADA *")

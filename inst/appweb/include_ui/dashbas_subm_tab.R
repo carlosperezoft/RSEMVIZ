@@ -3,7 +3,7 @@
 # 05/09/2018 14:08:28 p. m.
 #
 tabItem(tabName = "dashBASSubMTab",
-  h2(":: Tablero b\u00E1sico tabular del MODELO SEM"),
+  h2(":: DAshboard para el MODELO SEM"),
   # Elementos de Carga de informacion para el SET de DATOS:
   fluidPage(
     titlePanel("Modelo SEM para an\u00E1lisis"),
@@ -24,17 +24,19 @@ tabItem(tabName = "dashBASSubMTab",
       # Main panel for displaying outputs ----
       mainPanel(width = 7,
         wellPanel(
-          h2("Elementos Detallados"),
+          h3("Elementos Detallados"),
           tabsetPanel(type = "tabs",
-              tabPanel("Bases - General",h3("Tabla General - PRUEBA"),
-                       formattableOutput("tablaGeneralSEMOut", width = "100%")),
-              tabPanel("Indices de Ajuste", h3("Valores de indicadores de ajuste obtenidos"),
-                       verbatimTextOutput("indicesAjusteSEMTxtOut") %>% withSpinner()),
-              tabPanel("SELECCION de NODOS",
-                       actionButton("getNodesSelBtn", "LEER Nodos Seleccionados..."),
-                       h4("NODOs SELECCIONADOs ACTUALMENTE:"),
-                       verbatimTextOutput("nodesListTxtOut") %>% withSpinner())
-
+            tabPanel("Bases - General",h3("Tabla General - PRUEBA"),
+              formattableOutput("tablaGeneralSEMOut", width = "100%")
+            ),
+            tabPanel("Indices de Ajuste", h3("Valores de indicadores de ajuste obtenidos"),
+              verbatimTextOutput("indicesAjusteSEMTxtOut") %>% withSpinner()
+            ),
+            tabPanel("SELECCION de NODOS",
+              actionButton("getNodesSelBtn", "LEER Nodos Seleccionados..."),
+              h4("NODOs SELECCIONADOs ACTUALMENTE:"),
+              verbatimTextOutput("nodesListTxtOut") %>% withSpinner()
+            )
           )
         ) # FIN wellpanel
       ) # fin main panel

@@ -53,11 +53,14 @@ nodosGrafoSEM <- function(fitModel) {
     # La figura escala con el "value" del nodo, varficar que valor usar en cada caso LAT/OBS?
     value = param_nodes$e,
     # title equivale a un TOOLTIP !
-    title = paste0("<p><b>", param_nodes$metric,"</b><br>Err:",format(round(param_nodes$e, 3), nsmall=3),"</p>")
+    title = paste0("<p><b>", param_nodes$metric,"</b><br>Err:",format(round(param_nodes$e, 3), nsmall=3),"</p>"),
     # SHAPE aqui tiene prioridad sobre el visGroups(..)
     #shape = if_else(param_nodes$latent, "dot", "square"),
     # COLOR aqui tiene prioridad sobre el visGroups(..), el atributo color por Nodo debe ser solo un valor.
     #color = if_else(param_nodes$latent, "orange", "lightblue")
+    # Propiedades de color que aplican solo a nivel de nodo cuando se usa la funcion visNodes(..)
+    color.highlight = "red",
+    color.hover = "grey"
     #shadow = param_nodes$latent
   )
   return(nodesVis)
