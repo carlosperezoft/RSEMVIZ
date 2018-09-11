@@ -27,15 +27,15 @@ tabItem(tabName = "dashBASSubMTab",
           h3("Elementos Detallados"),
           tabsetPanel(type = "tabs",
             tabPanel("Bases - General",h3("Tabla General - PRUEBA"),
-              formattableOutput("tablaGeneralSEMOut", width = "100%")
+              formattableOutput("tablaGeneralSEMOut", width = "100%") %>% withSpinner()
             ),
             tabPanel("Indices de Ajuste", h3("Valores de indicadores de ajuste obtenidos"),
-              verbatimTextOutput("indicesAjusteSEMTxtOut") %>% withSpinner()
+              verbatimTextOutput("indicesAjusteSEMTxtOut")
             ),
             tabPanel("SELECCION de NODOS",
               actionButton("getNodesSelBtn", "LEER Nodos Seleccionados..."),
               h4("NODOs SELECCIONADOs ACTUALMENTE:"),
-              verbatimTextOutput("nodesListTxtOut") %>% withSpinner()
+              verbatimTextOutput("nodesListTxtOut")
             )
           )
         ) # FIN wellpanel

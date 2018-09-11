@@ -41,6 +41,7 @@ body <- dashboardBody(
     source("include_ui/set_datos_subm_tab.R", local = TRUE)$value,
     source("include_ui/modelo_sem_tab.R", local = TRUE)$value,
     source("include_ui/dashbas_subm_tab.R", local = TRUE)$value,
+    source("include_ui/hipotesis_tab.R", local = TRUE)$value,
     tabItem(tabName = "ayudaTab", href = "/ayuda/semviz.html", newtab = TRUE)
   ) # /tabItems
 ) # /dashboardBody

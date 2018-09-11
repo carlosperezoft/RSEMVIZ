@@ -37,7 +37,11 @@ shinyServer(function(input, output, session) {
   source('include_server/dashbas_subm_server.R', local=TRUE)
   # FIN vISNETWORK MODELO SEM
 
-    # FINALIZACION DE SESION WEB ----------------------------------------------
+  # vISNETWORK PARA ANALISIS DE HIPOTESIS
+  source('include_server/hipotesis_model_server.R', local=TRUE)
+  # FIN ANALISIS DE HIPOTESIS
+
+  # FINALIZACION DE SESION WEB ----------------------------------------------
   # Finaliza la ejecucion de la APP en R-Studio al cerrar la Ventana PPAL:
   session$onSessionEnded(function() {
     stopApp()

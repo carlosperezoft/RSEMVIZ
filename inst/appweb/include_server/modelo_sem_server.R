@@ -19,9 +19,14 @@ semFitLocal <- eventReactive(input$runSEMBtn, {
     estimadorList <- c("ML","GLS","WLS", "ULS","DWLS")
     #
     # mimic: aplica para la presentacion de los resultados
+    # std.lv: activa estandarizacion para las variables latentes.
+    # std.ov: activa estandarizacion para las variables observadas.
+    #         Esta en falso al asumir que los datos tienen alguna transformacion valida.
+    # meanstructure: activa la estimacion de los "interceptos" para cada ecuacion de regresion asociada.
     # * En estimadorList: Se debe usar un entero como indice.El input$tipoEstimacionSEM tiene valor tipo String.
     #
     lavaanFit <- lavaan::sem(model = input$modeloSEMTxt, data = datasetInput(), mimic = "lavaan",
+                             std.ov = FALSE, std.lv=TRUE, meanstructure=TRUE,
                              estimator = estimadorList[as.integer(input$tipoEstimacionSEM)])
     },
     error = function(e) {

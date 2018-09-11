@@ -95,3 +95,20 @@ rutasGrafoSEM <- function(fitModel) {
   )
   return(edgesVis)
 }
+
+getParamEstimatesByName <- function(fitModel, paramName) {
+  paramData <- fitModel %>% # "op" se refiere a la columa "operator"
+    # Usando el filtro:
+    filter(lhs == paramName) %>%
+    filter(op %in% c("=~", "~", "~~"), pvalue < .10) %>%
+    transmute(to = lhs,
+              from = rhs,
+              val = est,
+              type = dplyr::case_when(
+                op == "=~" ~ "loading",
+                op == "~"  ~ "regression",
+                op == "~~" ~ "correlation",
+                TRUE ~ NA_character_))
+  return(paramData)
+}
+

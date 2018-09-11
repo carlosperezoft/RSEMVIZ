@@ -6,7 +6,7 @@ paramsSemFit <- function() {
   lavaan::standardizedSolution(semFitLocal())
 }
 
-output$grafoModeloSEMOut <- renderVisNetwork({
+getGrafoModelSEMBase <- function() {
   fitModel <- paramsSemFit()
   visNetwork(nodosGrafoSEM(fitModel), rutasGrafoSEM(fitModel), main = "Graphical Analysis Driven SEM", width = "100%") %>%
     # darkblue square with shadow for group "LATENTE" (la figura es un "circulo" que escala con el "value" del nodo)
@@ -27,6 +27,10 @@ output$grafoModeloSEMOut <- renderVisNetwork({
     visOptions(selectedBy = "group", nodesIdSelection = TRUE,
                highlightNearest = list(enabled = TRUE, degree = 2, hover = TRUE))
 
+}
+
+output$grafoModeloSEMOut <- renderVisNetwork({
+  getGrafoModelSEMBase()
 })
 
 output$tablaGeneralSEMOut <- renderFormattable({

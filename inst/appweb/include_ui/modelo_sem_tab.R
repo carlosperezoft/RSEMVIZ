@@ -18,7 +18,7 @@ tabItem(tabName = "modeloSEMTab",
 
           # Input: Indica el tipo de Estimacion ----
           radioButtons("tipoEstimacionSEM", "Tipo de Estimaci\u00F3n:",
-             choices = c("ML   [Maximum Likelihood]" = 1,
+             choices = c("ML   [Maximum Likelihood. * Asume normalidad Multivariada]" = 1,
                "GLS  [Generalized Least Squares. * Usando datos completos]" = 2,
                "WLS  [Weighted Least Squares. * Usando datos completos]" = 3,
                "ULS  [Unweighted Least Squares]" = 4,
