@@ -34,23 +34,23 @@ tabItem(tabName = "homeTab",
           navlistPanel(
             "SEMVIZ: Intrucciones de USO",
             tabPanel(title = "INTRO", icon = icon("plug"), h3("INTRO"),
-                     wellPanel(# El wellPanel adiciona un "contorno Gris" a los elementos contenidos
-                       # la funcion helpText aplica estilos propios al texto HTML proporcionado
-                       includeMarkdown("help_files/controls_help.md")
-                     )
+               wellPanel(# El wellPanel adiciona un "contorno Gris" a los elementos contenidos
+                 # la funcion helpText aplica estilos propios al texto HTML proporcionado
+                 includeMarkdown("help_files/controls_help.md")
+               )
             ),
             tabPanel(title = "DATOS", icon = icon("database"), h3("DATOS"),
-                     wellPanel(# El wellPanel adiciona un "contorno Gris" a los elementos contenidos
-                       # la funcion helpText aplica estilos propios al texto HTML proporcionado
-                       includeMarkdown("help_files/controls_help.md")
-                     )
+               wellPanel(# El wellPanel adiciona un "contorno Gris" a los elementos contenidos
+                 # la funcion helpText aplica estilos propios al texto HTML proporcionado
+                 includeMarkdown("help_files/controls_help.md")
+               )
             ),
             "-- SECCION SEM --",
             tabPanel(title = "SEM TEST", icon = icon("laptop"), h3("SEM TEST"),
-                     wellPanel(# El wellPanel adiciona un "contorno Gris" a los elementos contenidos
-                       # la funcion helpText aplica estilos propios al texto HTML proporcionado
-                       includeMarkdown("help_files/controls_help.md")
-                     )
+               wellPanel(# El wellPanel adiciona un "contorno Gris" a los elementos contenidos
+                 # la funcion helpText aplica estilos propios al texto HTML proporcionado
+                 includeMarkdown("help_files/controls_help.md")
+               )
             )
           ) # FIN navlistPanel
        )

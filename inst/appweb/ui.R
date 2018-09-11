@@ -9,7 +9,7 @@ source('include_ui/utils_ui.R', local=TRUE)
 header <- dashboardHeader(
   # El titulo usado aqui es el presentado en el menu de la app web:
   title = tagList(shiny::icon("gear"), "SEMVIZ \u00AE"),
-  titleWidth = "250px", disable = FALSE, msgHelpMenu
+  titleWidth = "260px", disable = FALSE, msgHelpMenu
 )
 
 # menu_general ------------------------------------------------------------
@@ -20,7 +20,7 @@ header <- dashboardHeader(
 #
 # menu_general ------------------------------------------------------------
 #
-sidebar <- dashboardSidebar(width = "250px",
+sidebar <- dashboardSidebar(width = "260px",
   tags$head(
     tags$link(rel = "stylesheet", type = "text/css", href = "custom.css"),
     tags$script(src = "custom.js")
@@ -38,6 +38,7 @@ body <- dashboardBody(
   tabItems(
     # MENU ITEM PARA EL MENU ITEM: INICIO
     source("include_ui/home_tab.R", local = TRUE)$value,
+    source("include_ui/casos_estudio_tab.R", local = TRUE)$value,
     source("include_ui/set_datos_subm_tab.R", local = TRUE)$value,
     source("include_ui/modelo_sem_tab.R", local = TRUE)$value,
     source("include_ui/dashbas_subm_tab.R", local = TRUE)$value,
