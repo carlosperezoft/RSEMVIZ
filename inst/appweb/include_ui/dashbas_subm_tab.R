@@ -3,7 +3,7 @@
 # 05/09/2018 14:08:28 p. m.
 #
 tabItem(tabName = "dashBASSubMTab",
-  h2(":: DAshboard para el MODELO SEM"),
+  h2(":: Dashboard para el MODELO SEM"),
   # Elementos de Carga de informacion para el SET de DATOS:
   fluidPage(
     titlePanel("Modelo SEM para an\u00E1lisis"),

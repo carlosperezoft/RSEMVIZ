@@ -1,3 +1,4 @@
+# :: SEMVIZ -- CASO DE ESTUDIO <img src="images/UdeA_Escudo.jpg" align="right"/>
 ---
 runtime: shiny
 output: html_document

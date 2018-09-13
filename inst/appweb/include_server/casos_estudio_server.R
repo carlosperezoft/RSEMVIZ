@@ -4,8 +4,8 @@
 #
 casoEstudioData <- reactive({
   switch(input$casoEstudioSelect,
-     "Grupos_INVEST" = DATOS_GRUPOS_INVEST_UdeA[c("profes", "est", "salario")],
-     "Universidades_Estatales" = DATOS_GRUPOS_INVEST_UdeA[c("especie", "lineas", "jovinpre")]
+     "Grupos_INVEST" = DATOS_GRUPOS_INVEST_UdeA,
+     "Universidades_Estatales" = DATOS_GRUPOS_INVEST_UdeA
      )
 })
 
@@ -27,7 +27,7 @@ observe({
 
 # Generate a summary of the dataset ----
 output$resumenCasoEstudoTxtOut <- renderPrint({
-  dataset <- casoEstudioData()
+  dataset <- casoEstudioData()[c("profes", "est", "salario")]
   summary(dataset)
 })
 

@@ -17,7 +17,8 @@ getGrafoModelSEMBase <- function() {
     visLayout(randomSeed = 1409) %>%
     visPhysics(stabilization = FALSE) %>%
     # Opciones generales para las rutas
-    # NOTA: "smooth", controla el procesamiento elastico de las flechas, "activo" puede ser lento en grafos de muchos nodos!
+    # NOTA: "smooth", controla el procesamiento elastico de las flechas,
+    #       "activo" puede ser lento en grafos de muchos nodos, pero genera un grafico mejor distribuido !!
     visEdges(smooth = TRUE) %>%
     # Opciones generales para los nodos:
     visNodes(shadow = TRUE) %>%
@@ -72,7 +73,7 @@ observe({
 # por cada item que tenga y concatenda por cada fila:
 output$nodesListTxtOut <- renderPrint({
   paste0("{", input$grafoModeloSEMOut_selectedNodes,
-         "} NODO_POR_ID = (", input$grafoModeloSEMOut_selected,
+         "} NODO_ID = (", input$grafoModeloSEMOut_selected,
          ") POR_GRUPO = ", input$grafoModeloSEMOut_selectedBy)
 })
 
