@@ -8,9 +8,24 @@
 # -- Tambien se puede invocar un elemento en "localhost" ubicado en la carpeta "www" de la
 #    la aplicacion WEB Shiny dashboard (en este caso se probo con /ayuda/*)
 #
+# Opcion de user panel para el menu principal (izquierda)
+cperezUsrPanel <- sidebarUserPanel(name = a("Carlos A. P\u00E9rez Moncada", target = "_blank_",
+   href = "https://www.linkedin.com/in/carlos-alberto-perez-moncada-07b6b630/"),
+   subtitle = "Ingeniero de Sistemas.",
+   image = "images/Foto_CPEREZ.png"
+)
+
+# LinkedIn Sharing link
+linkedInHead <- tags$li(class = "dropdown",
+    tags$a(href = "https://www.linkedin.com/in/carlos-alberto-perez-moncada-07b6b630/",
+           target = "_blank",
+           tags$img(height = "18px", src = "images/linkedin.png")
+  )
+)
+
 msgHelpMenu <- dropdownMenu(
   type = "notifications",
-  icon = icon("question-circle", "fa-2x"),
+  icon = icon("question-circle", "fa-1x"), # Para ampliar se usa fa-2x...
   badgeStatus = NULL,
   headerText = "AYUDA GENERAL SEMVIZ:",
 

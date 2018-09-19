@@ -1,12 +1,12 @@
 # autor -------------------------------------------------------------------
 # carlos.perez7@udea.edu.co
-# 05/09/2018 14:08:28 p. m.
+# 19/09/2018 17:08:28 p. m.
 #
-output$grafoBasicoSEMOut <- renderVisNetwork({
+output$grafoAvanzSEMOut <- renderVisNetwork({
   getGrafoModelSEMBase()
 })
 
-output$tablaGeneralSEMOut1 <- renderFormattable({
+output$tablaGeneralSEMOut <- renderFormattable({
   # ESPECIFICACIONES DE FORMATO Y PRESENTACION PARA LA TABLA SEM DE LAVAAN:
   latentFormat <- formatter("span", style = style(color = "green", font.weight = "bold"))
   obsFormat <- formatter("span", style = style(color = "red", font.weight = "bold"))
@@ -32,21 +32,19 @@ output$tablaGeneralSEMOut1 <- renderFormattable({
   ))
 })
 
-output$indicesAjusteSEMTxtOut1 <- renderPrint({
+output$indicesAjusteSEMTxtOut <- renderPrint({
   fitMeasures(semFitLocal())
 })
 
 observe({
-  input$getNodesSelBtn1
-  visNetworkProxy("grafoBasicoSEMOut") %>% visGetSelectedNodes()
+  input$getNodesSelBtn
+  visNetworkProxy("grafoAvanzSEMOut") %>% visGetSelectedNodes()
 })
 
 # paste0(..) es una funcion vetorizadas, luego recorre _selectedNodes
 # por cada item que tenga y concatenda por cada fila:
-output$nodesListTxtOut1 <- renderPrint({
-  paste0("{", input$grafoBasicoSEMOut_selectedNodes,
-         "} NODO_ID = (", input$grafoBasicoSEMOut_selected,
-         ") POR_GRUPO = ", input$grafoBasicoSEMOut_selectedBy)
+output$nodesListTxtOut <- renderPrint({
+  paste0("{", input$grafoAvanzSEMOut_selectedNodes,
+         "} NODO_ID = (", input$grafoAvanzSEMOut_selected,
+         ") POR_GRUPO = ", input$grafoAvanzSEMOut_selectedBy)
 })
-
-

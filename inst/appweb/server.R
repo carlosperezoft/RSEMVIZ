@@ -37,9 +37,17 @@ shinyServer(function(input, output, session) {
   source('include_server/modelo_sem_server.R', local=TRUE)
   # FIN MODELO SEM LAVAAN
 
-  # vISNETWORK PARA MODELO SEM BASADO EN LAVAAN
+  # FUNCIONES SEMVIZ UTIL PARA EL GRAFO CON VIZNETWORK
+  source('include_server/grafo_semviz_util_server.R', local=TRUE)
+  # FIN SEMVIZ UTIL GRAFO CON VIZNETWORK
+
+  # vISNETWORK PARA RESULTADOS MODELO SEM BASICO
   source('include_server/dashbas_subm_server.R', local=TRUE)
-  # FIN vISNETWORK MODELO SEM
+  # FIN vISNETWORK RESULTADO BASICO
+
+  # vISNETWORK PARA RESULTADOS MODELO SEM AVANZADO
+  source('include_server/dashavan_subm_server.R', local=TRUE)
+  # FIN vISNETWORK RESULTADO AVANZADO
 
   # vISNETWORK PARA ANALISIS DE HIPOTESIS
   source('include_server/hipotesis_model_server.R', local=TRUE)

@@ -9,7 +9,7 @@ source('include_ui/utils_ui.R', local=TRUE)
 header <- dashboardHeader(
   # El titulo usado aqui es el presentado en el menu de la app web:
   title = tagList(shiny::icon("gear"), "SEMVIZ \u00AE"),
-  titleWidth = "260px", disable = FALSE, msgHelpMenu
+  titleWidth = "260px", disable = FALSE, linkedInHead, msgHelpMenu
 )
 
 # menu_general ------------------------------------------------------------
@@ -27,9 +27,8 @@ sidebar <- dashboardSidebar(width = "260px",
   ),
   # Definicion del PANEL MENU A LA IZQUIERDA:
   source("include_ui/sidebar_menu_ui.R", local = TRUE)$value,
-  br(),
-  # Definicion del FOOTER MENU A LA IZQUIERDA:
-  source("include_ui/footer_menu_ui.R", local = TRUE)$value
+  hr(),
+  cperezUsrPanel
 ) # /dashboardSidebar
 
 
@@ -42,12 +41,12 @@ body <- dashboardBody(
     source("include_ui/set_datos_subm_tab.R", local = TRUE)$value,
     source("include_ui/modelo_sem_tab.R", local = TRUE)$value,
     source("include_ui/dashbas_subm_tab.R", local = TRUE)$value,
+    source("include_ui/dashavan_subm_tab.R", local = TRUE)$value,
     source("include_ui/hipotesis_tab.R", local = TRUE)$value,
-    source("include_ui/modelo_medida_desc_subm_tab.R", local = TRUE)$value,
-    tabItem(tabName = "ayudaTab", href = "/ayuda/semviz.html", newtab = TRUE)
+    source("include_ui/modelo_medida_desc_subm_tab.R", local = TRUE)$value
   ) # /tabItems
 ) # /dashboardBody
 
 # DEFINICION ELEMENTO DASHBOARD -------------------------------------------------
 # El titulo usado aqui es el presentado en la pagina de Navegador WEB:
-dashboardPage(title = "SEMVIZ", header, sidebar, body, skin = "blue")
+dashboardPagePlus(title = "SEMVIZ", header, sidebar, body, skin = "green")

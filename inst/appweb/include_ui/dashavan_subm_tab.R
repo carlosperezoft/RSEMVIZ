@@ -1,12 +1,12 @@
 # autor -------------------------------------------------------------------
 # carlos.perez7@udea.edu.co
-# 05/09/2018 14:08:28 p. m.
+# 19/09/2018 17:08:28 p. m.
 #
-tabItem(tabName = "dashBASSubMTab",
-  h2(":: Dashboard de Resultados B\u00E1sicos"),
+tabItem(tabName = "dashAVANSubMTab",
+  h2(":: Dashboard Avanzado para el MODELO SEM"),
   # Elementos de Carga de informacion para el SET de DATOS:
   fluidPage(
-    titlePanel("Modelo SEM para an\u00E1lisis General"),
+    titlePanel("Modelo SEM para an\u00E1lisis Detallado"),
 
     sidebarLayout(
 
@@ -17,7 +17,7 @@ tabItem(tabName = "dashBASSubMTab",
       #      * se ha usado 5 en el sidebar (grafo) y 7 en el main (tablas).
       sidebarPanel(width = 5,
         fluidRow(
-          visNetworkOutput("grafoBasicoSEMOut", height = 600) %>% withSpinner()
+          visNetworkOutput("grafoAvanzSEMOut", height = 600) %>% withSpinner()
         )
       ), # fin sidebarPanel
 
@@ -27,15 +27,15 @@ tabItem(tabName = "dashBASSubMTab",
           h3("Elementos Detallados"),
           tabsetPanel(type = "tabs",
             tabPanel("Bases - General",h3("Tabla General - PRUEBA"),
-              formattableOutput("tablaGeneralSEMOut1", width = "100%") %>% withSpinner()
+              formattableOutput("tablaGeneralSEMOut", width = "100%") %>% withSpinner()
             ),
             tabPanel("Indices de Ajuste", h3("Valores de indicadores de ajuste obtenidos"),
-              verbatimTextOutput("indicesAjusteSEMTxtOut1")
+              verbatimTextOutput("indicesAjusteSEMTxtOut")
             ),
             tabPanel("SELECCION de NODOS",
-              actionButton("getNodesSelBtn1", "LEER Nodos Seleccionados..."),
+              actionButton("getNodesSelBtn", "LEER Nodos Seleccionados..."),
               h4("NODOs SELECCIONADOs ACTUALMENTE:"),
-              verbatimTextOutput("nodesListTxtOut1")
+              verbatimTextOutput("nodesListTxtOut")
             )
           )
         ) # FIN wellpanel
