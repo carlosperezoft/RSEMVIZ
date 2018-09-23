@@ -1,6 +1,20 @@
-/* custom CSS code goes here */
+/*
+# autor -------------------------------------------------------------------
+# carlos.perez7@udea.edu.co
+# 22/09/2018 17:08:28 p. m.
+#
+*/
 .main-header .logo {
   font-family: "Georgia", Times, "Times New Roman", serif;
   font-weight: bold;
   font-size: 24px;
+}
+
+/* Estilo aplicado al Tag HTML h2 usado en los titulos de SEMVIZ: */
+h2 {
+  font-family: "Georgia", Times, "Times New Roman", serif;
+  color: steelblue;
+  font-size: 16px;
+  font-weight: bolder;
+  font-style: normal;
 }

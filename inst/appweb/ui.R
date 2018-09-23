@@ -33,7 +33,7 @@ sidebar <- dashboardSidebar(width = "260px",
 
 
 # TABS ASOCIADOS A CADA MENU ITEM DEL SIDE BAR PARA LA APPWEB -----------------
-body <- dashboardBody(
+body <- dashboardBody(setShadow("box"),
   tabItems(
     # MENU ITEM PARA EL MENU ITEM: INICIO
     source("include_ui/home_tab.R", local = TRUE)$value,

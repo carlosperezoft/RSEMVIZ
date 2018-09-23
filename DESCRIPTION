@@ -2,7 +2,7 @@ Package: semviz
 Type: Package
 Title: Visualizacion de alto nivel para el analisis e interpretacion de Modelos de Ecuaciones Estructurales
 Version: 0.1.0
-Date: 2018-8-21
+Date: 2018-9-21
 Authors@R: c(
     person("Carlos Alberto", "Perez Moncada", , "carlos.perez7@udea.edu.co", c("aut", "cre")),
     person(family = "Facultad de Ingenieria. Universidad de Antioquia.", role = "cph")
