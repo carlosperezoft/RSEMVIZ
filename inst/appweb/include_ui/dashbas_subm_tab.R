@@ -77,7 +77,7 @@ tabItem(tabName = "dashBASSubMTab",
          )
       ),
       tabPanel("Ajuste Parsimonioso",
-               h4("Criterios de Referencia para el Ajuste Parsimonioso")
+        h4("Criterios de Referencia para el Ajuste Parsimonioso")
       )
     )
   ) ## fin fluidPage ===========

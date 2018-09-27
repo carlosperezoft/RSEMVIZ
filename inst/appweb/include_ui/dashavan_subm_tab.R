@@ -26,16 +26,19 @@ tabItem(tabName = "dashAVANSubMTab",
         wellPanel(
           h3("Elementos Detallados"),
           tabsetPanel(type = "tabs",
-            tabPanel("Bases - General",h3("Tabla General - PRUEBA"),
-              formattableOutput("tablaGeneralSEMOut", width = "100%") %>% withSpinner()
+            tabPanel("Matrices Modelo SEM",h3("An\u00E1lsis de Correlaciones del Modelo SEM"),
+              svgPanZoomOutput("correlogramSEMOut", width = "100%", height = "500") %>% withSpinner(),
+              verbatimTextOutput("corrMatSEMTxtOut")
             ),
-            tabPanel("Indices de Ajuste", h3("Valores de indicadores de ajuste obtenidos"),
-              verbatimTextOutput("indicesAjusteSEMTxtOut")
-            ),
-            tabPanel("SELECCION de NODOS",
+            tabPanel("Informaci\u00F3n por Variable",
               actionButton("getNodesSelBtn", "LEER Nodos Seleccionados..."),
               h4("NODOs SELECCIONADOs ACTUALMENTE:"),
-              verbatimTextOutput("nodesListTxtOut")
+              verbatimTextOutput("nodesListTxtOut"),
+              formattableOutput("tablaGeneralSEMOut", width = "100%") %>% withSpinner()
+            ),
+            tabPanel("Elementos internos SEM", h3("Valores de indicadores de ajuste obtenidos"),
+               # Adicionar un SELECT para especificar que elementos leer del FIT SEM:
+               verbatimTextOutput("fitElementSEMTxtOut")
             )
           )
         ) # FIN wellpanel

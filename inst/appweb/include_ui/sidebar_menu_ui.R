@@ -12,12 +12,12 @@
 #
 sidebarMenu(id = "sidebarMenu",
     menuItem(text = "Inicio", tabName = "homeTab", icon = icon("home"),
-             badgeLabel = "HOME", badgeColor = "green", selected = TRUE),
+             badgeLabel = "HOME", badgeColor = "purple", selected = TRUE),
     #
     # SECCION DE MENUS OPERATIVOS PARA EL USO DE SEM GUIADO POR EL ANALISIS GRAFICO
     hr(), # ":: BASES"
     menuItem(text = "Casos de Estudio", tabName = "casosEstudioTab", icon = icon("desktop"),
-             badgeLabel = "CASOS", badgeColor = "yellow"),
+             badgeLabel = "CASOS", badgeColor = "green"),
     menuItem(text = "Gesti\u00F3n de Datos", icon = icon("database"),
        menuSubItem(text = "SET de Datos", tabName = "setDatosSubMTab", icon = icon("file")),
        menuSubItem(text = "An\u00E1lisis Exploratorio", tabName = "EDASubMTab", icon = icon("search"))

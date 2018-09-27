@@ -29,6 +29,9 @@ suppressPackageStartupMessages({
   library(visNetwork, quietly=TRUE)
   library(formattable, quietly=TRUE)
   library(rAmCharts, quietly=TRUE)
+  library(corrplot, quietly = TRUE)
+  library(svgPanZoom, quietly=TRUE)
+  library(svglite, quietly=TRUE)
 })
 
 # autor -------------------------------------------------------------------
