@@ -18,8 +18,8 @@ tabItem(tabName = "casosEstudioTab",
       sidebarPanel(width = 5,
          fluidRow(
            selectInput("casoEstudioSelect", "Casos de Estudio:", selected = "Seleccionar...",
-             choices = c("Seleccionar...",
-                         "Grupos_INVEST", "Universidades_Estatales")
+             choices = c("Seleccionar...", "Political_Democracy",
+                         "Grupos_INVESTIGACION", "Universidades_Estatales")
            ),
            checkboxInput("usarCasoEstudioChk", "Usar Caso de Estudio en SEMVIZ", value = FALSE)
          )
