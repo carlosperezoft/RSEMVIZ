@@ -32,6 +32,7 @@ suppressPackageStartupMessages({
   library(corrplot, quietly = TRUE)
   library(svgPanZoom, quietly=TRUE)
   library(svglite, quietly=TRUE)
+  library(heatmaply, quietly=TRUE)
 })
 
 # autor -------------------------------------------------------------------
