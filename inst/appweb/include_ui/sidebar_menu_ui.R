@@ -31,15 +31,15 @@ sidebarMenu(id = "sidebarMenu",
     ),
     menuItem(text = "An\u00E1lisis de Hip\u00F3tesis", tabName = "hipotesisTab", icon = icon("check-circle"),
              badgeLabel = "PARAMS", badgeColor = "blue"),
-    hr(), #":: AVANZADO"
+    hr(), # ":: AVANZADO"
     menuItem(text = "An\u00E1lisis SEM Medici\u00F3n", icon = icon("list-ol"),
        menuSubItem(text = "1. Descriptivo", tabName = "modMedDesSubMTab", icon = icon("pencil")),
-       menuSubItem(text = "2. Predicci\u00F3n", tabName = "modMedPosSubMTab", icon = icon("paper-plane")),
+       menuSubItem(text = "2. Predicci\u00F3n", tabName = "modMedPredSubMTab", icon = icon("paper-plane")), # Pos-estimacion
        menuSubItem(text = "3. Sensibilidad", tabName = "modeMedSenSubMTab", icon = icon("thumbs-up"))
     ),
     menuItem(text = "An\u00E1lisis SEM Estructural", icon = icon("sitemap"),
        menuSubItem(text = "1. Descriptivo", tabName = "modEstDesSubMTab", icon = icon("pencil")),
-       menuSubItem(text = "2. Predicci\u00F3n", tabName = "modEstPosSubMTab", icon = icon("paper-plane")),
+       menuSubItem(text = "2. Predicci\u00F3n", tabName = "modEstPredSubMTab", icon = icon("paper-plane")), # Pos-estimacion
        menuSubItem(text = "3. Sensibilidad", tabName = "modeEstSenSubMTab", icon = icon("thumbs-up"))
     ),
     "::",

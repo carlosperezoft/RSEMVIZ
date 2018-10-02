@@ -15,7 +15,7 @@ rutasModeloSEM <- function(fitModel) {
     filter(op %in% c("=~", "~", "~~"), pvalue < .10) %>%
     transmute(to = lhs,
               from = rhs,
-              val = est.std,
+              val = est.std, # En standardizedSolution(..) toma todas estimaciones estandarizadas...
               type = dplyr::case_when(
                 op == "=~" ~ "loading",
                 op == "~"  ~ "regression",
@@ -28,32 +28,35 @@ latentesModeloSEM <- function(fitModel) {
   latent_nodes <- rutasModeloSEM(fitModel) %>%
     filter(type == "loading") %>%
     distinct(to) %>%
-    transmute(metric = to, latent = TRUE)
+    transmute(node_name = to, latent = TRUE)
   return(latent_nodes)
 }
 
 nodosModeloSEM <- function(fitModel) {
   param_edges <- fitModel %>%
     filter(lhs == rhs) %>%
-    transmute(metric = lhs, e = est.std) %>%
+    transmute(node_name = lhs, e = est.std) %>%
     left_join(latentesModeloSEM(fitModel)) %>%
     mutate(latent = if_else(is.na(latent), FALSE, latent))
   return(param_edges)
 }
 
 # Las propiedades aqui especificadas aplican SOLO al nodo de forma individual.
-# Para que sea de aplicacion a todos los NODOS debe usarse: visNodes(..) al crear el grafo con visNetwork(..)
+# Para que sea de aplicacion a todos los NODOS debe usarse: visNodes(..)
+# al crear el grafo con visNetwork(..)
 #
 nodosGrafoSEM <- function(fitModel) {
   param_nodes <- nodosModeloSEM(fitModel)
   nodesVis <- data.frame(
-    id = param_nodes$metric,
-    label = param_nodes$metric,
+    id = param_nodes$node_name,
+    label = param_nodes$node_name,
     group = if_else(param_nodes$latent, "LATENTE", "OBSERVADA"),
-    # La figura escala con el "value" del nodo, varficar que valor usar en cada caso LAT/OBS?
+    # La figura escala con el "value" del nodo, verificar que valor usar en cada caso LAT/OBS?
+    # POR_HACER: Sumar las cargas (beta) de las OBRs que explica el factor y asignar aqui para LAT.
+    #            En caso de OBR, calcular su comunalidad (beta est.std^2), y asignar aqui.
     value = param_nodes$e,
     # title equivale a un TOOLTIP !
-    title = paste0("<p><b>", param_nodes$metric,"</b><br>Err:",format(round(param_nodes$e, 3), nsmall=3),"</p>"),
+    title = paste0("<p><b>", param_nodes$node_name,"</b><br>VAR_EST:",format(round(param_nodes$e, 3), nsmall=3),"</p>"),
     # SHAPE aqui tiene prioridad sobre el visGroups(..)
     #shape = if_else(param_nodes$latent, "dot", "square"),
     # COLOR aqui tiene prioridad sobre el visGroups(..), el atributo color por Nodo debe ser solo un valor.
@@ -78,7 +81,7 @@ rutasGrafoSEM <- function(fitModel) {
     #label = paste("PAR", format(round(param_edges$val, 2), nsmall=2)),
     #title = paste("PAR:", format(round(param_edges$val, 3), nsmall=3)),
     title = dplyr::case_when(
-      param_edges$type == "loading" ~ paste("lamda:", format(round(param_edges$val, 3), nsmall=3)),
+      param_edges$type == "loading" ~ paste("lambda:", format(round(param_edges$val, 3), nsmall=3)),
       param_edges$type == "regression"  ~ paste("beta:", format(round(param_edges$val, 3), nsmall=3)),
       param_edges$type == "correlation" ~ paste("phi:", format(round(param_edges$val, 3), nsmall=3))
     ),
@@ -95,20 +98,20 @@ rutasGrafoSEM <- function(fitModel) {
   )
   return(edgesVis)
 }
-
+# Utilizado en Hipotesis Model Server.R
 getParamEstimatesByName <- function(fitModel, paramName) {
   paramData <- fitModel %>% # "op" se refiere a la columa "operator"
     # Usando el filtro:
     filter(lhs == paramName) %>%
-    filter(op %in% c("=~", "~", "~~"), pvalue < .10) %>%
-    transmute(to = lhs,
-              from = rhs,
-              val = est,
-              type = dplyr::case_when(
-                op == "=~" ~ "loading",
-                op == "~"  ~ "regression",
-                op == "~~" ~ "correlation",
-                TRUE ~ NA_character_))
+    filter(op %in% c("=~", "~", "~~")) %>% # ,pvalue < .10
+    transmute(desde = lhs,
+      tipo = dplyr::case_when(
+        op == "=~" ~ "loading",
+        op == "~"  ~ "regression",
+        op == "~~" ~ "correlation",
+        TRUE ~ NA_character_),
+      hacia = rhs, estimado = est, valor_p = pvalue
+    )
   return(paramData)
 }
 

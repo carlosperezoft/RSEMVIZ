@@ -43,7 +43,8 @@ body <- dashboardBody(setShadow("box"), useShinyjs(),
     source("include_ui/dashbas_subm_tab.R", local = TRUE)$value,
     source("include_ui/dashavan_subm_tab.R", local = TRUE)$value,
     source("include_ui/hipotesis_tab.R", local = TRUE)$value,
-    source("include_ui/modelo_medida_desc_subm_tab.R", local = TRUE)$value
+    source("include_ui/modelo_medida_desc_subm_tab.R", local = TRUE)$value,
+    source("include_ui/modelo_medida_predic_subm_tab.R", local = TRUE)$value
   ) # /tabItems
 ) # /dashboardBody
 

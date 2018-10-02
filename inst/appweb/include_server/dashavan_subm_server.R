@@ -20,7 +20,7 @@ output$tablaGeneralSEMOut <- renderFormattable({
   ciLFormat <- formatter("span",x~ style(digits(x,3)))
   ciUFormat <- formatter("span",x~ style(digits(x,3)))
   ciUFmt <- x ~ round(x, digits=2)
-  #
+  # Se filtran los elementos por medio de la lista de nodos seleccionados en el grafo:
   param_data <- paramsSemFit() %>%
                 filter(lhs %in% input$grafoAvanzSEMOut_selectedNodes)
   #
@@ -43,7 +43,8 @@ output$fitElementSEMTxtOut <- renderPrint({
   # lavInspect(fit2,"rsquare")
   # residuals(fit2)
 })
-#
+# Se usa el objeto visNetworkProxy para establecer los elementos seleccionados en el Grafo:
+# Para actualizar la seleccion de varios nodos, se hace necesario el Boton:
 observe({
   input$getNodesSelBtn
   visNetworkProxy("grafoAvanzSEMOut") %>% visGetSelectedNodes()
@@ -51,10 +52,10 @@ observe({
 
 # paste0(..) es una funcion vetorizadas, luego recorre _selectedNodes
 # por cada item que tenga y concatenda por cada fila:
-output$nodesListTxtOut <- renderPrint({
-  paste0(input$grafoAvanzSEMOut_selectedNodes, ":by:",
-         #input$grafoAvanzSEMOut_selected, "::",
-         input$grafoAvanzSEMOut_selectedBy)
+output$nodesListTxtOut <- renderText({
+  paste(input$grafoAvanzSEMOut_selectedNodes, ":group-by:",  # Obtiene lista de nodos seleccionados
+         #input$grafoAvanzSEMOut_selected, "::",  # Obtiene un nodo (por nombre-ID) seleccionado
+         input$grafoAvanzSEMOut_selectedBy, sep = "\n") # Obtiene un grupo (por nombre-ID) seleccionado
 })
 #
 output$correlogramSEMOut <- renderSvgPanZoom({
@@ -75,7 +76,7 @@ output$correlogramSEMOut <- renderSvgPanZoom({
 })
 #
 output$heatmapSEMOut <- renderPlotly({
-  # Funcion de heatmaply adecuda para matrices de correlacion:
+  # Funcion de heatmaply adecuada para matrices de correlacion:
   heatmaply_cor(lavInspect(semFitLocal(), input$heatmapType), margins = c(80, 80),
                main = input$heatmapType, k_col = 2, k_row = 2, dendrogram = input$showDendrogram)
 })

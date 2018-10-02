@@ -53,9 +53,14 @@ shinyServer(function(input, output, session) {
   source('include_server/hipotesis_model_server.R', local=TRUE)
   # FIN ANALISIS DE HIPOTESIS
 
-  # QGRAPH PARA ANALISIS REDES PSICOMETRIA - SEM
+  # ANALISIS DE MENU DESCRIPTIVO DEL MODELO DE MEDICION - SEM
   source('include_server/modelo_medida_desc_subm_server.R', local=TRUE)
+  # FIN DESCRIPTIVO DEL MODELO DE MEDICION
+
+  # QGRAPH PARA ANALISIS REDES PSICOMETRIA - SEM
+  source('include_server/modelo_medida_predic_subm_server.R', local=TRUE)
   # FIN ANALISIS REDES PSICOMETRIA - SEM
+
 
   # FINALIZACION DE SESION WEB ----------------------------------------------
   # Finaliza la ejecucion de la APP en R-Studio al cerrar la Ventana PPAL:

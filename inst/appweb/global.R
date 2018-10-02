@@ -33,6 +33,7 @@ suppressPackageStartupMessages({
   library(svgPanZoom, quietly=TRUE)
   library(svglite, quietly=TRUE)
   library(heatmaply, quietly=TRUE)
+  library(GGally, quietly=TRUE)
 })
 
 # autor -------------------------------------------------------------------

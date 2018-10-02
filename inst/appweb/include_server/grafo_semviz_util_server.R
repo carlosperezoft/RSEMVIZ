@@ -2,11 +2,13 @@
 # carlos.perez7@udea.edu.co
 # 19/09/2018 17:08:28 p. m.
 #
-paramsSemFit <- function() {
+# Se usa "reactive" para auto-reprocesar la "funcion" cuando cambie algun "input" !
+paramsSemFit <- reactive({
   lavaan::standardizedSolution(semFitLocal())
-}
-
-getGrafoModelSEMBase <- function() {
+})
+#
+# Se usa "reactive" para auto-reprocesar la "funcion" cuando cambie algun "input" interno !
+getGrafoModelSEMBase <- reactive({
   fitModel <- paramsSemFit()
   visNetwork(nodosGrafoSEM(fitModel), rutasGrafoSEM(fitModel), main = "Graphical Analysis Driven SEM", width = "100%") %>%
     # darkblue square with shadow for group "LATENTE" (la figura es un "circulo" que escala con el "value" del nodo)
@@ -27,5 +29,5 @@ getGrafoModelSEMBase <- function() {
     # OPCIONES DE FILTRO PARA LOS NODOS VISUALIZADOS:
     visOptions(selectedBy = "group", nodesIdSelection = TRUE,
                highlightNearest = list(enabled = TRUE, degree = 2, hover = TRUE))
-
-}
+})
+#

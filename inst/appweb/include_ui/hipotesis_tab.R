@@ -26,11 +26,14 @@ tabItem(tabName = "hipotesisTab",
           wellPanel(
             h3("Validaci\u00F3n de H0 y H1:"),
             tabsetPanel(type = "tabs",
-              tabPanel("H0 vs H1 - MODELO", h3("Tabla Estimaci\u00F3n MODELO - PRUEBA"),
-                 formattableOutput("tablaHipostesisModeloOut", width = "100%") %>% withSpinner()
+              tabPanel("H0 vs H1 - FACTORES", h4("Tabla Estimaci\u00F3n Factorial Confirmatorio"), br(),
+                 formattableOutput("tablaHipotesisModeloOut", width = "100%") %>% withSpinner(),
+                 htmlOutput("ecuacionFactHipoTxtOut")
               ),
-              tabPanel("H0 vs H1 - PARAMETROS ", h3("Tabla Estimaci\u00F3n PARAMETROS - PRUEBA"),
-                 formattableOutput("tablaHipostesisParamsOut", width = "100%") %>% withSpinner()
+              tabPanel("H0 vs H1 - ESTRUCTURAL ",
+                 h4("Tabla Estimaci\u00F3n Modelo Estructural (Regresiones)"), br(),
+                 formattableOutput("tablaHipotesisParamsOut", width = "100%") %>% withSpinner(),
+                 htmlOutput("ecuacionEstrHipoTxtOut") # antes: verbatimTextOutput(..)
               )
             )
           ) # FIN wellpanel

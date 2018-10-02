@@ -2,7 +2,7 @@
 # carlos.perez7@udea.edu.co
 # 03/09/2018 04:47:28 p. m.
 #
-datasetInput <- reactive({
+datasetInput <- reactive({# Se usa "reactive" para reprocesar la "funcion" que algun "input" cambie...
   fileSEMdf <- NULL
   if((input$usarCasoEstudioChk == TRUE) &&
      (input$casoEstudioSelect  != "Seleccionar...")) {

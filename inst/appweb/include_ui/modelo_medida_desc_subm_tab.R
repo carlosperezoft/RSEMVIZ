@@ -1,36 +1,69 @@
 # autor -------------------------------------------------------------------
 # carlos.perez7@udea.edu.co
-# 12/09/2018 10:47:28 a. m.
+# 01/10/2018 17:36:28 a. m.
 #
 tabItem(tabName = "modMedDesSubMTab",
-  h2(":: Uso de Redes Psicometricas"),
+  h2(":: Modelo de Medici\u00F3n - SEM"),
   fluidPage(
 
-    titlePanel("An\u00E1lisis de elementos del modelo SEM"),
+    titlePanel("An\u00E1lisis Factorial (Confirmatorio) del Modelo SEM Estimado"),
+    ## POR HACER: MENUS EN DROPDAOWN-PRUEBAS para--> DENSIDAD, BOXPLOT, MATRICES(HEAT, CORR, SPLOM),
+    ##           REDES (COR, SPRING, LASSO), BIPLOTS, DENDROGRAMAS(CIRCULAR, CURVA, RECTAGUL), ARCOS(DENSIDAD), HIVE(3-LINEAS),
+    ##           SERIES(COMPARAR DYGRAPH, STREAMGRAPH), CORR PARALEL, CICULARIZAR INFO(SUNBURST, SANKEY, RADAR?),
+    ##           JERARQUICOS(ARBOLES, circlepack, treemap), CLUSTER(K-MEANS)
+    navbarPage("Men\u00FA AFC",
+       tabPanel(
+         "Matrices",
+         icon = icon("desktop"),
+         h3("Matriz SPLOM"),
+         plotlyOutput("splomFactorOut", width = "500", height = "500") %>% withSpinner()
+       ),
+       tabPanel(
+         "Redes Psico",
+         icon = icon("gear"),
+         h3("PREDICCION CON FORECAST VISUAL"),
+         ###
+         tabBox(width = "100%", height = "100%",
+            title = tagList(shiny::icon("random"), "Clasificaci\u00F3n por tipo"),
+            tabPanel("Ajuste 1",
+               h4("Criterios de Referencia 1")
+            ),
+            tabPanel("Ajuste 2",
+               h4("Criterios de Referencia 2")
+            )
+         )
+         ###
+       ),
+       tabPanel(
+         "MOSAICO DE VARIAS GRAFICAS",
+         icon = icon("desktop"),
+         h3("PANEL DE GRAFICOS CON SUBPLOT ARRAY"),
+         sidebarLayout(
+           sidebarPanel(width = 4,
+             h3("CUADRANTE DE GRAFICOS:")
 
-    navlistPanel(
-      "--- An\u00E1lisis General ---",
-      # NOTA: Es necesario especificar un ancho y un alto para el Plot,
-      # ya sea en la UI o en el server. Aqui se ha usado "auto" en ambios.
-      tabPanel("Grafo por Grupos", h3("Variables Observadas como nodos, agrupadas por Constructo"),
-               plotOutput("personBig5Plot",'auto','auto') %>% withSpinner()),
+           ),
+           mainPanel(
+             h3("DATOS PRESENTADOS")
 
-      # NOTA: Es necesario especificar un ancho y un alto para el Plot,
-      # ya sea en la UI o en el server. Aqui se ha usado 100% en ancho, y 500 en alto.
-      tabPanel("Grafo tipo Cluster", h3("Variables Observadas como nodos, agrupadas por Constructo"),
-               plotOutput("personClusterPlot",width = "750px", height = "600px") %>% withSpinner()),
-      "--- An\u00E1lisis Especifico ---",
-      tabPanel("Grafo PSICO: GLASSO", h3("Variables Observadas como nodos, agrupadas por Constructo"),
-               plotOutput("personPSICOPlot",width = "100%", height = "500px") %>% withSpinner()),
-      tabPanel("Grafo RED PSICO :: Concentraci\u00F3n de Nodos",
-               h3("Variables Observadas como nodos, agrupadas por Constructo"),
-               plotOutput("personPSICOFactorPlot",width = "100%", height = "500px") %>% withSpinner()),
-      tabPanel("Grafo PSICO :: Centralidad",
-               h3("Variables Observadas como nodos, agrupadas por Constructo"),
-               plotOutput("personPSICOCentraPlot",width = "100%", height = "500px") %>% withSpinner()),
-      tabPanel("Grafo Dirigido del Modelo SEM", h3("RED de grafo dirigido simple"),
-               plotOutput("personGraDirPlot",width = "600px", height = "600px") %>% withSpinner())
+           )
+         )
+       ),
+       navbarMenu(
+         "EXTRA WIDGESTS PLOTLY",
+         tabPanel(
+           "PAR COORD INTERACTIVAS",
+           icon = icon("tasks"),
+           h3("COORDENADAS PARALELAS INTERACTIVAS")
 
+         ),
+         tabPanel(
+           "COORDENADAS PARALELAS ESTATICAS",
+           icon = icon("desktop"),
+           h3("Cordenadas PREDEFINIDAS")
+
+         )
+       )
     )
   )
 )
