@@ -7,17 +7,17 @@ tabItem(tabName = "dashAVANSubMTab",
   # Elementos de Carga de informacion para el SET de DATOS:
   fluidPage(
     titlePanel("Modelo SEM para an\u00E1lisis Detallado"),
-
     sidebarLayout(
-
       # Sidebar panel for inputs ----
       # NOTA: Es posible indicar el numero de columnas para el sidebarPanel y el mainPanel,
       #       esto con el fin de ajustarse al tamaño de los elementos contenidos en cada panel.
       #      * IMPORTANTE el total son 12 columnas para ajustar los dos Paneles,
       #      * se ha usado 5 en el sidebar (grafo) y 7 en el main (tablas).
-      sidebarPanel(width = 5,
+      sidebarPanel(width = 5, style="background-color: #FFFFFF;",
         fluidRow(
-          visNetworkOutput("grafoAvanzSEMOut", height = 600) %>% withSpinner()
+          box(visNetworkOutput("grafoAvanzSEMOut", height = 600) %>% withSpinner(),
+              title = tagList(shiny::icon("gears"), "Modelo SEM"), width = NULL,
+              collapsible = TRUE, status = "primary", solidHeader = TRUE)
         )
       ), # fin sidebarPanel
 

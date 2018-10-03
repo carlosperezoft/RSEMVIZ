@@ -7,7 +7,7 @@ tabItem(tabName = "hipotesisTab",
   # Elementos de Carga de informacion para el SET de DATOS:
   fluidPage(
     titlePanel("An\u00E1lisis de hip\u00F3tesis asociadas"),
-
+    a(id = "hipotSidePanelToggle", "Ver/Ocultar Modelo SEM"),
     sidebarLayout(
 
       # Sidebar panel for inputs ----
@@ -15,7 +15,7 @@ tabItem(tabName = "hipotesisTab",
       #       esto con el fin de ajustarse al tamaño de los elementos contenidos en cada panel.
       #      * IMPORTANTE el total son 12 columnas para ajustar los dos Paneles,
       #      * se ha usado 5 en el sidebar (grafo) y 7 en el main (tablas).
-      sidebarPanel(width = 5,
+      sidebarPanel(id="hipotSidebarPanel", width = 5, style="background-color: white;",
          fluidRow(
            visNetworkOutput("grafoHipotSEMOut", height = 600) %>% withSpinner()
          )

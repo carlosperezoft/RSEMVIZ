@@ -137,3 +137,4 @@ output$ecuacionEstrHipoTxtOut <- renderUI({  # antes: renderText(..)
   #
 })
 #
+shinyjs::onclick("hipotSidePanelToggle", shinyjs::toggle(id = "hipotSidebarPanel", anim = TRUE))
