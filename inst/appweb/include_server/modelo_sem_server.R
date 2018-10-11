@@ -43,7 +43,21 @@ semFitLocal <- eventReactive(input$runSEMBtn, {
   )
   return(lavaanFit)
 })
-
+#
 output$modeloSEMLavaanTxtOut <- renderPrint({
   summary(semFitLocal(), fit.measures=TRUE, standardized = input$modSEMStandChk)
 })
+#
+semModelScoreData <- reactive({
+  # Metodo de Lavaan para estimar los "score" de cada factor del modelo de SEM:
+  data.frame(lavPredict(semFitLocal(), type = "ov", method = "regression"), # Estimado de los Score de Var. Observadas.
+             lavPredict(semFitLocal(), type = "lv", method = "regression")) # Estimado de los Score de Var. Latentes.
+})
+#
+#
+# Asignacion del SET de DATOS a la tabla dinamica:
+# NOTA: se usa el atributo scrollX para activar la barra horizontal.
+output$semScoreDataDTOut <- renderDT({
+  semModelScoreData()
+}, options = list(scrollX = TRUE))
+

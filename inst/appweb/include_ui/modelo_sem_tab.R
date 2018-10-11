@@ -32,12 +32,18 @@ tabItem(tabName = "modeloSEMTab",
 
       # Main panel for displaying outputs ----
       mainPanel(
-        wellPanel(
-          h3("General Tabular (Estimaci\u00F3n del Modelo)"),
-          # Input: Indica el uso de datos estandarizados ----
-          checkboxInput("modSEMStandChk", "Estandarizado", TRUE),
-          verbatimTextOutput("modeloSEMLavaanTxtOut") %>% withSpinner()
-        ) # FIN wellpanel
+        tabBox(width = "100%", height = "100%",
+               title = tagList(shiny::icon("calculator"), "Estimaci\u00F3n por medio de LAVAAN"),
+          tabPanel("Resumen General",h4("Informaci\u00F3n General (Estimaci\u00F3n del Modelo)"),
+            # Input: Indica el uso de datos estandarizados ----
+            checkboxInput("modSEMStandChk", "Estandarizado", TRUE),
+            verbatimTextOutput("modeloSEMLavaanTxtOut") %>% withSpinner()
+          ),
+          tabPanel("Puntuaciones (Score)",
+            h4("Puntuaciones (Score) estimadas para variables Observadas y Latentes:"),
+            DTOutput('semScoreDataDTOut', width = "100%", height = "100%") %>% withSpinner()
+          )
+        ) # FIN tabBox
       ) # fin main panel
     ) # fin sidebarLayout
   ) ## fin fluidPage ===========
