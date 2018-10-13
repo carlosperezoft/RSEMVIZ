@@ -34,6 +34,8 @@ suppressPackageStartupMessages({
   library(svglite, quietly=TRUE)
   library(heatmaply, quietly=TRUE)
   library(GGally, quietly=TRUE)
+  library(reshape2, quietly=TRUE)
+  library(ggridges, quietly=TRUE)
 })
 
 # autor -------------------------------------------------------------------

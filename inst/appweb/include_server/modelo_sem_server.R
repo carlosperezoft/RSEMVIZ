@@ -50,8 +50,14 @@ output$modeloSEMLavaanTxtOut <- renderPrint({
 #
 semModelScoreData <- reactive({
   # Metodo de Lavaan para estimar los "score" de cada factor del modelo de SEM:
-  data.frame(lavPredict(semFitLocal(), type = "ov", method = "regression"), # Estimado de los Score de Var. Observadas.
-             lavPredict(semFitLocal(), type = "lv", method = "regression")) # Estimado de los Score de Var. Latentes.
+  # ov: Estimado de los Score de Var. Observadas.
+  # lv: Estimado de los Score de Var. Latentes.
+  estimated_data <- data.frame(lavPredict(semFitLocal(), type = "ov", method = "regression"),
+                               lavPredict(semFitLocal(), type = "lv", method = "regression"))
+  # Se adiciona explicitamente la columna el numero de fila como "row_id",
+  # Esto para el uso de row_id como key en las operaciones de "melt" de los datos:
+  estimated_data$row_id <- seq(1:(nrow(estimated_data)))
+  return(estimated_data)
 })
 #
 #

@@ -8,6 +8,11 @@
 # obtenido por medio de lavaan.
 # Parametro: fitModel, el modelo sem calculado.
 #
+# IMPORTANTE: Estas funciones de utilidad usan el modelo SEM estimado (fitModel), el cual se actualiza
+# por medio de la funcion "Reactiva" semFitLocal(..) definida en el archivo: "modelo_sem_server.R".
+# -- Esto implica que son llamadas solo cuando la estimacion del modelo cambia al usar el boton: "input$runSEMBtn"
+#    del TAB en al UI: "modelo_sem_tab.R"
+#
 rutasModeloSEM <- function(fitModel) {
   param_edges <- fitModel %>% # "op" se refiere a la columa "operator"
     # Usando el filtro con o sin nodos iguales (lhs != rhs), en SEM se usa para correlaciones
@@ -23,7 +28,7 @@ rutasModeloSEM <- function(fitModel) {
                 TRUE ~ NA_character_))
   return(param_edges)
 }
-
+#
 latentesModeloSEM <- function(fitModel) {
   latent_nodes <- rutasModeloSEM(fitModel) %>%
     filter(type == "loading") %>%
@@ -31,14 +36,14 @@ latentesModeloSEM <- function(fitModel) {
     transmute(node_name = to, latent = TRUE)
   return(latent_nodes)
 }
-
+#
 nodosModeloSEM <- function(fitModel) {
-  param_edges <- fitModel %>%
+  model_nodes <- fitModel %>%
     filter(lhs == rhs) %>%
     transmute(node_name = lhs, e = est.std) %>%
     left_join(latentesModeloSEM(fitModel)) %>%
     mutate(latent = if_else(is.na(latent), FALSE, latent))
-  return(param_edges)
+  return(model_nodes)
 }
 
 # Las propiedades aqui especificadas aplican SOLO al nodo de forma individual.

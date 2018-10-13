@@ -27,33 +27,46 @@ tabItem(tabName = "modMedDesSubMTab",
   h2(":: Modelo de Medici\u00F3n - SEM"),
   fluidPage(
     titlePanel("An\u00E1lisis de Puntuaciones (Score) para variables Latentes Ex\u00F3genas y variables Observadas"),
-    box(visNetworkOutput("grafoModeloMedicionOut", height = 400) %>% withSpinner(),
-        br(), actionButton("selectedNodesModMedicionBtn", "Actualizar Nodos Seleccionados..."),
+    box(actionButton("selectedNodesModMedicionBtn", "Actualizar Nodos Seleccionados..."),
+        visNetworkOutput("grafoModeloMedicionOut", height = 400) %>% withSpinner(),
         title = tagList(shiny::icon("gears"), "Modelo SEM"), width = NULL, # Ancho igual a NULL, ajusta el Box a su contenedor
         collapsible = TRUE, status = "primary", solidHeader = TRUE
     ),
+    htmlOutput("nodeSelectedTxtOut"),
     navbarPage("Men\u00FA de Tipos",
        navbarMenu("Distribuci\u00F3n",
          tabPanel("Violin",icon = icon("music"), h3("Violin"),
-            htmlOutput("nodeSelectedTxtOut"),
-            plotlyOutput("splomFactorOut", width = "500", height = "500") %>% withSpinner()
+            plotlyOutput("violinMedidaPlotOut", width = "100%", height = "500") %>% withSpinner()
          ),
-         tabPanel("Densidad 2D", icon = icon("pause"),h3("Densidad 2D")
-           # ...
+         tabPanel("Densidad 2D", icon = icon("pause"),h3("Densidad 2D"),
+            plotlyOutput("densidad2DMedidaPlotOut", width = "100%", height = "500") %>% withSpinner()
          ),
-         tabPanel("Histograma", icon = icon("signal"),h3("Histograma")
-                  # ...
+         tabPanel("Histograma", icon = icon("signal"),h3("Histograma"),
+            plotlyOutput("histogramaMedidaPlotOut", width = "100%", height = "500") %>% withSpinner()
          ),
-         tabPanel("Boxplot", icon = icon("square"),h3("Boxplot")
-                  # ...
+         tabPanel("Boxplot", icon = icon("square"), h3("Boxplot"),
+            # NOTA: Size of the button: lg, sm, xs.
+            #       status like: 'info', 'primary', 'danger', 'warning' or 'success'.
+            dropdownButton(inputId = "boxplotMedidaOpsBtn",
+               tags$h4("Opciones de Presentaci\u00F3n:"),
+               awesomeCheckbox(inputId = "boxplotMedidaJitterCheck",
+                               label = "Ver Puntos de Score", value = TRUE, status = "success"),
+               tags$h5("Usar la opciones gr\u00E1ficas..."),
+               circle = TRUE, status = "danger", icon = icon("gear"), width = "250px",
+               size = "xs", tooltip = tooltipOptions(title = "Cambiar opciones...")
+            ),
+            plotlyOutput("boxplotMedidaPlotOut", width = "100%", height = "500") %>% withSpinner()
          ),
-         tabPanel("Ridgeline", icon = icon("arrow-right"),h3("Ridgeline")
-                  # ...
+         tabPanel("Ridgeline", icon = icon("arrow-right"),h3("Ridgeline (formalmente: Joyplot)"),
+            # IMPORTANTE: Se debe usar la version mas reciente de ggplot2 v 3.0.0
+            # -- Adicionalmente, plotly no tiene actualmente el WRAPPER para este tipo de grafico
+            #    por eso usa un "plotOut" estandar.
+            plotOutput("ridgelineMedidaPlotOut", width = "100%", height = "500") %>% withSpinner()
          )
        ),
        navbarMenu("Correlaci\u00F3n",
-          tabPanel("Scatter (SPLOM, Biplot)",icon = icon("th"), h3("Scatter (SPLOM, Biplot)")
-                   #  ...
+          tabPanel("Scatter (SPLOM, Biplot)",icon = icon("th"), h3("Scatter (SPLOM, Biplot)"),
+             plotlyOutput("splomPlotOut", width = "500", height = "500") %>% withSpinner()
           ),
           tabPanel("Heatmap", icon = icon("qrcode"),h3("Heatmap")
                    # ...
@@ -75,7 +88,7 @@ tabItem(tabName = "modMedDesSubMTab",
           tabPanel("Coordenadas Paralelas (estatico)", icon = icon("tasks"),h3("Coordenadas Paralelas (estatico)")
                    # ...
           ),
-          tabPanel("Circular Barplot (basico)", icon = icon("stop-circle"),h3("Circular Barplot (basico)")
+          tabPanel("Circular Barplot (basico)", icon = icon("stop-circle"),h3("Circular Barplot (b\u00E1sico)")
                    # ...
           ),
           tabPanel("Lollipop", icon = icon("map-pin"),h3("Lollipop")
