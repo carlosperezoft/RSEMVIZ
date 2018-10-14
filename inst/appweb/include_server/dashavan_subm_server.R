@@ -58,26 +58,20 @@ output$nodesListTxtOut <- renderText({
          input$grafoAvanzSEMOut_selectedBy, sep = "\n") # Obtiene un grupo (por nombre-ID) seleccionado
 })
 #
-output$correlogramSEMOut <- renderSvgPanZoom({
+output$correlogramSEMOut <- renderPlot({
   # POSIBLE USO PARA PRESENTAR LA MATRIZ C
   # ## visualize a  matrix in [-100, 100]
   # ran <- round(matrix(runif(225, -100,100), 15))
   # corrplot(ran, is.corr = FALSE)
   # corrplot(ran, is.corr = FALSE, cl.lim = c(-100, 100))
-  # IMPORTANTE: con panEnabled "activo", es posible manipular la imagen en ZOOM.
-  # Con viewBox "incativo" el objeto SVG queda contenido correctamente en el elemento UI
-  # asociado, y usa los elementos de ancho y alto de dicha UI.
-  svgPanZoom(controlIconsEnabled = TRUE, panEnabled = TRUE, viewBox = FALSE,
-    svglite:::inlineSVG({
-      corMat <- lavInspect(semFitLocal(), input$corType)
-      corrplot(corMat, title = input$corType, method = input$corMethod)
-    })
-  )
+  corMat <- lavInspect(semFitLocal(), input$corType)
+  # NOTA: numero de lineas para margenes del titulo en el grafico -> mar = c(bottom, left, top, right)
+  corrplot(corMat, title = input$corType, method = input$corMethod, type = input$corSection,  mar = c(1, 1, 2, 1))
 })
 #
 output$heatmapSEMOut <- renderPlotly({
   # Funcion de heatmaply adecuada para matrices de correlacion:
-  heatmaply_cor(lavInspect(semFitLocal(), input$heatmapType), margins = c(80, 80),
+  heatmaply_cor(lavInspect(semFitLocal(), input$heatmapType), margins = c(80, 80), # Margenes del grafico para titulos
                main = input$heatmapType, k_col = 2, k_row = 2, dendrogram = input$showDendrogram)
 })
 #

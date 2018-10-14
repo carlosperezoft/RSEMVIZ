@@ -36,6 +36,7 @@ suppressPackageStartupMessages({
   library(GGally, quietly=TRUE)
   library(reshape2, quietly=TRUE)
   library(ggridges, quietly=TRUE)
+  library(ggExtra, quietly=TRUE)
 })
 
 # autor -------------------------------------------------------------------

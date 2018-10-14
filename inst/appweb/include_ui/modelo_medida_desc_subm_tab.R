@@ -35,122 +35,140 @@ tabItem(tabName = "modMedDesSubMTab",
     htmlOutput("nodeSelectedTxtOut"),
     navbarPage("Men\u00FA de Tipos",
        navbarMenu("Distribuci\u00F3n",
-         tabPanel("Violin",icon = icon("music"), h3("Violin"),
+         tabPanel("Violin",icon = icon("music"), h4("Violin"),
             plotlyOutput("violinMedidaPlotOut", width = "100%", height = "500") %>% withSpinner()
          ),
-         tabPanel("Densidad 2D", icon = icon("pause"),h3("Densidad 2D"),
+         tabPanel("Densidad 2D", icon = icon("pause"),h4("Densidad 2D"),
             plotlyOutput("densidad2DMedidaPlotOut", width = "100%", height = "500") %>% withSpinner()
          ),
-         tabPanel("Histograma", icon = icon("signal"),h3("Histograma"),
+         tabPanel("Histograma", icon = icon("signal"),h4("Histograma"),
             plotlyOutput("histogramaMedidaPlotOut", width = "100%", height = "500") %>% withSpinner()
          ),
-         tabPanel("Boxplot", icon = icon("square"), h3("Boxplot"),
+         tabPanel("Boxplot", icon = icon("square"), h4("Boxplot"),
             # NOTA: Size of the button: lg, sm, xs.
             #       status like: 'info', 'primary', 'danger', 'warning' or 'success'.
             dropdownButton(inputId = "boxplotMedidaOpsBtn",
                tags$h4("Opciones de Presentaci\u00F3n:"),
                awesomeCheckbox(inputId = "boxplotMedidaJitterCheck",
                                label = "Ver Puntos de Score", value = TRUE, status = "success"),
-               tags$h5("Usar la opciones gr\u00E1ficas..."),
+               tags$i("Actualizaci\u00F3n autom\u00E1tica..."),
                circle = TRUE, status = "danger", icon = icon("gear"), width = "250px",
                size = "xs", tooltip = tooltipOptions(title = "Cambiar opciones...")
             ),
             plotlyOutput("boxplotMedidaPlotOut", width = "100%", height = "500") %>% withSpinner()
          ),
-         tabPanel("Ridgeline", icon = icon("arrow-right"),h3("Ridgeline (formalmente: Joyplot)"),
-            # IMPORTANTE: Se debe usar la version mas reciente de ggplot2 v 3.0.0
-            # -- Adicionalmente, plotly no tiene actualmente el WRAPPER para este tipo de grafico
-            #    por eso usa un "plotOut" estandar.
+         tabPanel("Ridgeline", icon = icon("arrow-right"),h4("Ridgeline (formalmente: Joyplot)"),
+            # IMPORTANTE: Para Ridgeline se debe usar la version mas reciente de ggplot2 v 3.0.0
+            # -- Adicionalmente, plotly/svgPanZoomOutput no tiene actualmente el WRAPPER para este
+            #    tipo de grafico de "ggplot"; por eso usa un "plotOutput" estandar.
             plotOutput("ridgelineMedidaPlotOut", width = "100%", height = "500") %>% withSpinner()
          )
        ),
        navbarMenu("Correlaci\u00F3n",
-          tabPanel("Scatter (SPLOM, Biplot)",icon = icon("th"), h3("Scatter (SPLOM, Biplot)"),
-             plotlyOutput("splomPlotOut", width = "500", height = "500") %>% withSpinner()
+          tabPanel("Dispersi\u00F3n (Scatter)",icon = icon("braille"), h4("Dispersi\u00F3n (Scatter)"),
+            plotlyOutput("scatterMedidaPlotOut", width = "100%", height = "500") %>% withSpinner()
           ),
-          tabPanel("Heatmap", icon = icon("qrcode"),h3("Heatmap")
+          tabPanel("Dispersi\u00F3n (Regresi\u00F3n)",icon = icon("braille"), h4("Dispersi\u00F3n (Regresi\u00F3n)"),
+             dropdownButton(inputId = "scatterRegresMedidaOpsBtn",
+                tags$h4("Opciones de Presentaci\u00F3n:"),
+                selectInput(inputId = 'scatterRegresMedidaType', label = 'Complemantos al margen',
+                            choices = c("density", "histogram", "boxplot", "violin"), selected = "density"),
+                selectInput(inputId = 'scatterRegresMedidaMargins', label = 'Usar margen',
+                            choices = c("both", "x", "y"), selected = "both"),
+                tags$i("Actualizaci\u00F3n autom\u00E1tica..."),
+                circle = TRUE, status = "danger", icon = icon("gear"), width = "250px",
+                size = "xs", tooltip = tooltipOptions(title = "Cambiar opciones...")
+             ),
+             # IMPORTANTE: plotly actualmente no tiene el WRAPPER para ggExtra (ggMarginal).
+             # --> Por eso usa un "plotOutput" estandar.
+             plotOutput("scatterRegresMedidaPlotOut", width = "100%", height = "500") %>% withSpinner()
+          ),
+          tabPanel("Matriz de Dispersi\u00F3n (SPLOM)",icon = icon("th"), h4("Matriz de Dispersi\u00F3n (SPLOM)"),
+             plotlyOutput("splomMedidaPlotOut", width = "100%", height = "500") %>% withSpinner()
+          ),
+          tabPanel("Heatmap", icon = icon("qrcode"),h4("Heatmap")
                    # ...
           ),
-          tabPanel("Correlograma", icon = icon("th-large"),h3("Correlograma")
+          tabPanel("Correlograma", icon = icon("th-large"),h4("Correlograma")
                    # ...
           ),
-          tabPanel("Burbujas", icon = icon("comments"),h3("Burbujas")
+          tabPanel("Burbujas", icon = icon("comments"),h4("Burbujas")
                    # ...
           ),
-          tabPanel("Densidad 2D", icon = icon("pause"),h3("Densidad 2D")
+          tabPanel("Densidad 2D", icon = icon("pause"),h4("Densidad 2D")
                    # ...
           )
        ),
        navbarMenu("Barras",
-          tabPanel("Barras",icon = icon("signal"), h3("Barras")
+          tabPanel("Barras",icon = icon("signal"), h4("Barras")
                    #  ...
           ),
-          tabPanel("Coordenadas Paralelas (estatico)", icon = icon("tasks"),h3("Coordenadas Paralelas (estatico)")
+          tabPanel("Coordenadas Paralelas (estatico)", icon = icon("tasks"),h4("Coordenadas Paralelas (estatico)")
                    # ...
           ),
-          tabPanel("Circular Barplot (basico)", icon = icon("stop-circle"),h3("Circular Barplot (b\u00E1sico)")
+          tabPanel("Circular Barplot (basico)", icon = icon("stop-circle"),h4("Circular Barplot (b\u00E1sico)")
                    # ...
           ),
-          tabPanel("Lollipop", icon = icon("map-pin"),h3("Lollipop")
+          tabPanel("Lollipop", icon = icon("map-pin"),h4("Lollipop")
                    # ...
           )
        ),
        navbarMenu("Jer\u00E1rquicos",
-          tabPanel("Treemap",icon = icon("tree"), h3("Treemap")
+          tabPanel("Treemap",icon = icon("tree"), h4("Treemap")
                    #  ...
           ),
-          tabPanel("Dendrograma", icon = icon("sitemap"),h3("Dendrograma")
+          tabPanel("Dendrograma", icon = icon("sitemap"),h4("Dendrograma")
                    # ...
           ),
-          tabPanel("Cluster", icon = icon("object-group"),h3("Cluster")
+          tabPanel("Cluster", icon = icon("object-group"),h4("Cluster")
                    # ...
           ),
-          tabPanel("QQ-Plot (odenando ASC score)", icon = icon("minus-square"),h3("QQ-Plot (odenando ASC score)")
+          tabPanel("QQ-Plot (odenando ASC score)", icon = icon("minus-square"),h4("QQ-Plot (odenando ASC score)")
                    # ...
           )
        ),
        navbarMenu("Redes",
-          tabPanel("qgraph (CORR, SPRING, LASSO)",icon = icon("connectdevelop"), h3("qgraph (CORR, SPRING, LASSO)")
+          tabPanel("qgraph (CORR, SPRING, LASSO)",icon = icon("connectdevelop"), h4("qgraph (CORR, SPRING, LASSO)")
                    #  ...
           ),
-          tabPanel("Hive (3-lineas)", icon = icon("forumbee"),h3("Hive (3-lineas)")
+          tabPanel("Hive (3-lineas)", icon = icon("forumbee"),h4("Hive (3-lineas)")
                    # ...
           ),
-          tabPanel("Arcos", icon = icon("random"),h3("Arcos")
+          tabPanel("Arcos", icon = icon("random"),h4("Arcos")
                    # ...
           )
        ),
        navbarMenu("Evoluci\u00F3n",
-          tabPanel("Sandkey",icon = icon("key"), h3("Sandkey")
+          tabPanel("Sandkey",icon = icon("key"), h4("Sandkey")
                    #  ...
           ),
-          tabPanel("Series (DYGRAPH Comparativo)", icon = icon("server"),h3("Series (DYGRAPH Comparativo)")
+          tabPanel("Series (DYGRAPH Comparativo)", icon = icon("server"),h4("Series (DYGRAPH Comparativo)")
                    # ...
           ),
-          tabPanel("Streamgraph", icon = icon("road"),h3("Streamgraph")
+          tabPanel("Streamgraph", icon = icon("road"),h4("Streamgraph")
                    # ...
           ),
-          tabPanel("ArmsChart Multivariados", icon = icon("pause"),h3("ArmsChart Multivariados")
+          tabPanel("ArmsChart Multivariados", icon = icon("pause"),h4("ArmsChart Multivariados")
                    # ...
           )
        ),
        navbarMenu("Circularizar",
-          tabPanel("Circular Barplot (avanzado)",icon = icon("pause-circle"), h3("Circular Barplot (avanzado)")
+          tabPanel("Circular Barplot (avanzado)",icon = icon("pause-circle"), h4("Circular Barplot (avanzado)")
                    #  ...
           ),
-          tabPanel("Circular Packing", icon = icon("circle"),h3("Circular Packing")
+          tabPanel("Circular Packing", icon = icon("circle"),h4("Circular Packing")
                    # ...
           ),
-          tabPanel("Sunburst", icon = icon("instagram"),h3("Sunburst")
+          tabPanel("Sunburst", icon = icon("instagram"),h4("Sunburst")
                    # ...
           ),
-          tabPanel("Diagrama de Cuerdas", icon = icon("life-ring"),h3("Diagrama de Cuerdas")
+          tabPanel("Diagrama de Cuerdas", icon = icon("life-ring"),h4("Diagrama de Cuerdas")
                    # ...
           ),
-          tabPanel("visNetwork (Cirular Layout)", icon = icon("exclamation-circle"),h3("visNetwork (Cirular Layout)")
+          tabPanel("visNetwork (Cirular Layout)", icon = icon("exclamation-circle"),h4("visNetwork (Cirular Layout)")
                    # ...
           ),
-          tabPanel("Circular Dendrograma (avanzado)", icon = icon("question-circle"),h3("Circular Dendrograma (avanzado)")
+          tabPanel("Circular Dendrograma (avanzado)", icon = icon("question-circle"),h4("Circular Dendrograma (avanzado)")
                    # ...
           )
        )
