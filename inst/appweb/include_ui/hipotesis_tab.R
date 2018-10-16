@@ -17,7 +17,7 @@ tabItem(tabName = "hipotesisTab",
       #      * se ha usado 5 en el sidebar (grafo) y 7 en el main (tablas).
       sidebarPanel(id="hipotSidebarPanel", width = 5, style="background-color: white;",
          fluidRow(
-           visNetworkOutput("grafoHipotSEMOut", height = 600) %>% withSpinner()
+           visNetworkOutput("grafoHipotSEMOut", height = 600) %>% withSpinner(type=8, color="cadetblue")
          )
       ), # fin sidebarPanel
 

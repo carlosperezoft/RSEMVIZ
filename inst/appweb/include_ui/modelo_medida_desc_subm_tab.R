@@ -28,7 +28,7 @@ tabItem(tabName = "modMedDesSubMTab",
   fluidPage(
     titlePanel("An\u00E1lisis de Puntuaciones (Score) para variables Latentes Ex\u00F3genas y variables Observadas"),
     box(actionButton("selectedNodesModMedicionBtn", "Actualizar Nodos Seleccionados..."),
-        visNetworkOutput("grafoModeloMedicionOut", height = 400) %>% withSpinner(),
+        visNetworkOutput("grafoModeloMedicionOut", height = 400) %>% withSpinner(type=8, color="cadetblue"),
         title = tagList(shiny::icon("gears"), "Modelo SEM"), width = NULL, # Ancho igual a NULL, ajusta el Box a su contenedor
         collapsible = TRUE, status = "primary", solidHeader = TRUE
     ),
@@ -42,6 +42,16 @@ tabItem(tabName = "modMedDesSubMTab",
             plotlyOutput("densidad2DMedidaPlotOut", width = "100%", height = "500") %>% withSpinner()
          ),
          tabPanel("Histograma", icon = icon("signal"),h4("Histograma"),
+            dropdownButton(inputId = "histogramaMedidaOpsBtn",
+               tags$h4("Opciones de Presentaci\u00F3n:"),
+               awesomeCheckbox(inputId = "histogramaMedidaCheck",
+                               label = "Separar Histogramas", value = FALSE, status = "success"),
+               selectInput(inputId = 'histogramaMedidaBarraType', label = 'Tipo de Barra',
+                           choices = c( "group", "stack", "overlay"), selected = "group"),
+               tags$i("Actualizaci\u00F3n autom\u00E1tica..."),
+               circle = TRUE, status = "danger", icon = icon("gear"), width = "250px",
+               size = "xs", tooltip = tooltipOptions(title = "Cambiar opciones...")
+            ),
             plotlyOutput("histogramaMedidaPlotOut", width = "100%", height = "500") %>% withSpinner()
          ),
          tabPanel("Boxplot", icon = icon("square"), h4("Boxplot"),
@@ -86,17 +96,41 @@ tabItem(tabName = "modMedDesSubMTab",
           tabPanel("Matriz de Dispersi\u00F3n (SPLOM)",icon = icon("th"), h4("Matriz de Dispersi\u00F3n (SPLOM)"),
              plotlyOutput("splomMedidaPlotOut", width = "100%", height = "500") %>% withSpinner()
           ),
-          tabPanel("Heatmap", icon = icon("qrcode"),h4("Heatmap")
-                   # ...
+          tabPanel("Heatmap", icon = icon("qrcode"),h4("Heatmap"),
+             dropdownButton(inputId = "heatmapMedidaOpsBtn",
+                tags$h4("Opciones de Presentaci\u00F3n:"),
+                selectInput(inputId = "heatmapMedidaTransType", label = "Aplicar transformaci\u00F3n",
+                            choices = c("Ninguna", "Escalar", "Normalizar", "Porcentualizar"),
+                            selected = "Ninguna"),
+                selectInput(inputId = 'heatmapMedidaDendroType', label = 'Ver Dendrograma',
+                            choices = c('none', 'row', 'column','both'), selected = "none"),
+                tags$i("Actualizaci\u00F3n autom\u00E1tica..."),
+                circle = TRUE, status = "danger", icon = icon("gear"), width = "250px",
+                size = "xs", tooltip = tooltipOptions(title = "Cambiar opciones...")
+             ),
+             plotlyOutput("heatmapMedidaPlotOut", width = "100%", height = "700") %>% withSpinner(type=4, color="cadetblue")
           ),
-          tabPanel("Correlograma", icon = icon("th-large"),h4("Correlograma")
-                   # ...
+          tabPanel("Correlograma", icon = icon("th-large"),h4("Correlograma"),
+             dropdownButton(inputId = "correlogramaMedidaOpsBtn",
+                tags$h4("Opciones de Presentaci\u00F3n:"),
+                selectInput(inputId = 'correlogramaMedidaMethod', label = 'Estilo de Representaci\u00F3n',
+                            choices = c("circle", "square", "ellipse", "number", "pie"),
+                            selected = "ellipse"),
+                selectInput(inputId = 'correlogramaMedidaSection', label = 'Ver Secci\u00F3n',
+                            choices = c("full", "lower", "upper"),
+                            selected = "upper"),
+                tags$i("Actualizaci\u00F3n autom\u00E1tica..."),
+                circle = TRUE, status = "danger", icon = icon("gear"), width = "250px",
+                size = "xs", tooltip = tooltipOptions(title = "Cambiar opciones...")
+             ),
+             # IMPORTANTE: corrplot genera un grafico estandar para el cual plotly no tiene WRAPPER...
+             plotOutput("correlogramaMedidaPlotOut", width = "100%", height = "500") %>% withSpinner(type=5, color="cadetblue")
           ),
-          tabPanel("Burbujas", icon = icon("comments"),h4("Burbujas")
-                   # ...
+          tabPanel("Burbujas", icon = icon("comments"),h4("Burbujas"),
+             plotlyOutput("bubleMedidaPlotOut", width = "100%", height = "700") %>% withSpinner(type=4, color="cadetblue")
           ),
-          tabPanel("Densidad 2D", icon = icon("pause"),h4("Densidad 2D")
-                   # ...
+          tabPanel("Contorno (Densidad 2D)", icon = icon("pause"),h4("Contorno (Densidad 2D)"),
+             plotlyOutput("contourMedidaPlotOut", width = "100%", height = "700") %>% withSpinner(type=4, color="cadetblue")
           )
        ),
        navbarMenu("Barras",
