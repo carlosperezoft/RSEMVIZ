@@ -36,10 +36,10 @@ tabItem(tabName = "modMedDesSubMTab",
     navbarPage("Men\u00FA de Tipos",
        navbarMenu("Distribuci\u00F3n",
          tabPanel("Violin",icon = icon("music"), h4("Violin"),
-            plotlyOutput("violinMedidaPlotOut", width = "100%", height = "500") %>% withSpinner()
+            plotlyOutput("violinMedidaPlotOut", width = "100%", height = "500") %>% withSpinner(type=4, color="cadetblue")
          ),
          tabPanel("Densidad 2D", icon = icon("pause"),h4("Densidad 2D"),
-            plotlyOutput("densidad2DMedidaPlotOut", width = "100%", height = "500") %>% withSpinner()
+            plotlyOutput("densidad2DMedidaPlotOut", width = "100%", height = "500") %>% withSpinner(type=5, color="cadetblue")
          ),
          tabPanel("Histograma", icon = icon("signal"),h4("Histograma"),
             dropdownButton(inputId = "histogramaMedidaOpsBtn",
@@ -52,7 +52,7 @@ tabItem(tabName = "modMedDesSubMTab",
                circle = TRUE, status = "danger", icon = icon("gear"), width = "250px",
                size = "xs", tooltip = tooltipOptions(title = "Cambiar opciones...")
             ),
-            plotlyOutput("histogramaMedidaPlotOut", width = "100%", height = "500") %>% withSpinner()
+            plotlyOutput("histogramaMedidaPlotOut", width = "100%", height = "500") %>% withSpinner(type=4, color="cadetblue")
          ),
          tabPanel("Boxplot", icon = icon("square"), h4("Boxplot"),
             # NOTA: Size of the button: lg, sm, xs.
@@ -65,18 +65,18 @@ tabItem(tabName = "modMedDesSubMTab",
                circle = TRUE, status = "danger", icon = icon("gear"), width = "250px",
                size = "xs", tooltip = tooltipOptions(title = "Cambiar opciones...")
             ),
-            plotlyOutput("boxplotMedidaPlotOut", width = "100%", height = "500") %>% withSpinner()
+            plotlyOutput("boxplotMedidaPlotOut", width = "100%", height = "500") %>% withSpinner(type=5, color="cadetblue")
          ),
          tabPanel("Ridgeline", icon = icon("arrow-right"),h4("Ridgeline (formalmente: Joyplot)"),
             # IMPORTANTE: Para Ridgeline se debe usar la version mas reciente de ggplot2 v 3.0.0
             # -- Adicionalmente, plotly/svgPanZoomOutput no tiene actualmente el WRAPPER para este
             #    tipo de grafico de "ggplot"; por eso usa un "plotOutput" estandar.
-            plotOutput("ridgelineMedidaPlotOut", width = "100%", height = "500") %>% withSpinner()
+            plotOutput("ridgelineMedidaPlotOut", width = "100%", height = "500") %>% withSpinner(type=4, color="cadetblue")
          )
        ),
        navbarMenu("Correlaci\u00F3n",
           tabPanel("Dispersi\u00F3n (Scatter)",icon = icon("braille"), h4("Dispersi\u00F3n (Scatter)"),
-            plotlyOutput("scatterMedidaPlotOut", width = "100%", height = "500") %>% withSpinner()
+            plotlyOutput("scatterMedidaPlotOut", width = "100%", height = "500") %>% withSpinner(type=5, color="cadetblue")
           ),
           tabPanel("Dispersi\u00F3n (Regresi\u00F3n)",icon = icon("braille"), h4("Dispersi\u00F3n (Regresi\u00F3n)"),
              dropdownButton(inputId = "scatterRegresMedidaOpsBtn",
@@ -91,10 +91,10 @@ tabItem(tabName = "modMedDesSubMTab",
              ),
              # IMPORTANTE: plotly actualmente no tiene el WRAPPER para ggExtra (ggMarginal).
              # --> Por eso usa un "plotOutput" estandar.
-             plotOutput("scatterRegresMedidaPlotOut", width = "100%", height = "500") %>% withSpinner()
+             plotOutput("scatterRegresMedidaPlotOut", width = "100%", height = "500") %>% withSpinner(type=4, color="cadetblue")
           ),
           tabPanel("Matriz de Dispersi\u00F3n (SPLOM)",icon = icon("th"), h4("Matriz de Dispersi\u00F3n (SPLOM)"),
-             plotlyOutput("splomMedidaPlotOut", width = "100%", height = "500") %>% withSpinner()
+             plotlyOutput("splomMedidaPlotOut", width = "100%", height = "500") %>% withSpinner(type=5, color="cadetblue")
           ),
           tabPanel("Heatmap", icon = icon("qrcode"),h4("Heatmap"),
              dropdownButton(inputId = "heatmapMedidaOpsBtn",
@@ -130,12 +130,37 @@ tabItem(tabName = "modMedDesSubMTab",
              plotlyOutput("bubleMedidaPlotOut", width = "100%", height = "700") %>% withSpinner(type=4, color="cadetblue")
           ),
           tabPanel("Contorno (Densidad 2D)", icon = icon("pause"),h4("Contorno (Densidad 2D)"),
-             plotlyOutput("contourMedidaPlotOut", width = "100%", height = "700") %>% withSpinner(type=4, color="cadetblue")
+             dropdownButton(inputId = "contornoMedidaOpsBtn",
+                tags$h4("Opciones de Presentaci\u00F3n:"),
+                selectInput(inputId = 'contornoMedidaMethod', label = 'Estilo de Representaci\u00F3n',
+                            choices = c("Poligono", "Contorno", "Espectral"),
+                            selected = "Espectral"),
+                awesomeCheckbox(inputId = "contornoMedidaPuntosCheck",
+                                label = "Ver Puntos de Score", value = FALSE, status = "success"),
+                tags$i("Actualizaci\u00F3n autom\u00E1tica..."),
+                circle = TRUE, status = "danger", icon = icon("gear"), width = "250px",
+                size = "xs", tooltip = tooltipOptions(title = "Cambiar opciones...")
+             ),
+             plotlyOutput("contourMedidaPlotOut", width = "100%", height = "500") %>% withSpinner(type=5, color="cadetblue")
           )
        ),
        navbarMenu("Barras",
-          tabPanel("Barras",icon = icon("signal"), h4("Barras")
-                   #  ...
+          tabPanel("Barras",icon = icon("signal"), h4("Barras"),
+             dropdownButton(inputId = "barrasMedidaOpsBtn",
+                tags$h4("Opciones de Presentaci\u00F3n:"),
+                materialSwitch(inputId = "barrasMedidaHorizCheck", label = "Vista Horizontal",
+                               value = FALSE, status = "success", right = TRUE),
+                materialSwitch(inputId = "barrasMedidaStackCheck", label = "Apilar Barras",
+                               value = FALSE, status = "primary", right = TRUE),
+                materialSwitch(inputId = "barrasMedidaCursorCheck", label = "Usar cursor Comparativo",
+                               value = FALSE, status = "danger", right = TRUE),
+                materialSwitch(inputId = "barrasMedidaScrollCheck", label = "Usar barra Horizontal (Zoom)",
+                               value = FALSE, status = "warning", right = TRUE),
+                tags$i("Actualizaci\u00F3n autom\u00E1tica..."),
+                circle = TRUE, status = "danger", icon = icon("gear"), width = "250px",
+                size = "xs", tooltip = tooltipOptions(title = "Cambiar opciones...")
+             ),
+             amChartsOutput("barrasMedidaPlotOut", width = "100%", height = "500") %>% withSpinner(type=4, color="cadetblue")
           ),
           tabPanel("Coordenadas Paralelas (estatico)", icon = icon("tasks"),h4("Coordenadas Paralelas (estatico)")
                    # ...

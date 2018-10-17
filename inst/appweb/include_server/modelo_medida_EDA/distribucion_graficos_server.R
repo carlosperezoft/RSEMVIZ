@@ -54,17 +54,18 @@ output$histogramaMedidaPlotOut <- renderPlotly({
     melt_data %>%
         split(.$variable) %>%
         lapply(histogramByOne_plot) %>%
-        subplot(shareX = TRUE, titleX = TRUE, nrows = 2) # Se retorna el subplot final...
+        subplot(shareX = TRUE, titleX = TRUE, shareY = TRUE, titleY = TRUE, nrows = 2) # Se retorna el subplot final...
   }
   else { # Presentar los histogramas unidos ...
     plot_ly(melt_data, x = ~score, color = ~variable, alpha = 0.6) %>%
-            add_histogram() %>% layout(barmode = input$histogramaMedidaBarraType)
+            add_histogram() %>% layout(barmode = input$histogramaMedidaBarraType, yaxis = list(title = "Frecuencia"))
   }
   #
 })
 # Funcion de utileria para la presentacion de Histogramas en "histogramaMedidaPlotOut":
-histogramByOne_plot <- function(d) {
-  plot_ly(d, x = ~score, color = ~variable, alpha = 0.9) %>% add_histogram()
+histogramByOne_plot <- function(byOneData) {
+  plot_ly(byOneData, x = ~score, color = ~variable, alpha = 0.9) %>% add_histogram() %>%
+          layout(yaxis = list(title = "Frecuencia"))
 }
 #
 output$boxplotMedidaPlotOut <- renderPlotly({

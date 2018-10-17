@@ -119,24 +119,38 @@ output$contourMedidaPlotOut <- renderPlotly({
   shiny::validate(
     shiny::need(ncol(cast_data) == 2, "Este tipo de gr\u00E1fico aplica a DOS elementos solamente.")
   )
-  #
-  #
-  ggp <- ggplot(cast_data, aes_string(x=colnames(cast_data)[1], y=colnames(cast_data)[2])) +
+  # Schemes from ColorBrewer, distiller scales extends brewer to continuous scales by smoothly
+  # Palette Sequential: Blues, GnBu, Spectral
+  ggp <- ggplot(cast_data, aes_string(x=colnames(cast_data)[1], y=colnames(cast_data)[2]))
+  if(input$contornoMedidaMethod == "Poligono") {
     # geom_bin2d(bins = round(nrow(cast_data) / 5)) +
-     #geom_hex(bins = round(nrow(cast_data) / 5)) +
-     #scale_fill_gradient(low = "blue", high = "orange")
-    # theme_bw()
-    #stat_density_2d(aes(fill = ..level..), geom = "polygon") +
-    stat_density_2d(aes(fill = ..level..), geom = "polygon", colour="white")
-    # scale_fill_gradientn(colours = terrain.colors(10))
-    #stat_density_2d(aes(fill = ..density..), geom = "raster", contour = TRUE) + geom_point(colour = "white")
-    # scale_x_continuous(expand = c(0, 0)) +
-    # scale_y_continuous(expand = c(0, 0)) +
-    # theme(
-    #   legend.position='none'
-    # )
-  # ggp <- ggplot(cast_data, aes_string(x=colnames(cast_data)[1], y=colnames(cast_data)[2])) +
-  #        stat_density2d(geom="tile", aes(fill = ..density..), contour = FALSE) + geom_point(colour = "white")
-  #
+    ggp <- ggp + geom_hex(bins = round(nrow(cast_data) / 5)) +
+                 scale_fill_distiller(palette="Blues", direction=1) +  # direction=1: colores en orden normal
+                 theme_gray()
+  } else if(input$contornoMedidaMethod == "Contorno") {
+    ggp <- ggp + stat_density_2d(aes(fill = ..level..), geom = "polygon" ) + # , colour="gray": ver lineas del poligono
+                 scale_fill_distiller(palette="GnBu", direction=1) +
+                 theme_dark()
+  } else if(input$contornoMedidaMethod == "Espectral") {
+    ggp <- ggp + stat_density_2d(aes(fill = ..density..), geom = "raster", contour = FALSE) +
+                 scale_fill_distiller(palette="Spectral", direction=-1) # direction=-1: colores en orden invertido
+  }
+  # Presentar punto de Score en el grafico:
+  if(input$contornoMedidaPuntosCheck == TRUE) {
+    ggp <- ggp + geom_point(colour = "white") +
+           scale_x_continuous(expand = c(0, 0)) +
+           scale_y_continuous(expand = c(0, 0)) +
+           theme(
+             legend.position='right'
+           )
+  } else {
+    ggp <- ggp + scale_x_continuous(expand = c(0, 0)) +
+           scale_y_continuous(expand = c(0, 0)) +
+           theme(
+             legend.position='none'
+           )
+  }
+  # Grafico final:
   ggplotly(ggp)
 })
+#

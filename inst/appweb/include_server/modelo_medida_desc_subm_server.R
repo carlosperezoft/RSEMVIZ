@@ -39,9 +39,10 @@ output$nodeSelectedTxtOut <- renderUI({
 #
 # Graficos para el menu de Distribucion en el Modelo de Medicion:
 source('include_server/modelo_medida_EDA/distribucion_graficos_server.R', local=TRUE)
-# FIN Graficos Distribucion
 #
-# # Graficos para el menu de Distribucion en el Modelo de Medicion:
+# Graficos para el menu de Correlacion en el Modelo de Medicion:
 source('include_server/modelo_medida_EDA/correlacion_graficos_server.R', local=TRUE)
-# # FIN Graficos Correlacion
+#
+# Graficos para el menu de Barras en el Modelo de Medicion:
+source('include_server/modelo_medida_EDA/barras_graficos_server.R', local=TRUE)
 #
