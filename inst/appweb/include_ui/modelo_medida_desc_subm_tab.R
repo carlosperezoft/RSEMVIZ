@@ -148,6 +148,8 @@ tabItem(tabName = "modMedDesSubMTab",
           tabPanel("Barras",icon = icon("signal"), h4("Barras"),
              dropdownButton(inputId = "barrasMedidaOpsBtn",
                 tags$h4("Opciones de Presentaci\u00F3n:"),
+                materialSwitch(inputId = "barrasMedidaSortCheck", label = "Ordenar Score",
+                               value = FALSE, status = "info", right = TRUE),
                 materialSwitch(inputId = "barrasMedidaHorizCheck", label = "Vista Horizontal",
                                value = FALSE, status = "success", right = TRUE),
                 materialSwitch(inputId = "barrasMedidaStackCheck", label = "Apilar Barras",
@@ -162,11 +164,11 @@ tabItem(tabName = "modMedDesSubMTab",
              ),
              amChartsOutput("barrasMedidaPlotOut", width = "100%", height = "500") %>% withSpinner(type=4, color="cadetblue")
           ),
-          tabPanel("Coordenadas Paralelas (estatico)", icon = icon("tasks"),h4("Coordenadas Paralelas (estatico)")
+          tabPanel("Coordenadas Paralelas (b\u00E1sico)", icon = icon("tasks"),h4("Coordenadas Paralelas (b\u00E1sico)")
                    # ...
           ),
-          tabPanel("Circular Barplot (basico)", icon = icon("stop-circle"),h4("Circular Barplot (b\u00E1sico)")
-                   # ...
+          tabPanel("Barras Circulares (b\u00E1sico)", icon = icon("stop-circle"), h4("Barras Circulares (b\u00E1sico)"),
+              plotOutput("circleBarMedidaPlotOut", width = "100%", height = "500") %>% withSpinner(type=5, color="cadetblue")
           ),
           tabPanel("Lollipop", icon = icon("map-pin"),h4("Lollipop")
                    # ...
