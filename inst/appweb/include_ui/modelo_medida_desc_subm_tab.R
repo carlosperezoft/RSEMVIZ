@@ -164,14 +164,36 @@ tabItem(tabName = "modMedDesSubMTab",
              ),
              amChartsOutput("barrasMedidaPlotOut", width = "100%", height = "500") %>% withSpinner(type=4, color="cadetblue")
           ),
-          tabPanel("Coordenadas Paralelas (b\u00E1sico)", icon = icon("tasks"),h4("Coordenadas Paralelas (b\u00E1sico)")
-                   # ...
+          tabPanel("Histograma Circular (b\u00E1sico)", icon = icon("stop-circle"), h4("Barras Circulares (b\u00E1sico)"),
+             plotOutput("histoBarMedidaPlotOut", width = "100%", height = "500") %>% withSpinner(type=5, color="cadetblue")
           ),
-          tabPanel("Barras Circulares (b\u00E1sico)", icon = icon("stop-circle"), h4("Barras Circulares (b\u00E1sico)"),
-              plotOutput("circleBarMedidaPlotOut", width = "100%", height = "500") %>% withSpinner(type=5, color="cadetblue")
+          tabPanel("Barras Circular (b\u00E1sico)", icon = icon("stop-circle"), h4("Barras Circulares (b\u00E1sico)"),
+             plotOutput("circleBarMedidaPlotOut", width = "100%", height = "500") %>% withSpinner(type=4, color="cadetblue")
           ),
-          tabPanel("Lollipop", icon = icon("map-pin"),h4("Lollipop")
-                   # ...
+          tabPanel("Lollipop", icon = icon("map-pin"), h4("Lollipop"),
+             dropdownButton(inputId = "lollipopMedidaOpsBtn",
+                tags$h4("Opciones de Presentaci\u00F3n:"),
+                materialSwitch(inputId = "lollipopMedidaEjesCheck", label = "Intercambiar ejes",
+                               value = FALSE, status = "success", right = TRUE),
+                tags$i("Actualizaci\u00F3n autom\u00E1tica..."),
+                circle = TRUE, status = "danger", icon = icon("gear"), width = "250px",
+                size = "xs", tooltip = tooltipOptions(title = "Cambiar opciones...")
+             ),
+             plotlyOutput("lollipopMedidaPlotOut", width = "100%", height = "500") %>% withSpinner(type=5, color="cadetblue")
+          ),
+          tabPanel("Coordenadas Paralelas", icon = icon("tasks"), h4("Coordenadas Paralelas"),
+             dropdownButton(inputId = "paralelasMedidaOpsBtn",
+                tags$h4("Opciones de Presentaci\u00F3n:"),
+                materialSwitch(inputId = "paralelasMedidaRownameCheck", label = "Usar coordenada de filas",
+                               value = FALSE, status = "success", right = TRUE),
+                tags$i("Actualizaci\u00F3n autom\u00E1tica..."),
+                circle = TRUE, status = "danger", icon = icon("gear"), width = "250px",
+                size = "xs", tooltip = tooltipOptions(title = "Cambiar opciones...")
+             ),
+             parcoordsOutput("paralelasMedidaPlotOut", width = "100%", height = "500") %>%
+                 withSpinner(type=5, color="cadetblue") %>%
+                 helper(type = "markdown", title = "SEMVIZ: Coordenadas Paralelas", colour = "red",
+                        content = "paralelasMedidaPlot_help", size = "m") # size: define el ancho (s,m,l) del "popup"
           )
        ),
        navbarMenu("Jer\u00E1rquicos",

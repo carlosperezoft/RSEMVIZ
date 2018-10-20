@@ -38,7 +38,8 @@ output$scatterRegresMedidaPlotOut <- renderPlot({
   scatPlot <- ggplot(cast_data,
                      aes_string(x=colnames(cast_data)[1], y=colnames(cast_data)[2], color=colnames(cast_data)[2])) +
     geom_point() + geom_rug(col="steelblue", alpha=0.5, size=1.5) +
-    geom_smooth(method=lm , color="red", se=TRUE) +
+    # al usar poly(..) se tiene una curva con mejor ajuste en el smooth:
+    geom_smooth(method=lm , formula = y ~ poly(x, 3), color="red", se=TRUE) +
     scale_colour_gradient(low = "blue", high = "orange")
   # Se adicionan elementos al margen del scatter plot:
   ggMarginal(scatPlot, type = input$scatterRegresMedidaType,
@@ -123,8 +124,8 @@ output$contourMedidaPlotOut <- renderPlotly({
   # Palette Sequential: Blues, GnBu, Spectral
   ggp <- ggplot(cast_data, aes_string(x=colnames(cast_data)[1], y=colnames(cast_data)[2]))
   if(input$contornoMedidaMethod == "Poligono") {
-    # geom_bin2d(bins = round(nrow(cast_data) / 5)) +
-    ggp <- ggp + geom_hex(bins = round(nrow(cast_data) / 5)) +
+    # geom_bin2d(bins = round(nrow(cast_data) / 5)) + # bins: define el numero de celdas por eje, con lo cual agrupa puntos!
+    ggp <- ggp + geom_hex(bins = round(nrow(cast_data) / 5), binwidth = c(0.2, 0.2)) + # binwidth: tamaño visual del "bin"
                  scale_fill_distiller(palette="Blues", direction=1) +  # direction=1: colores en orden normal
                  theme_gray()
   } else if(input$contornoMedidaMethod == "Contorno") {

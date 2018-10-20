@@ -19,7 +19,7 @@ sidebarMenu(id = "sidebarMenu",
     menuItem(text = "Casos de Estudio", tabName = "casosEstudioTab", icon = icon("desktop"),
              badgeLabel = "CASOS", badgeColor = "green"),
     menuItem(text = "Gesti\u00F3n de Datos", icon = icon("database"),
-       menuSubItem(text = "SET de Datos", tabName = "setDatosSubMTab", icon = icon("file")),
+       menuSubItem(text = "SET de Datos", tabName = "setDatosSubMTab", icon = icon("save")), # <- "file"
        menuSubItem(text = "An\u00E1lisis Exploratorio", tabName = "EDASubMTab", icon = icon("search"))
     ),
     menuItem(text = "Especificar Modelo SEM", tabName = "modeloSEMTab", icon = icon("edit"),

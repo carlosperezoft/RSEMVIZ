@@ -58,3 +58,72 @@ output$circleBarMedidaPlotOut <- renderPlot({
       #plot.margin = unit(rep(-2,4), "cm")
     ) + coord_polar(start = 0)
 })
+#
+output$histoBarMedidaPlotOut <- renderPlot({
+  req(input$grafoModeloMedicionOut_selectedNodes)
+  #
+  melt_data <- melt(semModelScoreData()[c("row_id", input$grafoModeloMedicionOut_selectedNodes)],
+                               id = "row_id", variable.name = "variable", value.name = "score")
+  #
+  circos.clear()
+  circos.par("track.height" = 0.4)
+  circos.initialize(factors = melt_data$variable, x = melt_data$score)
+  circos.trackPlotRegion(factors = melt_data$variable, ylim = c(-10, 30),
+    panel.fun = function(x, y) {
+      circos.text(CELL_META$xcenter, CELL_META$cell.ylim[2] - uy(10, "mm"), CELL_META$sector.index)
+      # circos.text(5, 10, get.cell.meta.data("sector.index"))
+      circos.axis(labels.cex=0.8, labels.font=3, lwd=0.5)
+  })
+  colList = rainbow(length(input$grafoModeloMedicionOut_selectedNodes), alpha = 0.7)
+  circos.trackHist(melt_data$variable, melt_data$score, col = colList, bg.col = "grey78")
+  #
+})
+#
+output$lollipopMedidaPlotOut <- renderPlotly({
+  # verifica que tenga informacion. Cancela la invocacion dado el caso, y evita cualquier proceso "reactive" asociado
+  req(input$grafoModeloMedicionOut_selectedNodes)
+  #
+  cast_data <- semModelScoreData()[input$grafoModeloMedicionOut_selectedNodes]
+  #
+  shiny::validate(
+    shiny::need(ncol(cast_data) == 2, "Este tipo de gr\u00E1fico aplica a DOS elementos solamente.")
+  )
+  # NOTA: usar get(..) permite leer el "string" como parametro.
+  #dplyr::arrange(cast_data, get(colnames(cast_data)[2]))
+  #
+  ggp <- ggplot(cast_data, aes_string(x=colnames(cast_data)[1], y=colnames(cast_data)[2])) +
+    geom_segment(aes_string(x=colnames(cast_data)[1], xend=colnames(cast_data)[1],
+                            y=0, yend=colnames(cast_data)[2]), color="cadetblue") +
+    geom_point(size=4, color="red", fill=alpha("orange", 0.3), alpha=0.7, shape=21, stroke=1) +
+    theme_bw() +
+    theme(
+      panel.grid.major.x = element_blank(),
+      panel.border = element_blank(),
+      axis.ticks.x = element_blank()
+    )
+  #
+  # Verifica intercambio de ejes:
+  if(input$lollipopMedidaEjesCheck) {
+    ggp <- ggp + coord_flip()
+  }
+  #
+  ggplotly(ggp)
+})
+#
+output$paralelasMedidaPlotOut <- renderParcoords({
+  # verifica que tenga informacion. Cancela la invocacion dado el caso, y evita cualquier proceso "reactive" asociado
+  req(input$grafoModeloMedicionOut_selectedNodes)
+  #
+  cast_data <- semModelScoreData()[input$grafoModeloMedicionOut_selectedNodes]
+  #
+  parcoords(cast_data, rownames=input$paralelasMedidaRownameCheck, brushMode="1D-axes",
+            alpha=0.9, alphaOnBrushed=0.1, reorderable=T, autoresize=T,
+            # colorBy: Con "paste0(..)" genera el "string" del nombre. Se uso get(..) pero no funciono!
+            color = list(colorBy = paste0(colnames(cast_data)[1]),
+              colorScale = htmlwidgets::JS('d3.scale.category10()')
+            )
+  )
+  #
+})
+#
+

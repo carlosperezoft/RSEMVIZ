@@ -37,8 +37,10 @@ suppressPackageStartupMessages({
   library(reshape2, quietly=TRUE)
   library(ggridges, quietly=TRUE)
   library(ggExtra, quietly=TRUE)
+  library(circlize, quietly=TRUE)
+  library(parcoords, quietly=TRUE)
 })
-
+#
 # autor -------------------------------------------------------------------
 # carlos.perez7@udea.edu.co
 # 01/09/2018 5:18:51 p. m.

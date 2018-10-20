@@ -23,7 +23,7 @@ source('include_server/utils_server.R', local=TRUE)
 # INICIO SERVER
 shinyServer(function(input, output, session) {
   # INIT listener de elementos de "textos de ayuda":
-  observe_helpers(help_dir = "helpfiles")
+  observe_helpers(help_dir = "help_files")
   #
   # ELEMENTOS CASOS DE ESTUDIO
   source('include_server/casos_estudio_server.R', local=TRUE)
