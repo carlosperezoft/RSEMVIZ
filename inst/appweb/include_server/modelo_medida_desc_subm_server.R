@@ -46,3 +46,9 @@ source('include_server/modelo_medida_EDA/correlacion_graficos_server.R', local=T
 # Graficos para el menu de Barras en el Modelo de Medicion:
 source('include_server/modelo_medida_EDA/barras_graficos_server.R', local=TRUE)
 #
+# Graficos para el menu de Jerarquicos en el Modelo de Medicion:
+source('include_server/modelo_medida_EDA/jerarquicos_graficos_server.R', local=TRUE)
+#
+# Graficos para el menu de Redes en el Modelo de Medicion:
+source('include_server/modelo_medida_EDA/redes_graficos_server.R', local=TRUE)
+#

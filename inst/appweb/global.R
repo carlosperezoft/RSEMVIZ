@@ -5,6 +5,12 @@
 # Inclusion de la librerias propias para la ejecucion de la aplicacion
 # Shiny WEB semviz:
 #
+# Se inicializa esta variable de entorno en R-Studio para que permita un tope maximo
+# de DLLs (WINDOWS) cargadas por Session LOCAL de R:
+Sys.setenv(R_MAX_NUM_DLLS = 512)
+# se invoca esta opcion de devtools para que se inicialice correctamente los DATOS del paquete:
+devtools::load_all(".")
+#
 suppressPackageStartupMessages({
   library(markdown, quietly=TRUE)
   library(shinydashboard, quietly=TRUE)
@@ -39,6 +45,11 @@ suppressPackageStartupMessages({
   library(ggExtra, quietly=TRUE)
   library(circlize, quietly=TRUE)
   library(parcoords, quietly=TRUE)
+  library(ggraph, quietly=TRUE)
+  library(igraph, quietly=TRUE)
+  library(data.tree, quietly=TRUE)
+  library(networkD3, quietly=TRUE)
+  library(collapsibleTree, quietly=TRUE)
 })
 #
 # autor -------------------------------------------------------------------

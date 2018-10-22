@@ -191,28 +191,60 @@ tabItem(tabName = "modMedDesSubMTab",
                 size = "xs", tooltip = tooltipOptions(title = "Cambiar opciones...")
              ),
              parcoordsOutput("paralelasMedidaPlotOut", width = "100%", height = "500") %>%
-                 withSpinner(type=5, color="cadetblue") %>%
+                 withSpinner(type=4, color="cadetblue") %>%
                  helper(type = "markdown", title = "SEMVIZ: Coordenadas Paralelas", colour = "red",
                         content = "paralelasMedidaPlot_help", size = "m") # size: define el ancho (s,m,l) del "popup"
           )
        ),
        navbarMenu("Jer\u00E1rquicos",
-          tabPanel("Treemap",icon = icon("tree"), h4("Treemap")
-                   #  ...
+          tabPanel("Treemap",icon = icon("tree"), h4("Treemap"),
+             plotOutput("treemapMedidaPlotOut", width = "100%", height = "500") %>% withSpinner(type=5, color="cadetblue")
           ),
-          tabPanel("Dendrograma", icon = icon("sitemap"),h4("Dendrograma")
-                   # ...
+          tabPanel("Dendrograma", icon = icon("sitemap"),
+                   h4("Dendrograma  (Cluster de Observaciones)"),
+             dropdownButton(inputId = "dendrogramMedidaOpsBtn",
+                tags$h4("Opciones de Presentaci\u00F3n:"),
+                materialSwitch(inputId = "dendrogramMedidaHorizCheck", label = "Vista Horizontal",
+                               value = FALSE, status = "warning", right = TRUE),
+                materialSwitch(inputId = "dendrogramMedidaCurvasCheck", label = "Suavizar Enlaces",
+                               value = FALSE, status = "info", right = TRUE),
+                tags$i("Actualizaci\u00F3n autom\u00E1tica... (zoom activo)"),
+                circle = TRUE, status = "danger", icon = icon("gear"), width = "250px",
+                size = "xs", tooltip = tooltipOptions(title = "Cambiar opciones...")
+             ), wellPanel(style = "background-color: #ffffff;",
+                dendroNetworkOutput("dendrogramMedidaPlotOut", width = "100%", height = "500") %>%
+                      withSpinner(type=5, color="cadetblue")
+             )
           ),
-          tabPanel("Cluster", icon = icon("object-group"),h4("Cluster")
-                   # ...
+          tabPanel("Red Radial", icon = icon("asterisk"),
+                   h4("Red Radial (Cluster Circular basado en Dendrograma) -  sin zoom"),
+             wellPanel(style = "background-color: #ffffff;",
+                radialNetworkOutput("radialnetMedidaPlotOut", width = "100%", height = "500") %>%
+                      withSpinner(type=4, color="cadetblue")
+             )
           ),
-          tabPanel("QQ-Plot (odenando ASC score)", icon = icon("minus-square"),h4("QQ-Plot (odenando ASC score)")
-                   # ...
+          tabPanel("Cluster", icon = icon("object-group"), h4("Cluster (comparativo)"),
+             plotlyOutput("clusterMedidaPlotOut", width = "100%", height = "500") %>% withSpinner(type=5, color="cadetblue")
+          ),
+          tabPanel("\u00C1rbol Colapsible", icon = icon("tree"),h4("\u00C1rbol Colapsible (Cluster basado en Dendrograma)"),
+             dropdownButton(inputId = "collapsibleTreeMedidaOpsBtn",
+                tags$h4("Opciones de Presentaci\u00F3n:"),
+                materialSwitch(inputId = "collapsibleTreeMedidaExpandirCheck", label = "Expandir Nodos",
+                               value = FALSE, status = "success", right = TRUE),
+                tags$i("Actualizaci\u00F3n autom\u00E1tica..."),
+                circle = TRUE, status = "danger", icon = icon("gear"), width = "250px",
+                size = "xs", tooltip = tooltipOptions(title = "Cambiar opciones...")
+             ),
+             wellPanel(style = "background-color: #ffffff;",
+                 collapsibleTreeOutput("collapsibleTreeMedidaPlotOut", width = "100%", height = "500") %>%
+                                        withSpinner(type=5, color="cadetblue")
+             )
           )
        ),
        navbarMenu("Redes",
-          tabPanel("qgraph (CORR, SPRING, LASSO)",icon = icon("connectdevelop"), h4("qgraph (CORR, SPRING, LASSO)")
-                   #  ...
+          tabPanel("Red de Correlaci\u00F3n",icon = icon("connectdevelop"), h4("Red de Correlaci\u00F3n"),
+             plotOutput("corrnetMedidaPlotOut", width = "100%", height = "600") %>%
+                         withSpinner(type=4, color="cadetblue")
           ),
           tabPanel("Hive (3-lineas)", icon = icon("forumbee"),h4("Hive (3-lineas)")
                    # ...
