@@ -26,6 +26,7 @@ rutasModeloSEM <- function(fitModel) {
                 op == "~"  ~ "regression",
                 op == "~~" ~ "correlation",
                 TRUE ~ NA_character_))
+  #
   return(param_edges)
 }
 #
@@ -34,6 +35,7 @@ latentesModeloSEM <- function(fitModel) {
     filter(type == "loading") %>%
     distinct(to) %>%
     transmute(node_name = to, latent = TRUE)
+  #
   return(latent_nodes)
 }
 #
@@ -43,6 +45,7 @@ nodosModeloSEM <- function(fitModel) {
     transmute(node_name = lhs, e = est.std) %>%
     left_join(latentesModeloSEM(fitModel)) %>%
     mutate(latent = if_else(is.na(latent), FALSE, latent))
+  #
   return(model_nodes)
 }
 
@@ -82,9 +85,12 @@ rutasGrafoSEM <- function(fitModel) {
   edgesVis <- data.frame(
     from = param_edges$from,
     to = param_edges$to,
+    type = param_edges$type, # usado en menu medicion: Redes>>Hive
+    # La flecha escala con la magnitud de "value"!
+    value = param_edges$val * 10,  # usado en menu medicion: Evolucion>>Sandkey
     # NO es recomendable el LABEL, pues oculta mucho la "flecha"
-    #label = paste("PAR", format(round(param_edges$val, 2), nsmall=2)),
-    #title = paste("PAR:", format(round(param_edges$val, 3), nsmall=3)),
+    # label = paste("PAR", format(round(param_edges$val, 2), nsmall=2)),
+    # title = paste("PAR:", format(round(param_edges$val, 3), nsmall=3)),
     title = dplyr::case_when(
       param_edges$type == "loading" ~ paste("lambda:", format(round(param_edges$val, 3), nsmall=3)),
       param_edges$type == "regression"  ~ paste("beta:", format(round(param_edges$val, 3), nsmall=3)),
@@ -119,4 +125,4 @@ getParamEstimatesByName <- function(fitModel, paramName) {
     )
   return(paramData)
 }
-
+#

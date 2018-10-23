@@ -117,8 +117,7 @@ tabItem(tabName = "modMedDesSubMTab",
                             choices = c("circle", "square", "ellipse", "number", "pie"),
                             selected = "ellipse"),
                 selectInput(inputId = 'correlogramaMedidaSection', label = 'Ver Secci\u00F3n',
-                            choices = c("full", "lower", "upper"),
-                            selected = "upper"),
+                            choices = c("full", "lower", "upper"), selected = "upper"),
                 tags$i("Actualizaci\u00F3n autom\u00E1tica..."),
                 circle = TRUE, status = "danger", icon = icon("gear"), width = "250px",
                 size = "xs", tooltip = tooltipOptions(title = "Cambiar opciones...")
@@ -133,8 +132,7 @@ tabItem(tabName = "modMedDesSubMTab",
              dropdownButton(inputId = "contornoMedidaOpsBtn",
                 tags$h4("Opciones de Presentaci\u00F3n:"),
                 selectInput(inputId = 'contornoMedidaMethod', label = 'Estilo de Representaci\u00F3n',
-                            choices = c("Poligono", "Contorno", "Espectral"),
-                            selected = "Espectral"),
+                            choices = c("Poligono", "Contorno", "Espectral"), selected = "Espectral"),
                 awesomeCheckbox(inputId = "contornoMedidaPuntosCheck",
                                 label = "Ver Puntos de Score", value = FALSE, status = "success"),
                 tags$i("Actualizaci\u00F3n autom\u00E1tica..."),
@@ -242,26 +240,49 @@ tabItem(tabName = "modMedDesSubMTab",
           )
        ),
        navbarMenu("Redes",
-          tabPanel("Red de Correlaci\u00F3n",icon = icon("connectdevelop"), h4("Red de Correlaci\u00F3n"),
-             plotOutput("corrnetMedidaPlotOut", width = "100%", height = "600") %>%
-                         withSpinner(type=4, color="cadetblue")
+          tabPanel("Red de Correlaci\u00F3n",icon = icon("connectdevelop"),
+             h4("Red de Correlaci\u00F3n (an\u00E1lisis exploratorio/confirmatorio para las variables OBSERVADAS iniciales)"),
+             tags$i("Para activar el gr\u00E1fico seleccionar en el Modelo SEM el grupo: OBSERVADA"),
+             dropdownButton(inputId = "corrnetMedidaOpsBtn",
+                tags$h4("Opciones de Presentaci\u00F3n:"),
+                selectInput(inputId = 'corrnetMedidaLayout', label = 'Estilo de Representaci\u00F3n',
+                            choices = c("circle", "groups", "spring"), selected = "spring"),
+                selectInput(inputId = 'corrnetMedidaGraph', label = 'M\u00E9todo de Optimizaci\u00F3n',
+                            choices = c("Ninguno", "assosciation", "concentration", "glasso"), selected = "Ninguno"),
+                tags$i("Actualizaci\u00F3n autom\u00E1tica..."),
+                circle = TRUE, status = "danger", icon = icon("gear"), width = "250px",
+                size = "xs", tooltip = tooltipOptions(title = "Cambiar opciones...")
+             ),
+             plotOutput("corrnetMedidaPlotOut", width = "600", height = "600") %>%
+                         withSpinner(type=4, color="cadetblue") %>%
+             helper(type = "markdown", title = "SEMVIZ: Red de Correlaci\u00F3n", colour = "red",
+                    content = "redCorrelacionMedidaPlot_help", size = "m") # size: define el ancho (s,m,l) del "popup"
           ),
-          tabPanel("Hive (3-lineas)", icon = icon("forumbee"),h4("Hive (3-lineas)")
-                   # ...
+          tabPanel("Red Hive (Nodos en ejes)", icon = icon("forumbee"),
+             h4("Red Hive (Nodos en ejes -- An\u00E1lisis para las variables OBSERVADAS iniciales)"),
+             tags$i("Para activar el gr\u00E1fico seleccionar en el Modelo SEM el grupo: OBSERVADA"),
+             plotOutput("hiveMedidaPlotOut", width = "100%", height = "500") %>% withSpinner(type=5, color="cadetblue")
           ),
-          tabPanel("Arcos", icon = icon("random"),h4("Arcos")
-                   # ...
+          tabPanel("Arcos", icon = icon("random"),
+             h4("Red Arcos (Nodos en ejes -- An\u00E1lisis para las variables OBSERVADAS iniciales)"),
+             tags$i("Para activar el gr\u00E1fico seleccionar en el Modelo SEM el grupo: OBSERVADA"),
+             plotOutput("arcosMedidaPlotOut", width = "100%", height = "500") %>% withSpinner(type=4, color="cadetblue")
           )
        ),
        navbarMenu("Evoluci\u00F3n",
-          tabPanel("Sandkey",icon = icon("key"), h4("Sandkey")
-                   #  ...
+          tabPanel("Flujo de cargas de coeficientes (Sandkey)",icon = icon("key"),
+             h4("Flujo de cargas de coeficientes del Modelo SEM (Representaci\u00F3n tipo Sandkey)"),
+             tags$i("Para activar el gr\u00E1fico seleccionar en el Modelo SEM el grupo: LATENTE"),
+             sankeyNetworkOutput("sandkeyMedidaPlotOut", width = "100%", height = "500") %>%
+                                withSpinner(type=5, color="cadetblue")
           ),
           tabPanel("Series (DYGRAPH Comparativo)", icon = icon("server"),h4("Series (DYGRAPH Comparativo)")
-                   # ...
+                   #...
           ),
-          tabPanel("Streamgraph", icon = icon("road"),h4("Streamgraph")
-                   # ...
+          tabPanel("Flujo de los Score (Streamgraph)", icon = icon("road"),
+             h4("Flujo de los Score para elementos del Modelo SEM (Streamgraph)"),
+             streamgraphOutput("streamgraphPlot", width = "100%", height = "500") %>%
+                               withSpinner(type=5, color="cadetblue")
           ),
           tabPanel("ArmsChart Multivariados", icon = icon("pause"),h4("ArmsChart Multivariados")
                    # ...

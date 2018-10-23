@@ -52,3 +52,6 @@ source('include_server/modelo_medida_EDA/jerarquicos_graficos_server.R', local=T
 # Graficos para el menu de Redes en el Modelo de Medicion:
 source('include_server/modelo_medida_EDA/redes_graficos_server.R', local=TRUE)
 #
+# Graficos para el menu de Evolucion en el Modelo de Medicion:
+source('include_server/modelo_medida_EDA/evolucion_graficos_server.R', local=TRUE)
+#
