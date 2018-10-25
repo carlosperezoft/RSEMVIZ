@@ -62,7 +62,7 @@ nodosGrafoSEM <- function(fitModel) {
     # La figura escala con el "value" del nodo, verificar que valor usar en cada caso LAT/OBS?
     # POR_HACER: Sumar las cargas (beta) de las OBRs que explica el factor y asignar aqui para LAT.
     #            En caso de OBR, calcular su comunalidad (beta est.std^2), y asignar aqui.
-    value = param_nodes$e,
+    value = param_nodes$e +  10,
     # title equivale a un TOOLTIP !
     title = paste0("<p><b>", param_nodes$node_name,"</b><br>VAR_EST:",format(round(param_nodes$e, 3), nsmall=3),"</p>"),
     # SHAPE aqui tiene prioridad sobre el visGroups(..)
@@ -87,7 +87,9 @@ rutasGrafoSEM <- function(fitModel) {
     to = param_edges$to,
     type = param_edges$type, # usado en menu medicion: Redes>>Hive
     # La flecha escala con la magnitud de "value"!
-    value = param_edges$val * 10,  # usado en menu medicion: Evolucion>>Sandkey
+    value  = param_edges$val,  # Se multiplica por 10 si es usado en menu medicion: Evolucion>>Sandkey
+    length = param_edges$val * 200, # Se multiplica debido a que el "valor" esta en el intervalo [0,1]
+    # width  = param_edges$val, # Para aumentar el ancho de la linea en el arco...
     # NO es recomendable el LABEL, pues oculta mucho la "flecha"
     # label = paste("PAR", format(round(param_edges$val, 2), nsmall=2)),
     # title = paste("PAR:", format(round(param_edges$val, 3), nsmall=3)),
@@ -124,5 +126,14 @@ getParamEstimatesByName <- function(fitModel, paramName) {
       hacia = rhs, estimado = est, valor_p = pvalue
     )
   return(paramData)
+}
+# Funcion para generar "n" cadenas de caracteres de longitud "lenght"
+makeRandomString <- function(n=1, lenght=12){
+  randomString <- c(1:n)  # initialize vector
+  for (i in 1:n)  {  # "sample" es una funcion de muestreo aleatorio de R
+    randomString[i] <- paste(sample(c(0:9, letters, LETTERS),
+                             lenght, replace=TRUE), collapse="")
+  }
+  return(randomString)
 }
 #

@@ -209,17 +209,20 @@ tabItem(tabName = "modMedDesSubMTab",
                 tags$i("Actualizaci\u00F3n autom\u00E1tica... (zoom activo)"),
                 circle = TRUE, status = "danger", icon = icon("gear"), width = "250px",
                 size = "xs", tooltip = tooltipOptions(title = "Cambiar opciones...")
-             ), wellPanel(style = "background-color: #ffffff;",
-                dendroNetworkOutput("dendrogramMedidaPlotOut", width = "100%", height = "500") %>%
-                      withSpinner(type=5, color="cadetblue")
              )
+             # ,
+             # wellPanel(style = "background-color: #ffffff;",
+             #    dendroNetworkOutput("dendrogramMedidaPlotOut", width = "100%", height = "500") %>%
+             #          withSpinner(type=5, color="cadetblue")
+             # )
           ),
           tabPanel("Red Radial", icon = icon("asterisk"),
-                   h4("Red Radial (Cluster Circular basado en Dendrograma) -  sin zoom"),
-             wellPanel(style = "background-color: #ffffff;",
-                radialNetworkOutput("radialnetMedidaPlotOut", width = "100%", height = "500") %>%
-                      withSpinner(type=4, color="cadetblue")
-             )
+                   h4("Red Radial (Cluster Circular basado en Dendrograma) -  sin zoom")
+             #       ,
+             # wellPanel(style = "background-color: #ffffff;",
+             #    radialNetworkOutput("radialnetMedidaPlotOut", width = "100%", height = "500") %>%
+             #          withSpinner(type=4, color="cadetblue")
+             # )
           ),
           tabPanel("Cluster", icon = icon("object-group"), h4("Cluster (comparativo)"),
              plotlyOutput("clusterMedidaPlotOut", width = "100%", height = "500") %>% withSpinner(type=5, color="cadetblue")
@@ -232,11 +235,12 @@ tabItem(tabName = "modMedDesSubMTab",
                 tags$i("Actualizaci\u00F3n autom\u00E1tica..."),
                 circle = TRUE, status = "danger", icon = icon("gear"), width = "250px",
                 size = "xs", tooltip = tooltipOptions(title = "Cambiar opciones...")
-             ),
-             wellPanel(style = "background-color: #ffffff;",
-                 collapsibleTreeOutput("collapsibleTreeMedidaPlotOut", width = "100%", height = "500") %>%
-                                        withSpinner(type=5, color="cadetblue")
              )
+             # ,
+             # wellPanel(style = "background-color: #ffffff;",
+             #     collapsibleTreeOutput("collapsibleTreeMedidaPlotOut", width = "100%", height = "500") %>%
+             #                             withSpinner(type=5, color="cadetblue")
+             # )
           )
        ),
        navbarMenu("Redes",
@@ -270,21 +274,53 @@ tabItem(tabName = "modMedDesSubMTab",
           )
        ),
        navbarMenu("Evoluci\u00F3n",
-          tabPanel("Flujo de cargas de coeficientes (Sandkey)",icon = icon("key"),
-             h4("Flujo de cargas de coeficientes del Modelo SEM (Representaci\u00F3n tipo Sandkey)"),
+          tabPanel("Flujo de cargas de coeficientes (Sankey)",icon = icon("key"),
+             h4("Flujo de cargas de coeficientes del Modelo SEM (Representaci\u00F3n tipo Sankey)"),
              tags$i("Para activar el gr\u00E1fico seleccionar en el Modelo SEM el grupo: LATENTE"),
-             sankeyNetworkOutput("sandkeyMedidaPlotOut", width = "100%", height = "500") %>%
+             dropdownButton(inputId = "collapsibleTreeMedidaOpsBtn",
+                tags$h4("Opciones de Presentaci\u00F3n:"),
+                materialSwitch(inputId = "sankeyMedidaVerticalCheck", label = "Vista Vertical",
+                               value = FALSE, status = "danger", right = TRUE),
+                tags$i("Actualizaci\u00F3n autom\u00E1tica..."),
+                circle = TRUE, status = "danger", icon = icon("gear"), width = "250px",
+                size = "xs", tooltip = tooltipOptions(title = "Cambiar opciones...")
+             ),
+             plotlyOutput("sankeyMedidaPlotOut", width = "100%", height = "500") %>%
                                 withSpinner(type=5, color="cadetblue")
           ),
-          tabPanel("Series (DYGRAPH Comparativo)", icon = icon("server"),h4("Series (DYGRAPH Comparativo)")
+          tabPanel("An\u00E1lisis tipo Series (Comparativo)", icon = icon("server"),
+                   h4("Series (DYGRAPH Comparativo)")
                    #...
           ),
-          tabPanel("Flujo de los Score (Streamgraph)", icon = icon("road"),
+          tabPanel("An\u00E1lisis tipo Score-Streamgraph", icon = icon("recycle"),
              h4("Flujo de los Score para elementos del Modelo SEM (Streamgraph)"),
-             streamgraphOutput("streamgraphPlot", width = "100%", height = "500") %>%
-                               withSpinner(type=5, color="cadetblue")
+             dropdownButton(inputId = "streamgraphMedidaOpsBtn",
+                tags$h4("Opciones de Presentaci\u00F3n:"),
+                materialSwitch(inputId = "streamgraphMedidaLinealCheck", label = "Flujo Lineal",
+                               value = FALSE, status = "success", right = TRUE),
+                materialSwitch(inputId = "streamgraphMedidaApilarCheck", label = "Centrar flujos",
+                               value = FALSE, status = "warning", right = TRUE),
+                tags$i("Actualizaci\u00F3n autom\u00E1tica..."),
+                circle = TRUE, status = "danger", icon = icon("gear"), width = "250px",
+                size = "xs", tooltip = tooltipOptions(title = "Cambiar opciones...")
+             ),
+             wellPanel(style = "background-color: #ffffff;",
+                streamgraphOutput("streamgraphMedidaPlotOut", width = "100%", height = "500") %>%
+                                   withSpinner(type=5, color="cadetblue")
+             )
           ),
-          tabPanel("ArmsChart Multivariados", icon = icon("pause"),h4("ArmsChart Multivariados")
+          tabPanel("An\u00E1lisis tipo Score-Se\u00F1al", icon = icon("road"),
+             h4("An\u00E1lisis de Flujo de los Score para elementos del Modelo SEM (Tipo Se\u00F1al)"),
+             plotlyOutput("signalMedidaPlotOut", width = "100%", height = "500") %>%
+                           withSpinner(type=4, color="cadetblue")
+          ),
+          tabPanel("An\u00E1lisis tipo Score-\u00C1reas", icon = icon("align-right"),
+             h4("An\u00E1lisis de Flujo de los Score para elementos del Modelo SEM (\u00C1reas apiladas)"),
+             plotlyOutput("stackedAreaMedidaPlotOut", width = "100%", height = "500") %>%
+                           withSpinner(type=5, color="cadetblue")
+          ),
+          tabPanel("An\u00E1lisis tipo Multivariado", icon = icon("pause"),
+                   h4("ArmsChart Multivariados")
                    # ...
           )
        ),

@@ -17,34 +17,34 @@ output$treemapMedidaPlotOut <- renderPlot({
   #
 })
 #
-output$dendrogramMedidaPlotOut <- renderDendroNetwork({
-  # verifica que tenga informacion. Cancela la invocacion dado el caso, y evita cualquier proceso "reactive" asociado
-  req(input$grafoModeloMedicionOut_selectedNodes)
-  #
-  cast_data <- semModelScoreData()[input$grafoModeloMedicionOut_selectedNodes]
-  #
-  hc_data <- hclust(dist(cast_data, method = "euclidean"), method = "average")
-  hc_data$labels <- seq(1, nrow(cast_data)) # adicionar row_id como "label"
-  #
-  dendroNetwork(hc_data, width = NULL, height = NULL, zoom = T, # <-- activa uso de "zoom" y "panoramica"
-                treeOrientation = if_else(input$dendrogramMedidaHorizCheck == T, "horizontal", "vertical"),
-                linkType = if_else(input$dendrogramMedidaCurvasCheck == T, "diagonal", "elbow")
-                )
-  #
-})
-#
-output$radialnetMedidaPlotOut <- renderRadialNetwork({
-  # verifica que tenga informacion. Cancela la invocacion dado el caso, y evita cualquier proceso "reactive" asociado
-  req(input$grafoModeloMedicionOut_selectedNodes)
-  #
-  cast_data <- semModelScoreData()[input$grafoModeloMedicionOut_selectedNodes]
-  #
-  hc_data <- hclust(dist(cast_data, method = "euclidean"), method = "average")
-  hc_data$labels <- seq(1, nrow(cast_data)) # adicionar row_id como "label"
-  #
-  radialNetwork(as.radialNetwork(hc_data), width = NULL, height = NULL, linkColour = "#aaa")
-  #
-})
+# output$dendrogramMedidaPlotOut <- renderDendroNetwork({
+#   # verifica que tenga informacion. Cancela la invocacion dado el caso, y evita cualquier proceso "reactive" asociado
+#   req(input$grafoModeloMedicionOut_selectedNodes)
+#   #
+#   cast_data <- semModelScoreData()[input$grafoModeloMedicionOut_selectedNodes]
+#   #
+#   hc_data <- hclust(dist(cast_data, method = "euclidean"), method = "average")
+#   hc_data$labels <- seq(1, nrow(cast_data)) # adicionar row_id como "label"
+#   #
+#   dendroNetwork(hc_data, width = NULL, height = NULL, zoom = T, # <-- activa uso de "zoom" y "panoramica"
+#                 treeOrientation = if_else(input$dendrogramMedidaHorizCheck == T, "horizontal", "vertical"),
+#                 linkType = if_else(input$dendrogramMedidaCurvasCheck == T, "diagonal", "elbow")
+#                 )
+#   #
+# })
+# #
+# output$radialnetMedidaPlotOut <- renderRadialNetwork({
+#   # verifica que tenga informacion. Cancela la invocacion dado el caso, y evita cualquier proceso "reactive" asociado
+#   req(input$grafoModeloMedicionOut_selectedNodes)
+#   #
+#   cast_data <- semModelScoreData()[input$grafoModeloMedicionOut_selectedNodes]
+#   #
+#   hc_data <- hclust(dist(cast_data, method = "euclidean"), method = "average")
+#   hc_data$labels <- seq(1, nrow(cast_data)) # adicionar row_id como "label"
+#   #
+#   radialNetwork(as.radialNetwork(hc_data), width = NULL, height = NULL, linkColour = "#aaa")
+#   #
+# })
 #
 output$clusterMedidaPlotOut <- renderPlotly({
   # verifica que tenga informacion. Cancela la invocacion dado el caso, y evita cualquier proceso "reactive" asociado
@@ -69,24 +69,24 @@ output$clusterMedidaPlotOut <- renderPlotly({
   ggplotly(ggp)
 })
 #
-output$collapsibleTreeMedidaPlotOut <- renderCollapsibleTree({
-  # verifica que tenga informacion. Cancela la invocacion dado el caso, y evita cualquier proceso "reactive" asociado
-  req(input$grafoModeloMedicionOut_selectedNodes)
-  #
-  cast_data <- semModelScoreData()[input$grafoModeloMedicionOut_selectedNodes]
-  #
-  hc_data <- hclust(dist(cast_data, method = "euclidean"), method = "average")
-  hc_data$labels <- seq(1, nrow(cast_data)) # adicionar row_id como "label"
-  dendro_data <- as.dendrogram(hc_data)
-  tree_data <- as.Node(dendro_data)
-  #
-  # NOTA:Funcionan OK para asignar el color u otra operacion con atributos!
-  # tree_data$Do(function(x) x$color <- "red")
-  tree_data$Set(color = "cadetblue", filterFun = isNotLeaf)
-  tree_data$Set(color = "orange", filterFun = isLeaf)
-  #
-  collapsibleTree(tree_data, tooltip = T, fill = "color",
-                  collapsed = !input$collapsibleTreeMedidaExpandirCheck)
-  #
-})
+# output$collapsibleTreeMedidaPlotOut <- renderCollapsibleTree({
+#   # verifica que tenga informacion. Cancela la invocacion dado el caso, y evita cualquier proceso "reactive" asociado
+#   req(input$grafoModeloMedicionOut_selectedNodes)
+#   #
+#   cast_data <- semModelScoreData()[input$grafoModeloMedicionOut_selectedNodes]
+#   #
+#   hc_data <- hclust(dist(cast_data, method = "euclidean"), method = "average")
+#   hc_data$labels <- seq(1, nrow(cast_data)) # adicionar row_id como "label"
+#   dendro_data <- as.dendrogram(hc_data)
+#   tree_data <- as.Node(dendro_data)
+#   #
+#   # NOTA:Funcionan OK para asignar el color u otra operacion con atributos!
+#   # tree_data$Do(function(x) x$color <- "red")
+#   tree_data$Set(color = "cadetblue", filterFun = isNotLeaf)
+#   tree_data$Set(color = "orange", filterFun = isLeaf)
+#   #
+#   collapsibleTree(tree_data, tooltip = T, fill = "color",
+#                   collapsed = !input$collapsibleTreeMedidaExpandirCheck)
+#   #
+# })
 #

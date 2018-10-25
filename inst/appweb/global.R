@@ -18,7 +18,6 @@ suppressPackageStartupMessages({
   library(shinyjs, quietly=TRUE)
   library(shinycssloaders, quietly=TRUE)
   library(shinyhelper, quietly=TRUE)
-  library(networkD3, quietly=TRUE)
   library(DT, quietly=TRUE)
   library(dplyr, quietly=TRUE)
   library(parcoords, quietly=TRUE)
@@ -38,8 +37,6 @@ suppressPackageStartupMessages({
   library(formattable, quietly=TRUE)
   library(rAmCharts, quietly=TRUE)
   library(corrplot, quietly = TRUE)
-  # library(svgPanZoom, quietly=TRUE)
-  # library(svglite, quietly=TRUE)
   library(heatmaply, quietly=TRUE)
   library(GGally, quietly=TRUE)
   library(reshape2, quietly=TRUE)
@@ -49,9 +46,14 @@ suppressPackageStartupMessages({
   library(ggraph, quietly=TRUE)
   library(igraph, quietly=TRUE)
   library(data.tree, quietly=TRUE)
-  library(collapsibleTree, quietly=TRUE)
+  library(ggTimeSeries, quietly=TRUE)
+  # Se desactivan por incompatibilidad con D3.js
+  #library(networkD3, quietly=TRUE)
+  #library(collapsibleTree, quietly=TRUE) # usa D3.js
+  # Se desactivan por NO uso actualmente...
+  # library(svgPanZoom, quietly=TRUE)
+  # library(svglite, quietly=TRUE)
 })
-library(streamgraph)
 #
 # autor -------------------------------------------------------------------
 # carlos.perez7@udea.edu.co
