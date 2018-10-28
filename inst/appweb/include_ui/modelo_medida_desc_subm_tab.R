@@ -195,52 +195,66 @@ tabItem(tabName = "modMedDesSubMTab",
           )
        ),
        navbarMenu("Jer\u00E1rquicos",
-          tabPanel("Treemap",icon = icon("tree"), h4("Treemap"),
+          tabPanel("Treemap",icon = icon("tree"),
+             h4("An\u00E1lisis Jer\u00E1rquico de los Score seleccionados del Modelo SEM (Treemap)"),
              plotOutput("treemapMedidaPlotOut", width = "100%", height = "500") %>% withSpinner(type=5, color="cadetblue")
           ),
-          tabPanel("Dendrograma", icon = icon("sitemap"),
-                   h4("Dendrograma  (Cluster de Observaciones)"),
+          tabPanel("Dendrograma B\u00E1sico", icon = icon("sitemap"),
+             h4("An\u00E1lisis Jer\u00E1rquico para los Score de los elementos seleccionados (Dendrograma-B\u00E1sico)"),
              dropdownButton(inputId = "dendrogramMedidaOpsBtn",
                 tags$h4("Opciones de Presentaci\u00F3n:"),
-                materialSwitch(inputId = "dendrogramMedidaHorizCheck", label = "Vista Horizontal",
+                materialSwitch(inputId = "dendrogramMedidaCircleCheck", label = "Vista Circular",
                                value = FALSE, status = "warning", right = TRUE),
                 materialSwitch(inputId = "dendrogramMedidaCurvasCheck", label = "Suavizar Enlaces",
                                value = FALSE, status = "info", right = TRUE),
-                tags$i("Actualizaci\u00F3n autom\u00E1tica... (zoom activo)"),
-                circle = TRUE, status = "danger", icon = icon("gear"), width = "250px",
-                size = "xs", tooltip = tooltipOptions(title = "Cambiar opciones...")
-             )
-             # ,
-             # wellPanel(style = "background-color: #ffffff;",
-             #    dendroNetworkOutput("dendrogramMedidaPlotOut", width = "100%", height = "500") %>%
-             #          withSpinner(type=5, color="cadetblue")
-             # )
-          ),
-          tabPanel("Red Radial", icon = icon("asterisk"),
-                   h4("Red Radial (Cluster Circular basado en Dendrograma) -  sin zoom")
-             #       ,
-             # wellPanel(style = "background-color: #ffffff;",
-             #    radialNetworkOutput("radialnetMedidaPlotOut", width = "100%", height = "500") %>%
-             #          withSpinner(type=4, color="cadetblue")
-             # )
-          ),
-          tabPanel("Cluster", icon = icon("object-group"), h4("Cluster (comparativo)"),
-             plotlyOutput("clusterMedidaPlotOut", width = "100%", height = "500") %>% withSpinner(type=5, color="cadetblue")
-          ),
-          tabPanel("\u00C1rbol Colapsible", icon = icon("tree"),h4("\u00C1rbol Colapsible (Cluster basado en Dendrograma)"),
-             dropdownButton(inputId = "collapsibleTreeMedidaOpsBtn",
-                tags$h4("Opciones de Presentaci\u00F3n:"),
-                materialSwitch(inputId = "collapsibleTreeMedidaExpandirCheck", label = "Expandir Nodos",
-                               value = FALSE, status = "success", right = TRUE),
                 tags$i("Actualizaci\u00F3n autom\u00E1tica..."),
                 circle = TRUE, status = "danger", icon = icon("gear"), width = "250px",
                 size = "xs", tooltip = tooltipOptions(title = "Cambiar opciones...")
+             ),
+             wellPanel(style = "background-color: #ffffff;",
+                plotOutput("dendrogramMedidaPlotOut", width = "100%", height = "500") %>%
+                      withSpinner(type=5, color="cadetblue")
              )
-             # ,
-             # wellPanel(style = "background-color: #ffffff;",
-             #     collapsibleTreeOutput("collapsibleTreeMedidaPlotOut", width = "100%", height = "500") %>%
-             #                             withSpinner(type=5, color="cadetblue")
-             # )
+          ),
+          tabPanel("Dendrograma Exploratorio", icon = icon("sitemap"),
+             h4("An\u00E1lisis Jer\u00E1rquico para los Score de los elementos seleccionados (Dendrograma-Interactivo)"),
+             dropdownButton(inputId = "dendroInterMedidaOpsBtn",
+                  tags$h4("Opciones de Presentaci\u00F3n:"),
+                  materialSwitch(inputId = "dendroInterMedidaHorizCheck", label = "Vista Horizontal",
+                                 value = FALSE, status = "warning", right = TRUE),
+                  materialSwitch(inputId = "dendroInterMedidaTriangCheck", label = "Vista Triangular",
+                                 value = FALSE, status = "info", right = TRUE),
+                  sliderInput(inputId = 'dendroInterMedidaClusters', label = 'N\u00FAmero de Grupos',
+                              value = 3, min = 1, max = 7),
+                  tags$i("Actualizaci\u00F3n autom\u00E1tica..."),
+                  circle = TRUE, status = "danger", icon = icon("gear"), width = "250px",
+                  size = "xs", tooltip = tooltipOptions(title = "Cambiar opciones...")
+             ),
+             wellPanel(style = "background-color: #ffffff;",
+                  plotOutput("dendroInterMedidaPlotOut", width = "100%", height = "600") %>%
+                            withSpinner(type=4, color="cadetblue")
+             )
+          ),
+          tabPanel("Dendrograma Comparativo", icon = icon("sitemap"),
+             h4("An\u00E1lisis Jer\u00E1rquico para los Score de los elementos seleccionados (Dendrograma-Comparativo)"),
+             dropdownButton(inputId = "dendroCompaMedidaOpsBtn",
+                  tags$h4("Opciones de Presentaci\u00F3n:"),
+                  materialSwitch(inputId = "dendroCompaMedidaTriangCheck", label = "Vista Triangular",
+                                 value = FALSE, status = "warning", right = TRUE),
+                  sliderInput(inputId = 'dendroCompaMedidaClusters', label = 'N\u00FAmero de Grupos',
+                              value = 3, min = 1, max = 7),
+                  tags$i("Actualizaci\u00F3n autom\u00E1tica..."),
+                  circle = TRUE, status = "danger", icon = icon("gear"), width = "250px",
+                  size = "xs", tooltip = tooltipOptions(title = "Cambiar opciones...")
+             ),
+             wellPanel(style = "background-color: #ffffff;",
+                  plotOutput("dendroCompaMedidaPlotOut", width = "100%", height = "600") %>%
+                         withSpinner(type=5, color="cadetblue")
+             )
+          ),
+          tabPanel("Cluster Comparativo", icon = icon("object-group"),
+             h4("An\u00E1lisis de Cluster para los Score de los elementos seleccionados (Cluster-Comparativo)"),
+             plotlyOutput("clusterMedidaPlotOut", width = "100%", height = "500") %>% withSpinner(type=4, color="cadetblue")
           )
        ),
        navbarMenu("Redes",
@@ -275,9 +289,9 @@ tabItem(tabName = "modMedDesSubMTab",
        ),
        navbarMenu("Evoluci\u00F3n",
           tabPanel("Flujo de cargas de coeficientes (Sankey)",icon = icon("key"),
-             h4("Flujo de cargas de coeficientes del Modelo SEM (Representaci\u00F3n tipo Sankey)"),
+             h4("An\u00E1lisis de Flujo de cargas de coeficientes del Modelo SEM (Representaci\u00F3n tipo Sankey)"),
              tags$i("Para activar el gr\u00E1fico seleccionar en el Modelo SEM el grupo: LATENTE"),
-             dropdownButton(inputId = "collapsibleTreeMedidaOpsBtn",
+             dropdownButton(inputId = "sankeyMedidaOpsBtn",
                 tags$h4("Opciones de Presentaci\u00F3n:"),
                 materialSwitch(inputId = "sankeyMedidaVerticalCheck", label = "Vista Vertical",
                                value = FALSE, status = "danger", right = TRUE),
@@ -289,11 +303,14 @@ tabItem(tabName = "modMedDesSubMTab",
                                 withSpinner(type=5, color="cadetblue")
           ),
           tabPanel("An\u00E1lisis tipo Series (Comparativo)", icon = icon("server"),
-                   h4("Series (DYGRAPH Comparativo)")
-                   #...
+             h4("An\u00E1lisis de Flujo de los Score para elementos del Modelo SEM tipo Series (Comparativo)"),
+             wellPanel(style = "background-color: #ffffff;",
+                 dygraphOutput("seriesMedidaPlotOut", width = "100%", height = "500") %>%
+                               withSpinner(type=5, color="cadetblue")
+             )
           ),
           tabPanel("An\u00E1lisis tipo Score-Streamgraph", icon = icon("recycle"),
-             h4("Flujo de los Score para elementos del Modelo SEM (Streamgraph)"),
+             h4("An\u00E1lisis de Flujo de los Score para elementos del Modelo SEM (Streamgraph)"),
              dropdownButton(inputId = "streamgraphMedidaOpsBtn",
                 tags$h4("Opciones de Presentaci\u00F3n:"),
                 materialSwitch(inputId = "streamgraphMedidaLinealCheck", label = "Flujo Lineal",
@@ -318,10 +335,6 @@ tabItem(tabName = "modMedDesSubMTab",
              h4("An\u00E1lisis de Flujo de los Score para elementos del Modelo SEM (\u00C1reas apiladas)"),
              plotlyOutput("stackedAreaMedidaPlotOut", width = "100%", height = "500") %>%
                            withSpinner(type=5, color="cadetblue")
-          ),
-          tabPanel("An\u00E1lisis tipo Multivariado", icon = icon("pause"),
-                   h4("ArmsChart Multivariados")
-                   # ...
           )
        ),
        navbarMenu("Circularizar",
@@ -335,9 +348,6 @@ tabItem(tabName = "modMedDesSubMTab",
                    # ...
           ),
           tabPanel("Diagrama de Cuerdas", icon = icon("life-ring"),h4("Diagrama de Cuerdas")
-                   # ...
-          ),
-          tabPanel("visNetwork (Cirular Layout)", icon = icon("exclamation-circle"),h4("visNetwork (Cirular Layout)")
                    # ...
           ),
           tabPanel("Circular Dendrograma (avanzado)", icon = icon("question-circle"),h4("Circular Dendrograma (avanzado)")

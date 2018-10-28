@@ -20,8 +20,8 @@ output$corrnetMedidaPlotOut <- renderPlot({
   #     adicional. Por ahora no se usan aqui para evitar errores. Pero puede ser util en otros graficos.
   #
   # hc_data <- hclust(dist(cast_data, method = "euclidean"), method = "average")
-  # groups_id <- cutree(hc_data, k=3)
-  # NOTA: Permite asociar una columan con los ID del cluster de cada dato!
+  # groups_id <- stats::cutree(hc_data, k=3)
+  # NOTA: Permite asociar una columna con los ID del cluster de cada dato!
   # cast_data <- cbind(cast_data, groups_id) # en qgraph, se usa por separado!
   # subgrupo1 <- subset(cast_data, groups_id == 1) # obtiene los elementos por ID del grupo, dado el caso!
   # subgrupo2 <- subset(cast_data, groups_id == 2)

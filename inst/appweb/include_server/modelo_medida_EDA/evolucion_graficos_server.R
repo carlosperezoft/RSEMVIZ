@@ -49,7 +49,7 @@ output$streamgraphMedidaPlotOut <- renderStreamgraph({
   streamgraph(data = melt_data, key="variable", value="score", date="row_id", scale = "continuous", # al usar ID como date...
               interpolate = if_else(input$streamgraphMedidaLinealCheck, "linear", "cardinal"),
               offset = if_else(input$streamgraphMedidaApilarCheck, "zero", "silhouette")) %>%
-              sg_legend(TRUE, "Variable: ") %>% sg_fill_brewer("Spectral")
+              sg_legend(TRUE, "Variable: ") %>% sg_fill_brewer("Set2")
   #
 })
 #
@@ -62,7 +62,7 @@ output$signalMedidaPlotOut <- renderPlotly({
   #
   ggp <- ggplot(melt_data, aes(x = row_id, y = score, group = variable, fill = variable)) +
          stat_steamgraph() + labs(x = "Fila", y = "Score por variable") +
-         scale_fill_brewer(palette = "Spectral") + theme_bw()
+         scale_fill_brewer(palette = "Set1") + theme_bw()
   #
   ggplotly(ggp)
 })
@@ -76,8 +76,24 @@ output$stackedAreaMedidaPlotOut <- renderPlotly({
   #
   ggp <- ggplot(melt_data, aes(x=row_id, y=score, fill=variable)) +
          geom_area() + labs(x = "Fila", y = "Score por variable") +
-         scale_fill_brewer(palette = "Spectral", breaks=rev(levels(melt_data$variable))) + theme_bw()
+         scale_fill_brewer(palette = "Set3", breaks=rev(levels(melt_data$variable))) + theme_bw()
   #
   ggplotly(ggp)
 })
 #
+output$seriesMedidaPlotOut <- renderDygraph({
+  # Verifica el objeto indicado. Dado el caso NULL: cancela cualquier proceso "reactive" asociado
+  req(input$grafoModeloMedicionOut_selectedNodes)
+  #
+  cast_data <- semModelScoreData()[c("row_id", input$grafoModeloMedicionOut_selectedNodes)]
+  #
+  # PENDIENTE: add boton de opciones con temas de:
+  # http://rstudio.github.io/dygraphs/gallery-series-options.html
+  # y un opcion extra para "dyHighlight" como : Usar resaltar lineas
+  dygraph(cast_data, main = "Flujo de los Score", xlab = "Fila", ylab = "Score por Variable") %>%
+         dyRangeSelector() %>% dyUnzoom() %>%
+         dyOptions(drawGrid = T, colors = RColorBrewer::brewer.pal(3, "Set1")) %>%
+         dyHighlight(highlightCircleSize = 5, highlightSeriesBackgroundAlpha = 0.2,
+                     highlightSeriesOpts = list(strokeWidth = 3), hideOnMouseOut = T)
+  #
+})
