@@ -304,6 +304,18 @@ tabItem(tabName = "modMedDesSubMTab",
           ),
           tabPanel("An\u00E1lisis tipo Series (Comparativo)", icon = icon("server"),
              h4("An\u00E1lisis de Flujo de los Score para elementos del Modelo SEM tipo Series (Comparativo)"),
+             dropdownButton(inputId = "seriesMedidaOpsBtn",
+                tags$h4("Opciones de Presentaci\u00F3n:"),
+                materialSwitch(inputId = "seriesMedidaStepCheck", label = "Curva paso a paso",
+                               value = FALSE, status = "info", right = TRUE),
+                materialSwitch(inputId = "seriesMedidaPointCheck", label = "Resaltar puntos",
+                               value = FALSE, status = "warning", right = TRUE),
+                materialSwitch(inputId = "seriesMedidaAreaCheck", label = "Ver \u00E1reas",
+                               value = FALSE, status = "success", right = TRUE),
+                tags$i("Actualizaci\u00F3n autom\u00E1tica..."),
+                circle = TRUE, status = "danger", icon = icon("gear"), width = "250px",
+                size = "xs", tooltip = tooltipOptions(title = "Cambiar opciones...")
+             ),
              wellPanel(style = "background-color: #ffffff;",
                  dygraphOutput("seriesMedidaPlotOut", width = "100%", height = "500") %>%
                                withSpinner(type=5, color="cadetblue")
@@ -341,8 +353,10 @@ tabItem(tabName = "modMedDesSubMTab",
           tabPanel("Circular Barplot (avanzado)",icon = icon("pause-circle"), h4("Circular Barplot (avanzado)")
                    #  ...
           ),
-          tabPanel("Circular Packing", icon = icon("circle"),h4("Circular Packing")
-                   # ...
+          tabPanel("Circular Packing", icon = icon("circle"),h4("Circular Packing"),
+                   circlepackeROutput("circlepackeRMedidaPlotOut", width = "100%", height = "500") %>%
+                     withSpinner(type=5, color="cadetblue")
+
           ),
           tabPanel("Sunburst", icon = icon("instagram"),h4("Sunburst")
                    # ...

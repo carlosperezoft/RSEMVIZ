@@ -87,13 +87,30 @@ output$seriesMedidaPlotOut <- renderDygraph({
   #
   cast_data <- semModelScoreData()[c("row_id", input$grafoModeloMedicionOut_selectedNodes)]
   #
-  # PENDIENTE: add boton de opciones con temas de:
-  # http://rstudio.github.io/dygraphs/gallery-series-options.html
-  # y un opcion extra para "dyHighlight" como : Usar resaltar lineas
   dygraph(cast_data, main = "Flujo de los Score", xlab = "Fila", ylab = "Score por Variable") %>%
-         dyRangeSelector() %>% dyUnzoom() %>%
-         dyOptions(drawGrid = T, colors = RColorBrewer::brewer.pal(3, "Set1")) %>%
-         dyHighlight(highlightCircleSize = 5, highlightSeriesBackgroundAlpha = 0.2,
-                     highlightSeriesOpts = list(strokeWidth = 3), hideOnMouseOut = T)
+     dyRangeSelector() %>% dyUnzoom() %>%
+     dyCrosshair(direction = "both") %>%
+     dyLegend(show = if_else(input$seriesMedidaPointCheck, "follow", "always"), width = 400) %>%
+     dyOptions(drawGrid = input$seriesMedidaPointCheck, stepPlot = input$seriesMedidaStepCheck,
+               drawPoints = input$seriesMedidaPointCheck, pointSize = 4,
+               fillGraph = input$seriesMedidaAreaCheck,
+               pointShape = if_else(input$seriesMedidaPointCheck, "circle", "dot"),
+               colors = RColorBrewer::brewer.pal(9, "Set1")) %>%
+     dyHighlight(highlightCircleSize = 4, highlightSeriesBackgroundAlpha = 0.2,
+                 highlightSeriesOpts = list(strokeWidth = 3), hideOnMouseOut = T)
   #
+})
+#
+output$circlepackeRMedidaPlotOut <- renderCirclepackeR({
+  data=data.frame(
+    root=rep("root", 15),
+    group=c(rep("group A",5), rep("group B",5), rep("group C",5)),
+    subgroup= rep(letters[1:5], each=3),
+    subsubgroup=rep(letters[1:3], 5),
+    value=sample(seq(1:15), 15)
+  )
+
+  data$pathString <- paste("world", data$group, data$subgroup, data$subsubgroup, sep = "/")
+  population <- as.Node(data)
+  circlepackeR(population, size = "value")
 })
