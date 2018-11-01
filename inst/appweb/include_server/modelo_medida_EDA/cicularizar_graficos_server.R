@@ -29,33 +29,59 @@ output$circlePackOneLevelMedidaPlotOut <- renderPlotly({
 })
 #
 output$circlePackJerarqMedidaPlotOut <- renderCirclepackeR({
-  # # Verifica el objeto indicado. Dado el caso NULL: cancela cualquier proceso "reactive" asociado
-  # req(input$grafoModeloMedicionOut_selectedBy)
-  # #
-  # shiny::validate(
-  #   shiny::need(input$grafoModeloMedicionOut_selectedBy == "LATENTE",
-  #               "Este tipo de gr\u00E1fico aplica solamente para el conjunto de variables LATENTES")
-  # )
-  # #
-  # fitModel <- paramsSemFit()
-  # # Se deben filrtar los enlaces circulares:
-  # edgesVis <- rutasModeloSEM(fitModel) %>% filter(from != to)
-  # # FromDataFrameNetwork crea un objeto data.tree a partir de un data.frame tipo [from, to, value]
-  # tree_net <- FromDataFrameNetwork(edgeVis, "val")
-  # print(tree_net)
-  # # es necesario asignar un valor a size!
-  # circlepackeR(tree_net, size = "val")
+  # Verifica el objeto indicado. Dado el caso NULL: cancela cualquier proceso "reactive" asociado
+  req(input$grafoModeloMedicionOut_selectedBy)
   #
-  #verifica que tenga informacion. Cancela la invocacion dado el caso, y evita cualquier proceso "reactive" asociado
-    req(input$grafoModeloMedicionOut_selectedNodes)
-    #
-    cast_data <- semModelScoreData()[input$grafoModeloMedicionOut_selectedNodes]
-    #
-    hc_data <- hclust(dist(cast_data, method = "euclidean"), method = "average")
-    dendro_data <- as.dendrogram(hc_data)
-    tree_data <- as.Node(dendro_data)
-    tree_data$Set(value = 1)
-    # es necesario asignar un valor a size!
-    circlepackeR(tree_data, size = "value")
+  shiny::validate(
+    shiny::need(input$grafoModeloMedicionOut_selectedBy == "LATENTE",
+                "Este tipo de gr\u00E1fico aplica solamente para el conjunto de variables LATENTES")
+  )
+  #
+  fitModel <- paramsSemFit()
+  # rutasModeloSEM: Se deben filrtar los enlaces circulares:
+  edgesVis <- rutasModeloSEM(fitModel) %>% filter(from != to)
+  # FromDataFrameNetwork crea un objeto data.tree a partir de un data.frame tipo [from, to, value]
+  tree_net <- FromDataFrameNetwork(edgesVis, "val")
+  # es necesario asignar un valor a size!
+  circlepackeR(tree_net, size = "val")
+  #
 })
 #
+output$circlePackDendroMedidaPlotOut <- renderCirclepackeR({
+  # Verifica el objeto indicado. Dado el caso NULL: cancela cualquier proceso "reactive" asociado
+  req(input$grafoModeloMedicionOut_selectedNodes)
+  #
+  cast_data <- semModelScoreData()[input$grafoModeloMedicionOut_selectedNodes]
+  #
+  hc_data <- hclust(dist(cast_data, method = "euclidean"), method = "average")
+  dendro_data <- as.dendrogram(hc_data)
+  tree_data <- as.Node(dendro_data)
+  #
+  # es necesario asignar un valor a size!
+  tree_data$Set(value = 1)
+  circlepackeR(tree_data, size = "value")
+  #
+})
+#
+output$circlePackSunMedidaPlotOut  <- renderPlot({
+  # Verifica el objeto indicado. Dado el caso NULL: cancela cualquier proceso "reactive" asociado
+  req(input$grafoModeloMedicionOut_selectedBy)
+  #
+  shiny::validate(
+    shiny::need(input$grafoModeloMedicionOut_selectedBy == "LATENTE",
+                "Este tipo de gr\u00E1fico aplica solamente para el conjunto de variables LATENTES")
+  )
+  #
+  fitModel <- paramsSemFit()
+  # rutasModeloSEM: Se deben filrtar los enlaces circulares:
+  edgesVis <- rutasModeloSEM(fitModel) %>% filter(from != to)
+  #
+  # links <- data.frame(source=edgesVis$from, target=edgesVis$to, value=(edgesVis$val))
+  # nodes <- data.frame(name=c(as.character(links$source), as.character(links$target)) %>% unique())
+  #
+  gr <- graph_from_data_frame(edgesVis, vertices = NULL, directed = T)
+  #
+  ggraph(gr, layout = 'partition') + geom_node_tile(aes(y = -y, fill = depth))
+  #
+  ##subplot(gr, gr, shareX = TRUE, titleX = TRUE, shareY = TRUE, titleY = TRUE, nrows = 2)
+})
