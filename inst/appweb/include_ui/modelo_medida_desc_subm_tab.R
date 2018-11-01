@@ -350,13 +350,19 @@ tabItem(tabName = "modMedDesSubMTab",
           )
        ),
        navbarMenu("Circularizar",
-          tabPanel("Circular Barplot (avanzado)",icon = icon("pause-circle"), h4("Circular Barplot (avanzado)")
+          tabPanel("Circular Barplot (avanzado)",icon = icon("pause-circle"),
+             h4("An\u00E1lisis Jer\u00E1rquico para los Score de los elementos seleccionados (Dendrograma-Comparativo)")
                    #  ...
           ),
-          tabPanel("Circular Packing", icon = icon("circle"),h4("Circular Packing"),
-                   circlepackeROutput("circlepackeRMedidaPlotOut", width = "100%", height = "500") %>%
-                     withSpinner(type=5, color="cadetblue")
-
+          tabPanel("Circular Packing de un Nivel", icon = icon("circle"),
+             h4("An\u00E1lisis Circular Packing de un nivel para los Score de los elementos seleccionados"),
+             plotlyOutput("circlePackOneLevelMedidaPlotOut", width = "100%", height = "500") %>%
+                     withSpinner(type=4, color="cadetblue")
+          ),
+          tabPanel("Circular Packing Jer\u00E1rquico", icon = icon("circle"),
+             h4("An\u00E1lisis Jer\u00E1rquico del Flujo de cargas de coeficientes del Modelo SEM (Circular Packing)"),
+             circlepackeROutput("circlePackJerarqMedidaPlotOut", width = "100%", height = "500") %>%
+                                 withSpinner(type=5, color="cadetblue")
           ),
           tabPanel("Sunburst", icon = icon("instagram"),h4("Sunburst")
                    # ...

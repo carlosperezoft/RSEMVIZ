@@ -16,11 +16,11 @@ output$sankeyMedidaPlotOut <- renderPlotly({
   edgesVis <- rutasModeloSEM(fitModel) %>% filter(from != to)
   #
   # Es posible multiplicar el "edgesVis$val" por algun valor. Pero con el formato "valueformat = ".3r" es lo adecuado
-  links=data.frame(source=edgesVis$from, target=edgesVis$to, value=(edgesVis$val))
-  nodes=data.frame(name=c(as.character(links$source), as.character(links$target)) %>% unique())
+  links <- data.frame(source=edgesVis$from, target=edgesVis$to, value=(edgesVis$val))
+  nodes <- data.frame(name=c(as.character(links$source), as.character(links$target)) %>% unique())
   # El sankey usa 0-index para los enlaces:
-  links$IDsource=match(links$source, nodes$name)-1
-  links$IDtarget=match(links$target, nodes$name)-1
+  links$IDsource <- match(links$source, nodes$name)-1
+  links$IDtarget <- match(links$target, nodes$name)-1
   #
   plot_ly(type = "sankey", domain = list(x =  c(0,1), y =  c(0,1)), # el domain indica el rango de los valores..
       orientation = if_else(input$sankeyMedidaVerticalCheck, "v", "h"),
@@ -101,16 +101,3 @@ output$seriesMedidaPlotOut <- renderDygraph({
   #
 })
 #
-output$circlepackeRMedidaPlotOut <- renderCirclepackeR({
-  data=data.frame(
-    root=rep("root", 15),
-    group=c(rep("group A",5), rep("group B",5), rep("group C",5)),
-    subgroup= rep(letters[1:5], each=3),
-    subsubgroup=rep(letters[1:3], 5),
-    value=sample(seq(1:15), 15)
-  )
-
-  data$pathString <- paste("world", data$group, data$subgroup, data$subsubgroup, sep = "/")
-  population <- as.Node(data)
-  circlepackeR(population, size = "value")
-})

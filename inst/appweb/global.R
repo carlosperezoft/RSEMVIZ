@@ -49,6 +49,7 @@ suppressPackageStartupMessages({
   library(ggTimeSeries, quietly=TRUE)
   library(dygraphs, quietly=TRUE)
   library(dendextend, quietly=TRUE)
+  library(packcircles, quietly=TRUE)
   library(circlepackeR, quietly=TRUE)
   # Se desactivan por incompatibilidad con D3.js
   #library(networkD3, quietly=TRUE)
