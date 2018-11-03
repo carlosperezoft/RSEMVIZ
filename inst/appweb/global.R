@@ -51,6 +51,7 @@ suppressPackageStartupMessages({
   library(dendextend, quietly=TRUE)
   library(packcircles, quietly=TRUE)
   library(circlepackeR, quietly=TRUE)
+  library(gridExtra, quietly=TRUE)
   # Se desactivan por incompatibilidad con D3.js
   #library(networkD3, quietly=TRUE)
   #library(collapsibleTree, quietly=TRUE) # usa D3.js

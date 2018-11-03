@@ -8,7 +8,7 @@
 # Jerárquicos: Treemap, Dendrograma, Cluster, QQ-Plot (odenando ASC score)
 # Redes: qgraph (CORR, SPRING, LASSO), Hive (3-lineas), Arcos
 # Evoluci\u00F3n: Stacked Area, Lineas, Lineas+Areas, Coordenadas Paralelas (interactivo)
-# Flujo: Sandkey, Series (DYGRAPH Comparativo), Streamgraph, ArmsChart Multivariados
+# Flujo: Sankey, Series (DYGRAPH Comparativo), Streamgraph, ArmsChart Multivariados
 # Circularizar: Circular Barplot (avanzado), Circular Packing, Sunburst, Diagrama de Cuerdas,
 # visNetwork (Cirular Layout), Circular Dendrograma (avanzado)
 #
@@ -357,6 +357,7 @@ tabItem(tabName = "modMedDesSubMTab",
           ),
           tabPanel("Circular Packing Jer\u00E1rquico", icon = icon("circle"),
              h4("An\u00E1lisis Jer\u00E1rquico del Flujo de cargas de coeficientes del Modelo SEM (Circular Packing)"),
+             tags$i("Para activar el gr\u00E1fico seleccionar en el Modelo SEM el grupo: LATENTE"),
              circlepackeROutput("circlePackJerarqMedidaPlotOut", width = "100%", height = "500") %>%
                                 withSpinner(type=5, color="cadetblue")
           ),
@@ -367,11 +368,25 @@ tabItem(tabName = "modMedDesSubMTab",
           ),
           tabPanel("Sunburst Jer\u00E1rquico", icon = icon("instagram"),
               h4("An\u00E1lisis Jer\u00E1rquico del Flujo de cargas de coeficientes del Modelo SEM (Sunburst-Comparativo)"),
+              tags$i("Para activar el gr\u00E1fico seleccionar en el Modelo SEM el grupo: LATENTE"),
               plotOutput("circlePackSunMedidaPlotOut", width = "100%", height = "500") %>%
-                                withSpinner(type=5, color="cadetblue")
+                         withSpinner(type=5, color="cadetblue")
           ),
-          tabPanel("Diagrama de Cuerdas", icon = icon("life-ring"),h4("Diagrama de Cuerdas")
-                   # ...
+          tabPanel("Diagrama de Cuerdas", icon = icon("life-ring"),
+              h4("An\u00E1lisis del Flujo de cargas de coeficientes del Modelo SEM (Flujo entre Cuerdas)"),
+              tags$i("Para activar el gr\u00E1fico seleccionar en el Modelo SEM el grupo: LATENTE"),
+              fluidRow(
+                box(
+                  title = "Cargas de Coeficientes", status = "success", solidHeader = TRUE, collapsible = TRUE,
+                  plotOutput("chordCoefiMedidaPlotOut", width = "100%", height = "400") %>%
+                            withSpinner(type=4, color="cadetblue")
+                ),
+                box(
+                  title = "Correlaciones por variable", status = "primary", solidHeader = TRUE, collapsible = TRUE,
+                  plotOutput("chordCorrMedidaPlotOut", width = "100%", height = "400") %>%
+                            withSpinner(type=4, color="cadetblue")
+                )
+              ) # FIN fluidRow
           )
        )
     )  # FIN PANEL navbarPage
