@@ -131,10 +131,9 @@ output$ecuacionEstrHipoTxtOut <- renderUI({  # antes: renderText(..)
     ecuLat <- "NO Disponible."
   }
   #
-  HTML(paste(tags$b("Ecuaci\u00F3n Latente Exogena (FACTOR):"), ecuFac, "----",
-             tags$b("Ecuaci\u00F3n Latente Endogena (CONSTRUCTO):"), ecuLat, sep = "<br/>")
+  HTML(paste(tags$b("Ecuaci\u00F3n Latente Ex\u00F3gena (FACTOR):"), ecuFac, "----",
+             tags$b("Ecuaci\u00F3n Latente End\u00F3gena (CONSTRUCTO):"), ecuLat, sep = "<br/>")
        ) # antes: sep = "\n"
   #
 })
 #
-shinyjs::onclick("hipotSidePanelToggle", shinyjs::toggle(id = "hipotSidebarPanel", anim = TRUE))

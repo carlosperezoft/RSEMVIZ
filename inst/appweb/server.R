@@ -46,12 +46,11 @@ shinyServer(function(input, output, session) {
   # VISNETWORK PARA ANALISIS DE HIPOTESIS
   source('include_server/hipotesis_model_server.R', local=TRUE)
   #
-  # ANALISIS DE MENU DESCRIPTIVO DEL MODELO DE MEDICION - SEM
+  # MENU DE ANALISIS DESCRIPTIVO DEL MODELO DE MEDICION - SEM
   source('include_server/modelo_medida_desc_subm_server.R', local=TRUE)
   #
-  # QGRAPH PARA ANALISIS REDES PSICOMETRIA - SEM
-  source('include_server/modelo_medida_predic_subm_server.R', local=TRUE)
-  # FIN ANALISIS REDES PSICOMETRIA - SEM
+  # MENU DE ANALISIS DE PREDICCION DEL MODELO ESTRUCTURAL - SEM
+  source('include_server/mod_estruct_predic_subm_server.R', local=TRUE)
   #
   # FINALIZACION DE SESION WEB ----------------------------------------------
   # Finaliza la ejecucion de la APP en R-Studio al cerrar la Ventana PPAL:

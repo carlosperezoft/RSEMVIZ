@@ -7,9 +7,7 @@ tabItem(tabName = "hipotesisTab",
   # Elementos de Carga de informacion para el SET de DATOS:
   fluidPage(
     titlePanel("An\u00E1lisis de hip\u00F3tesis asociadas"),
-    a(id = "hipotSidePanelToggle", "Ver/Ocultar Modelo SEM"),
     sidebarLayout(
-
       # Sidebar panel for inputs ----
       # NOTA: Es posible indicar el numero de columnas para el sidebarPanel y el mainPanel,
       #       esto con el fin de ajustarse al tamaño de los elementos contenidos en cada panel.
@@ -17,7 +15,10 @@ tabItem(tabName = "hipotesisTab",
       #      * se ha usado 5 en el sidebar (grafo) y 7 en el main (tablas).
       sidebarPanel(id="hipotSidebarPanel", width = 5, style="background-color: white;",
          fluidRow(
-           visNetworkOutput("grafoHipotSEMOut", height = 600) %>% withSpinner(type=8, color="cadetblue")
+           box(visNetworkOutput("grafoHipotSEMOut", height = 600) %>% withSpinner(type=8, color="cadetblue"),
+              title = tagList(shiny::icon("gears"), "Modelo SEM"), width = NULL,
+              collapsible = TRUE, status = "success", solidHeader = TRUE
+           )
          )
       ), # fin sidebarPanel
 

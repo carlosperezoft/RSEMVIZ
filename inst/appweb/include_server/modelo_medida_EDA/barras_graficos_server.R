@@ -14,7 +14,7 @@ output$barrasMedidaPlotOut<- renderAmCharts({
   }
   #
   # Create a vector of n contiguous colors. Alpha [0, 1], escala de claridad del color, 0 la mas baja, 1 oscuro
-  # Lisra de funciones predefinidas en R-base:
+  # Lista de funciones predefinidas en R-base:
   # rainbow(n, alpha = 1)
   # heat.colors(n, alpha = 1)
   # terrain.colors(n, alpha = 1)

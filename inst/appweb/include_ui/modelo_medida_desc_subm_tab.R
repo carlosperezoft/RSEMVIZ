@@ -28,12 +28,15 @@ tabItem(tabName = "modMedDesSubMTab",
   fluidPage(
     titlePanel("An\u00E1lisis de Puntuaciones (Score) para variables Latentes Ex\u00F3genas y variables Observadas"),
     box(actionButton("selectedNodesModMedicionBtn", "Actualizar Nodos Seleccionados..."),
-        visNetworkOutput("grafoModeloMedicionOut", height = 400) %>% withSpinner(type=8, color="cadetblue"),
-        title = tagList(shiny::icon("gears"), "Modelo SEM"), width = NULL, # Ancho igual a NULL, ajusta el Box a su contenedor
-        collapsible = TRUE, status = "primary", solidHeader = TRUE
+        visNetworkOutput("grafoModeloMedicionOut", height=350) %>% withSpinner(type=8, color="cadetblue"),
+        title = tagList(shiny::icon("gears"), "Modelo SEM"), status="primary",
+        collapsible=TRUE, solidHeader=TRUE, width=NULL # NULL, ajusta el Box a su contenedor
     ),
-    htmlOutput("nodeSelectedTxtOut"),
-    navbarPage("Men\u00FA de Tipos",
+    box(htmlOutput("medicionSelectedNodesTxtOut"),
+        title = tagList(shiny::icon("list"), "Nodos SEM Seleccionados"), status="warning",
+        collapsible=TRUE, solidHeader=TRUE, width=NULL # NULL, ajusta el Box a su contenedor
+    ),
+    navbarPage("An\u00E1lisis Gr\u00E1fico:",
        navbarMenu("Distribuci\u00F3n",
          tabPanel("Violin",icon = icon("music"), h4("Violin"),
             plotlyOutput("violinMedidaPlotOut", width = "100%", height = "500") %>% withSpinner(type=4, color="cadetblue")

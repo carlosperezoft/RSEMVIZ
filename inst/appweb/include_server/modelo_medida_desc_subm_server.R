@@ -11,12 +11,12 @@ observeEvent(input$selectedNodesModMedicionBtn, ignoreNULL = TRUE, ignoreInit = 
   visNetworkProxy("grafoModeloMedicionOut") %>% visGetSelectedNodes() # actualiza contenedores...
 })
 #
-output$nodeSelectedTxtOut <- renderUI({
+output$medicionSelectedNodesTxtOut <- renderUI({
   req(input$grafoModeloMedicionOut_selectedNodes) # verifica que tenga informacion...
   #
   nodesListTxt <- paste(input$grafoModeloMedicionOut_selectedNodes, collapse = ",")
   # NOTA: La info para HTML(..) debe ser resultado de un paste(..):
-  HTML(paste(tags$b("Modelo SEM[nodos seleccionados]:"), nodesListTxt))
+  HTML(paste(tags$b("Variables SEM:"), nodesListTxt))
 })
 #
 # NOTA: FUNCION USADA DE PRUEBA PARA FILTRAR EN GRAFICOS CON SE PUEDA APLICAR ELEMENTOS AGRUPADOS POR LATENTE/OBSERVADA
