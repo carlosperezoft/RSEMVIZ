@@ -117,7 +117,7 @@ output$chordCoefiMedidaPlotOut <- renderPlot({
   # "directional" = 1, indica que la direccion del arco es de las filas hacia las columnas (desde "from" hacia "to")
   # "directional" = -1, indica que la direccion del arco es de las columnas hacia las filas (desde "to" hacia "from")
   circos.clear()
-  chordDiagram(edgesVis, directional = -1, direction.type = "arrows", link.arr.type = "big.arrow")
+  circlize::chordDiagram(edgesVis, directional = -1, direction.type = "arrows", link.arr.type = "big.arrow")
          # direction.type = c("diffHeight", "arrows"), # presenta un espacio en el eje de la fuente
          # link.arr.type = "big.arrow", link.arr.length = 0.2) #  sin "big.arrow", se muestra una "flecha"
   #
@@ -136,8 +136,9 @@ output$chordCorrMedidaPlotOut <- renderPlot({
   # Matriz de correlacion para las variables latentes y observadas
   corMat <- lavInspect(semFitLocal(), "cor.all")
   #
+  circos.clear()
   col_fun = colorRamp2(c(-1, 0, 1), c("red", "white", "green"))
-  chordDiagram(corMat, symmetric = TRUE, col = col_fun)
+  circlize::chordDiagram(corMat, symmetric = TRUE, col = col_fun)
   #
 })
 #
