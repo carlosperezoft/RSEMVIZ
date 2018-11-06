@@ -379,13 +379,11 @@ tabItem(tabName = "modMedDesSubMTab",
               h4("An\u00E1lisis del Flujo de cargas de coeficientes del Modelo SEM (Flujo entre Cuerdas)"),
               tags$i("Para activar el gr\u00E1fico seleccionar en el Modelo SEM el grupo: LATENTE"),
               fluidRow(
-                box(
-                  title = "Cargas de Coeficientes", status = "success", solidHeader = TRUE, collapsible = TRUE,
+                box(title = "Cargas de Coeficientes", status = "success", solidHeader = TRUE, collapsible = TRUE,
                   plotOutput("chordCoefiMedidaPlotOut", width = "100%", height = "400") %>%
                             withSpinner(type=4, color="cadetblue")
                 ),
-                box(
-                  title = "Correlaciones por variable", status = "primary", solidHeader = TRUE, collapsible = TRUE,
+                box(title = "Correlaciones por variable", status = "primary", solidHeader = TRUE, collapsible = TRUE,
                   plotOutput("chordCorrMedidaPlotOut", width = "100%", height = "400") %>%
                             withSpinner(type=4, color="cadetblue")
                 )

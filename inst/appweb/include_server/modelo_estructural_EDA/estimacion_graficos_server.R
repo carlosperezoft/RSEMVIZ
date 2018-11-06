@@ -28,7 +28,7 @@ output$seriesEstructuralPlotOut <- renderDygraph({
      dyCrosshair(direction = "both") %>%
      dyLegend(show = if_else(input$seriesEstructPointCheck, "follow", "always"), width = 400) %>%
      dyOptions(drawGrid = input$seriesEstructPointCheck, stepPlot = input$seriesEstructStepCheck,
-               drawPoints = input$seriesEstructPointCheck, pointSize = 4,
+               drawPoints = input$seriesEstructPointCheck, pointSize = 2,
                fillGraph = input$seriesEstructAreaCheck,
                pointShape = if_else(input$seriesEstructPointCheck, "circle", "dot"),
                colors = RColorBrewer::brewer.pal(9, "Set1")) %>%
@@ -134,3 +134,52 @@ output$densidad2DEstructPlotOut <- renderPlotly({
   #
 })
 #
+output$prediccionSeriesEstructPlotOut <- renderDygraph({
+  # Verifica el objeto indicado. Dado el caso NULL: cancela cualquier proceso "reactive" asociado
+  req(input$grafoModeloEstructuralOut_selected)
+  # Se ejecuta filtro para que el nodo sea VAR.LATENTE, con el objetivo de validar Regresion:
+  fitModel <- paramsSemFit()
+  nodo_sel <- (nodosModeloSEM(fitModel) %>%
+                   dplyr::filter(node_name == input$grafoModeloEstructuralOut_selected))
+  #
+  shiny::validate(
+    shiny::need(nodo_sel[1,"latent"] == TRUE, "Este tipo de gr\u00E1fico aplica a UNA variable LANTENTE solamente.")
+  )
+  #
+  score_data <- semModelScoreData()[c("row_id", input$grafoModeloEstructuralOut_selected)]
+  #
+  dygraph(score_data, main = "Flujo del Score", xlab = "Fila.SCR",
+                      ylab = paste("Score Estimado:", colnames(score_data)[2])) %>%
+     dyRangeSelector() %>% dyUnzoom() %>% dyCrosshair(direction="both") %>%
+     dyLegend(show="follow", width=110) %>%
+     dyOptions(drawPoints=TRUE, pointSize=2, pointShape="circle") %>%
+     dyHighlight(highlightCircleSize = 4, highlightSeriesBackgroundAlpha = 0.2,
+                 highlightSeriesOpts = list(strokeWidth = 3), hideOnMouseOut = TRUE)
+  #
+})
+#
+output$prediccionScatterEstructPlotOut <- renderPlotly({
+  # Verifica el objeto indicado. Dado el caso NULL: cancela cualquier proceso "reactive" asociado
+  req(input$grafoModeloEstructuralOut_selected)
+  # Se ejecuta filtro para que el nodo sea VAR.LATENTE, con el objetivo de validar Regresion:
+  fitModel <- paramsSemFit()
+  nodo_sel <- (nodosModeloSEM(fitModel) %>%
+                   dplyr::filter(node_name == input$grafoModeloEstructuralOut_selected))
+  #
+  shiny::validate(
+    shiny::need(nodo_sel[1,]$latent == TRUE, "Este tipo de gr\u00E1fico aplica a UNA variable LANTENTE solamente.")
+  )
+  #
+  score_data <- semModelScoreData()[c("row_id", input$grafoModeloEstructuralOut_selected)]
+  #
+  scatPlot <- ggplot(score_data,
+                     aes_string(x=colnames(score_data)[1], y=colnames(score_data)[2], color=colnames(score_data)[2])) +
+    labs(x = "Fila.SCR", y = paste("Score Estimado:", colnames(score_data)[2])) +
+    geom_point() + geom_rug(col="steelblue", alpha=0.5, size=1.5) +
+    # al usar poly(..) se tiene una curva con mejor ajuste en el smooth:
+    geom_smooth(method=lm , formula = y ~ poly(x, 3), color="red", se=TRUE) +
+    scale_colour_gradient(low = "blue", high = "orange")
+  #
+  ggplotly(scatPlot)
+  #
+})

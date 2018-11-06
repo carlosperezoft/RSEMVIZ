@@ -69,8 +69,18 @@ tabItem(tabName = "modEstPredSubMTab",
       navbarMenu("Predicci\u00F3n",
         tabPanel("Predicci\u00F3n Latentes", icon = icon("paper-plane"),
            h4("An\u00E1lisis de Predicci\u00F3n sobre las variables LANTENTES del Modelo SEM"),
-           dygraphOutput("prediccionEstructPlotOut", width = "100%", height = "500") %>%
-                         withSpinner(type=6, color="cadetblue")
+           tags$i("Para activar el gr\u00E1fico seleccionar en el Modelo SEM una variable LATENTE"),
+           fluidRow(
+              box(title = "Flujo de Latente.Score", status = "success", solidHeader = TRUE, collapsible = TRUE,
+                dygraphOutput("prediccionSeriesEstructPlotOut", width = "100%", height = "400") %>%
+                              withSpinner(type=6, color="cadetblue")
+              ),
+              box(title = "Dispersi\u00F3n de Latente.Score con curva de ajuste", status = "primary",
+                  solidHeader = TRUE, collapsible = TRUE,
+                  plotlyOutput("prediccionScatterEstructPlotOut", width = "100%", height = "400") %>%
+                              withSpinner(type=7, color="cadetblue")
+              )
+           ) # FIN fluidRow
         )
       )
     )  # FIN PANEL navbarPage
