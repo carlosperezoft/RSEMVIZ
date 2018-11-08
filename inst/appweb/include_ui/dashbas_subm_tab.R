@@ -14,71 +14,50 @@ tabItem(tabName = "dashBASSubMTab",
     tabBox(width = "100%", height = "100%",
       title = tagList(shiny::icon("random"), "Clasificaci\u00F3n por tipo"),
       tabPanel("Ajuste Absoluto",h4("Criterios de Referencia para el Ajuste Absoluto"),
-         # Para que fuciones los BOX(...) se debe usar un fluidRow layout que los contenga:
+         # Para que fucionen los BOX(...) se debe usar un fluidRow layout que los contenga:
          fluidRow(
            # NOTA: NO usar box(..) para contener un elemento tipo valueBoxOutput(..)
            #       El valueBoxOutput se activa cuando el SEM model ha sido estimado (tiene datos)
-           valueBoxOutput("statChi2Out", width = 3),
-           valueBoxOutput("pValueChi2Out", width = 3),
-           valueBoxOutput("statRazonChi2Out", width = 3),
-           infoBoxOutput("gradosLibertadOut", width = 3)
+           valueBoxOutput("statChi2Out", width = 3), valueBoxOutput("pValueChi2Out", width = 3),
+           valueBoxOutput("statRazonChi2Out", width = 3), infoBoxOutput("gradosLibertadOut", width = 3)
          ),
          fluidRow(
-           uiOutput("gfiBoxOut")
+           uiOutput("gfiBoxOut") %>% withSpinner(type=7, color="cadetblue"),
+           uiOutput("rmseaBoxOut") %>% withSpinner(type=7, color="cadetblue"),
+           uiOutput("rmrBoxOut") %>% withSpinner(type=7, color="cadetblue"),
+           uiOutput("ecviBoxOut") %>% withSpinner(type=7, color="cadetblue")
          )
       ),
-      tabPanel("Ajuste Incremental", h4("Criterios de Referencia para el Ajuste Incremental"),
-         verbatimTextOutput("indicesAjusteSEMTxtOut1"),
+      tabPanel("Ajuste Incremental",
+         h4("Criterios de Referencia para el Ajuste Incremental (Comparativo), presentado en porcentaje (%)"),
          fluidRow(
-           # NOTA: NO usar box(..) para contener un elemento tipo valueBoxOutput(..)
-           #       El valueBoxOutput se activa cuando el SEM model ha sido estimado (tiene datos)
-           box(flexdashboard::gaugeOutput("RMSEAIdx") %>% withSpinner(),
-               title = tagList(shiny::icon("thumbs-down"), "GFI"), width = 4,
-               collapsible = TRUE, status = "danger", solidHeader = TRUE),
-           box(flexdashboard::gaugeOutput("RMSEApvalue") %>% withSpinner() %>%
-                 helper(type = "inline", title = "NFI", colour = "red",
-                        content = "Criterio de informaci\u00F3n de AKAIKE. Un valor peque\u00F3o indica parsimonia",
-                        size = "s"), "Informacion extra del elemento", width = 4,
-               title = tagList(shiny::icon("thumbs-up"), "P-value RMSEA"),
-               collapsible = TRUE, status = "success", solidHeader = TRUE)
+           uiOutput("nfiBoxOut") %>% withSpinner(type=7, color="cadetblue"),
+           uiOutput("tliBoxOut") %>% withSpinner(type=7, color="cadetblue"),
+           uiOutput("agfiBoxOut") %>% withSpinner(type=7, color="cadetblue"),
+           uiOutput("gfiCmpBoxOut") %>% withSpinner(type=7, color="cadetblue")
+         )
+      ),
+      tabPanel("Ajuste Parsimonioso", height = 200, h4("Criterios de Referencia para el Ajuste Parsimonioso"),
+         fluidRow(
+            valueBoxOutput("pgfiBoxOut", width = 3), valueBoxOutput("pnfiBoxOut", width = 3),
+            valueBoxOutput("aicInfoOut", width = 3), valueBoxOutput("bicInfoOut", width = 3)
          ),
-         h4("Prueba GAUGE [rAmCharts]:"),
-         fluidRow(
-           boxPlus(amChartsOutput(outputId = "gaugeAMCOut1", width = "180", height = "180")
-               %>% withSpinner() %>% helper(type = "inline", title = "TLI", colour = "blue",
-                            content = "Criterio de informaci\u00F3n de AKAIKE. Un valor pequeño indica parsimonia",
-                                            size = "s"),
-               title=tagList(shiny::icon("thumbs-down"), "boxPLUS:TLI"),
-               collapsible = TRUE, closable = FALSE,  status = "danger", solidHeader = TRUE,
-               width = 3, footer = tagList(
-                 checkboxInput("somevalue", "Some value", FALSE),
-                 helpText("Estadistico Ratio de verosimilitud. Validacion >= 0.90"),
-                 sliderInput(
-                   "slider_boxsidebar",
-                   "Number of observations:",
-                   min = 0,
-                   max = 1000,
-                   value = 500
-                 )
-               )
-           ),
-           gradientBox(amChartsOutput(outputId = "gaugeAMCOut2", width = "250", height = "110") %>% withSpinner()
-               %>% helper(type = "inline", title = "AIC!", colour = "red",
-                          content = "Criterio de informaci\u00F3n de AKAIKE. Un valor pequeño indica parsimonia",
-                          size = "s", icon = "question"),
-               title=tagList(shiny::icon("thumbs-up"), "gaugeAMCOut2"), collapsible = TRUE,  width = 4,
-               gradientColor = "green", footer = "Validacion >= 0.90"),
-           gradientBox(amChartsOutput(outputId = "gaugeAMCOut3", width = "250", height = "110") %>% withSpinner()
-               %>% helper(type = "inline", title = "AIC!", colour = "red", icon = "exclamation",
-                          content = "Criterio de informaci\u00F3n de AKAIKE. Un valor pequeño indica parsimonia",
-                          size = "s"),
-               title="gaugeAMCOut3", collapsible = TRUE, gradientColor = "red", width = 4,
-               icon = shiny::icon("thumbs-down"), footer = "Validacion >= 0.90")
-         )
-      ),
-      tabPanel("Ajuste Parsimonioso",
-        h4("Criterios de Referencia para el Ajuste Parsimonioso")
+         dropdownButton(inputId = "barrasMedidasAjusteOpsBtn",
+            tags$h4("Opciones de Presentaci\u00F3n:"),
+            materialSwitch(inputId = "barrasMedidasAjusteSortCheck", label = "Ordenar Valores",
+                           value = FALSE, status = "info", right = TRUE),
+            materialSwitch(inputId = "barrasMedidasAjusteHorizCheck", label = "Vista Horizontal",
+                           value = FALSE, status = "success", right = TRUE),
+            materialSwitch(inputId = "barrasMedidasAjusteStackCheck", label = "Ajustar Barras",
+                           value = FALSE, status = "warning", right = TRUE),
+            tags$i("Actualizaci\u00F3n autom\u00E1tica..."),
+            circle = TRUE, status = "danger", icon = icon("gear"), width = "250px",
+            size = "xs", tooltip = tooltipOptions(title = "Cambiar opciones...")
+         ),
+         amChartsOutput("barrasMedidasAjustePlotOut", width = "100%", height = "500") %>%
+                       withSpinner(type=6, color="cadetblue")
       )
     )
   ) ## fin fluidPage ===========
 )
+#

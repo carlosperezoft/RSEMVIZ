@@ -2,7 +2,7 @@
 # carlos.perez7@udea.edu.co
 # 17/10/2018 11:59:28 a. m.
 #
-output$barrasMedidaPlotOut<- renderAmCharts({
+output$barrasMedidaPlotOut <- renderAmCharts({
   # verifica que tenga informacion. Cancela la invocacion dado el caso, y evita cualquier proceso "reactive" asociado
   req(input$grafoModeloMedicionOut_selectedNodes)
   #

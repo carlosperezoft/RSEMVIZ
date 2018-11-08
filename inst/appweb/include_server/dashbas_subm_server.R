@@ -4,8 +4,8 @@
 #
 ### elementos de bondad de ajuste:
 output$statChi2Out <- renderValueBox({
-  chi2Value <- fitMeasures(semFitLocal(), "chisq")
-  gradosLib <- fitMeasures(semFitLocal(), "df")
+  chi2Value <- getMedidaAjusteValue("chisq")
+  gradosLib <- getMedidaAjusteValue("df")
   #
   razonChi2 <- chi2Value / gradosLib
   if(razonChi2 <= 3)  {
@@ -27,8 +27,8 @@ output$statChi2Out <- renderValueBox({
   )
 })
 #
-output$pValueChi2Out <- renderInfoBox({
-  pValue <- fitMeasures(semFitLocal(), "pvalue")
+output$pValueChi2Out <- renderValueBox({
+  pValue <- getMedidaAjusteValue("pvalue")
   # siginificacion con alfa mayor a 0.05, rechaza H0:
   # The null hypothesis is -- the postulated model holds in the population, i.e.,
   # the implied (sample)covariance matrix = population covariance matrix.
@@ -52,17 +52,9 @@ output$pValueChi2Out <- renderInfoBox({
   )
 })
 #
-output$gradosLibertadOut <- renderInfoBox({
-  infoBox(
-    "(GL) Grados de Libertad", fitMeasures(semFitLocal(), "df"),
-    icon = icon("plus-square"),
-    color = "light-blue", fill = TRUE
-  )
-})
-#
 output$statRazonChi2Out <- renderValueBox({
-  chi2Value <- fitMeasures(semFitLocal(), "chisq")
-  gradosLib <- fitMeasures(semFitLocal(), "df")
+  chi2Value <- getMedidaAjusteValue("chisq")
+  gradosLib <- getMedidaAjusteValue("df")
   #
   razonChi2 <- chi2Value / gradosLib
   if(razonChi2 <= 3)  {
@@ -86,9 +78,17 @@ output$statRazonChi2Out <- renderValueBox({
     color = colorChi2
   )
 })
-#  INICIO ELEMENTOS FLEX_GAUGE, AM_GAUGE, AM_BULLET:
+#
+output$gradosLibertadOut <- renderInfoBox({
+  infoBox(
+    "(GL) Grados de Libertad", getMedidaAjusteValue("df"),
+    icon = icon("plus-square"),
+    color = "light-blue", fill = TRUE
+  )
+})
+# INICIO ELEMENTOS FLEX_GAUGE, AM_GAUGE, AM_BULLET:
 output$gfiBoxOut <- renderUI({
-  item_val <- fitMeasures(semFitLocal(), "gfi")
+  item_val <- getMedidaAjusteValue("gfi")
   #
   if(item_val >= 0.90)  {
     item_subT <- "Aceptable"
@@ -149,12 +149,12 @@ output$tipoGraficoOut  <- renderUI({
 #
 output$gfiGaugeOut <- flexdashboard::renderGauge({
   if(input$indPorcentSwitch) { # Gauge en Porcentaje
-    flexdashboard::gauge(value = sprintf("%.1f", 100*fitMeasures(semFitLocal(), "gfi")),
+    flexdashboard::gauge(value = sprintf("%.1f", 100*getMedidaAjusteValue("gfi")),
        min = 0, max = 100, symbol = '%', label = paste("GFI"),
        flexdashboard::gaugeSectors(success = c(90, 100), warning = c(70,89), danger = c(0, 69),
                                    colors = c("success", "warning", "danger")))
   } else {
-    flexdashboard::gauge(value = sprintf("%.3f", fitMeasures(semFitLocal(), "gfi")),
+    flexdashboard::gauge(value = sprintf("%.3f", getMedidaAjusteValue("gfi")),
        min = 0, max = 1,  symbol = '', label = paste("GFI"),
        flexdashboard::gaugeSectors(success = c(0.90, 1), warning = c(0.70,0.89), danger = c(0, 0.69),
                                    colors = c("success", "warning", "danger")))
@@ -163,10 +163,10 @@ output$gfiGaugeOut <- flexdashboard::renderGauge({
 })
 #
 output$gfiAngularGaugeOut <- renderAmCharts({
-  bands <- data.frame(start = c(0, 40, 60), end = c(40, 60, 100) ,
+  bands <- data.frame(start = c(0, 40, 60), end = c(40, 60, 100),
                       color = c("#00CC00", "#ffac29", "#ea3838"), stringsAsFactors = FALSE)
 
-  amAngularGauge(x = as.numeric(sprintf("%.1f", 100*fitMeasures(semFitLocal(), "gfi"))),
+  amAngularGauge(x = as.numeric(sprintf("%.1f", 100*getMedidaAjusteValue("gfi"))),
                  bands = bands, text = "%", textSize = 10,
                  main = "GFI", mainColor = "#68838B", mainSize = 16,
                  creditsPosition = "bottom-right")
@@ -174,54 +174,345 @@ output$gfiAngularGaugeOut <- renderAmCharts({
 #
 output$gfiBulletOut <- renderAmCharts({
   if(input$indPorcentSwitch) { # Bullet en Porcentaje
-    amBullet(value = as.numeric(sprintf("%.3f", 100*fitMeasures(semFitLocal(), "gfi"))),
+    amBullet(value = as.numeric(sprintf("%.3f", 100*getMedidaAjusteValue("gfi"))),
              val_color = "blue", limit_color = "black",
              min = 0, max = 100, limit = 90, label = "GFI")
   } else {
-    amBullet(value = as.numeric(sprintf("%.3f", fitMeasures(semFitLocal(), "gfi"))),
+    amBullet(value = as.numeric(sprintf("%.3f", getMedidaAjusteValue("gfi"))),
              val_color = "blue", limit_color = "black",
              min = 0, max = 1, limit = 0.8, label = "GFI")
   }
 })
-
-#######
-# Lista de indicadores tipo Gauge:
-output$RMSEAIdx <- flexdashboard::renderGauge({
-  semLocal <- semFitLocal()
-  flexdashboard::gauge(value = sprintf("%.1f", 100*fitMeasures(semLocal, "gfi")),
-                       min = 0, max = 100, symbol = '%', label = paste("GFI"),
-                       flexdashboard::gaugeSectors(success = c(90, 100), warning = c(41,89), danger = c(0, 40),
-                                                   colors = c("success", "warning", "danger")))
+####### NUEVOS - FALTANTES
+output$rmseaBoxOut <- renderUI({
+  item_val <- getMedidaAjusteValue("rmsea")
+  #
+  if(item_val <= 0.05)  {
+    item_subT <- "Aceptable"
+    item_icon <- "thumbs-up"
+    item_color <- "success"
+  } else if(item_val <= 0.10) {
+    item_subT <- "Ajuste Medio"
+    item_icon <- "thumbs-up"
+    item_color <- "warning"
+  } else {
+    item_subT <- "NO Aceptable"
+    item_icon <- "thumbs-down"
+    item_color <- "danger"
+  }
+  #
+  boxPlus(title = tagList(shiny::icon(item_icon), "RMSEA: ", item_subT), width = 3,
+    collapsible = TRUE, status = item_color, solidHeader = TRUE, closable = FALSE,
+    amChartsOutput("rmseaBulletOut", height = "150"), # Es necesario usar un amChartsOutput... por el UI dinamico!
+    footer = tagList( # SECCION DE EXPLICACION DEL CRITERIO:
+      tags$b("Error de Aproximaci\u00F3n Cuadr\u00E1tico Medio (RMSEA)")
+    ) # FIN footer
+  )
 })
-output$RMSEApvalue <- flexdashboard::renderGauge({
-  semLocal <- semFitLocal()
-  flexdashboard::gauge(value = sprintf("%.3f", fitMeasures(semLocal, "nfi")), min = 0, max = 1,
-                       label = paste("NFI"), flexdashboard::gaugeSectors(
-                         danger = c(0, 0.40), warning = c(0.41,0.89), success = c(0.90, 1),
-                         colors = c("danger", "warning", "success")
-                       ))
+# amBullet usado en el UI dinamico: "rmseaBoxOut"
+output$rmseaBulletOut <- renderAmCharts({
+    amBullet(value = as.numeric(sprintf("%.3f", getMedidaAjusteValue("rmsea"))),
+             val_color = "blue", limit_color = "black",
+             min = 0, max = 1, limit = 0.05, label = "RMSEA")
 })
-
-bandsExt <- data.frame(start = c(0, 40, 60), end = c(40, 60, 100) , #, c(0, 0.40, 0.60), end = c(0.40, 0.60, 1)
-                    color = c("#00CC00", "#ffac29", "#ea3838"),
-                    stringsAsFactors = FALSE)
 #
-output$gaugeAMCOut1 <- renderAmCharts({
-  amAngularGauge(x = as.numeric(sprintf("%.1f", 100*fitMeasures(semFitLocal(), "tli"))),
-                 bands = bandsExt, text = "%", textSize = 10,
-                 main = "TLI", mainColor = "#68838B", mainSize = 16,
-                 creditsPosition = "bottom-right")
+output$rmrBoxOut <- renderUI({
+  item_val <- getMedidaAjusteValue("rmr")
+  #
+  if(item_val <= 0.05)  {
+    item_subT <- "Aceptable"
+    item_icon <- "thumbs-up"
+    item_color <- "success"
+  } else if(item_val <= 0.10) {
+    item_subT <- "Ajuste Medio"
+    item_icon <- "thumbs-up"
+    item_color <- "warning"
+  } else {
+    item_subT <- "NO Aceptable"
+    item_icon <- "thumbs-down"
+    item_color <- "danger"
+  }
+  #
+  boxPlus(title = tagList(shiny::icon(item_icon), "RMR: ", item_subT), width = 3,
+    collapsible = TRUE, status = item_color, solidHeader = TRUE, closable = FALSE,
+    amChartsOutput("rmrBulletOut", height = "150"), # Es necesario usar un amChartsOutput... por el UI dinamico!
+    footer = tagList( # SECCION DE EXPLICACION DEL CRITERIO:
+      tags$b("Indice de Error Cuadr\u00E1tico Medio (RMR)")
+    ) # FIN footer
+  )
 })
-output$gaugeAMCOut2 <- renderAmCharts({
-  amBullet(value = as.numeric(sprintf("%.3f", 100*fitMeasures(semFitLocal(), "tli"))),
-           val_color = "green", limit_color = "red",
-           min = 0, max = 100, limit = 90, label = "TLI")
+# amBullet usado en el UI dinamico: "rmrBoxOut"
+output$rmrBulletOut <- renderAmCharts({
+    amBullet(value = as.numeric(sprintf("%.3f", getMedidaAjusteValue("rmr"))),
+             val_color = "blue", limit_color = "black",
+             min = 0, max = 1, limit = 0.05, label = "RMR")
 })
-output$gaugeAMCOut3 <- renderAmCharts({
-  amBullet(value = as.numeric(sprintf("%.3f", fitMeasures(semFitLocal(), "pgfi"))),
-           val_color = "red", limit_color = "black",
-           min = 0, max = 1, limit = 0.8, label = "PGFI")
+#
+output$ecviBoxOut <- renderUI({
+  item_val <- getMedidaAjusteValue("ecvi")
+  #
+  if(item_val <= 2)  {
+    item_subT <- "Aceptable"
+    item_icon <- "thumbs-up"
+    item_color <- "success"
+  } else if(item_val <= 4) {
+    item_subT <- "Ajuste Medio"
+    item_icon <- "thumbs-up"
+    item_color <- "warning"
+  } else {
+    item_subT <- "NO Aceptable"
+    item_icon <- "thumbs-down"
+    item_color <- "danger"
+  }
+  #
+  boxPlus(title = tagList(shiny::icon(item_icon), "ECVI: ", item_subT), width = 3,
+    collapsible = TRUE, status = item_color, solidHeader = TRUE, closable = FALSE,
+    amChartsOutput("ecviBulletOut", height = "150"), # Es necesario usar un amChartsOutput... por el UI dinamico!
+    footer = tagList( # SECCION DE EXPLICACION DEL CRITERIO:
+      tags$b("Indice de Validaci\u00F3n Cruzada Esperada (ECVI)")
+    ) # FIN footer
+  )
 })
-
-#######
-
+# amBullet usado en el UI dinamico: "ecviBoxOut"
+output$ecviBulletOut <- renderAmCharts({
+    amBullet(value = as.numeric(sprintf("%.3f", getMedidaAjusteValue("ecvi"))),
+             val_color = "blue", limit_color = "black",
+             min = 0, max = 6, limit = 2, label = "ECVI")
+})
+#
+output$nfiBoxOut <- renderUI({
+  item_val <- getMedidaAjusteValue("nfi")
+  #
+  if(item_val >= 0.90)  {
+    item_subT <- "Aceptable"
+    item_icon <- "thumbs-up"
+    item_color <- "success"
+  } else if(item_val >= 0.70) {
+    item_subT <- "Ajuste Medio"
+    item_icon <- "thumbs-up"
+    item_color <- "warning"
+  } else {
+    item_subT <- "NO Aceptable"
+    item_icon <- "thumbs-down"
+    item_color <- "danger"
+  }
+  #
+  boxPlus(title = tagList(shiny::icon(item_icon), "NFI: ", item_subT), width = 3,
+    collapsible = TRUE, status = item_color, solidHeader = TRUE, closable = FALSE,
+    amChartsOutput("nfiBulletOut", height = "150"), # Es necesario usar un amChartsOutput... por el UI dinamico!
+    footer = tagList( # SECCION DE EXPLICACION DEL CRITERIO:
+      tags$b("Indice de ajuste normalizado (NFI)")
+    ) # FIN footer
+  )
+})
+# amBullet usado en el UI dinamico: "nfiBoxOut"
+output$nfiBulletOut <- renderAmCharts({
+    amBullet(value = as.numeric(sprintf("%.3f", 100*getMedidaAjusteValue("nfi"))),
+             val_color = "blue", limit_color = "black",
+             min = 0, max = 100, limit = 90, label = "NFI")
+})
+#
+output$tliBoxOut <- renderUI({
+  item_val <- getMedidaAjusteValue("tli")
+  #
+  if(item_val >= 0.90)  {
+    item_subT <- "Aceptable"
+    item_icon <- "thumbs-up"
+    item_color <- "success"
+  } else if(item_val >= 0.70) {
+    item_subT <- "Ajuste Medio"
+    item_icon <- "thumbs-up"
+    item_color <- "warning"
+  } else {
+    item_subT <- "NO Aceptable"
+    item_icon <- "thumbs-down"
+    item_color <- "danger"
+  }
+  #
+  boxPlus(title = tagList(shiny::icon(item_icon), "TLI: ", item_subT), width = 3,
+    collapsible = TRUE, status = item_color, solidHeader = TRUE, closable = FALSE,
+    amChartsOutput("tliBulletOut", height = "150"), # Es necesario usar un amChartsOutput... por el UI dinamico!
+    footer = tagList( # SECCION DE EXPLICACION DEL CRITERIO:
+      tags$b("Indice de ajuste NO normalizado - Tucker Lewis (NNFI-TLI)")
+    ) # FIN footer
+  )
+})
+# amBullet usado en el UI dinamico: "tliBoxOut"
+output$tliBulletOut <- renderAmCharts({
+    amBullet(value = as.numeric(sprintf("%.3f", 100*getMedidaAjusteValue("tli"))),
+             val_color = "blue", limit_color = "black",
+             min = 0, max = 100, limit = 90, label = "TLI")
+})
+#
+output$agfiBoxOut <- renderUI({
+  item_val <- getMedidaAjusteValue("agfi")
+  #
+  if(item_val >= 0.90)  {
+    item_subT <- "Aceptable"
+    item_icon <- "thumbs-up"
+    item_color <- "success"
+  } else if(item_val >= 0.70) {
+    item_subT <- "Ajuste Medio"
+    item_icon <- "thumbs-up"
+    item_color <- "warning"
+  } else {
+    item_subT <- "NO Aceptable"
+    item_icon <- "thumbs-down"
+    item_color <- "danger"
+  }
+  #
+  boxPlus(title = tagList(shiny::icon(item_icon), "AGFI: ", item_subT), width = 3,
+    collapsible = TRUE, status = item_color, solidHeader = TRUE, closable = FALSE,
+    amChartsOutput("agfiBulletOut", height = "150"), # Es necesario usar un amChartsOutput... por el UI dinamico!
+    footer = tagList( # SECCION DE EXPLICACION DEL CRITERIO:
+      tags$b("Indice de bondad de ajuste corregido (AGFI)")
+    ) # FIN footer
+  )
+})
+# amBullet usado en el UI dinamico: "agfiBoxOut"
+output$agfiBulletOut <- renderAmCharts({
+    amBullet(value = as.numeric(sprintf("%.3f", 100*getMedidaAjusteValue("agfi"))),
+             val_color = "blue", limit_color = "black",
+             min = 0, max = 100, limit = 90, label = "AGFI")
+})
+#
+output$gfiCmpBoxOut <- renderUI({
+  item_val <- getMedidaAjusteValue("gfi")
+  #
+  if(item_val >= 0.90)  {
+    item_subT <- "Aceptable"
+    item_icon <- "thumbs-up"
+    item_color <- "success"
+  } else if(item_val >= 0.70) {
+    item_subT <- "Ajuste Medio"
+    item_icon <- "thumbs-up"
+    item_color <- "warning"
+  } else {
+    item_subT <- "NO Aceptable"
+    item_icon <- "thumbs-down"
+    item_color <- "danger"
+  }
+  #
+  boxPlus(title = tagList(shiny::icon(item_icon), "GFI: ", item_subT), width = 3,
+    collapsible = TRUE, status = item_color, solidHeader = TRUE, closable = FALSE,
+    amChartsOutput("gfiCmpBulletOut", height = "150"), # Es necesario usar un amChartsOutput... por el UI dinamico!
+    footer = tagList( # SECCION DE EXPLICACION DEL CRITERIO:
+      tags$b("Indice de bondad de ajuste (GFI)")
+    ) # FIN footer
+  )
+})
+# amBullet usado en el UI dinamico: "gfiCmpBulletOut"
+output$gfiCmpBulletOut <- renderAmCharts({
+    amBullet(value = as.numeric(sprintf("%.3f", 100*getMedidaAjusteValue("gfi"))),
+             val_color = "blue", limit_color = "black",
+             min = 0, max = 100, limit = 90, label = "GFI")
+})
+#
+output$pgfiBoxOut <- renderValueBox({
+  item_val <- getMedidaAjusteValue("pgfi")
+  #
+  if((item_val >= 0.50) && (item_val <= 0.70))  {
+    item_subT <- "Aceptable"
+    item_icon <- "thumbs-up"
+    item_color <- "green"
+  } else {
+    item_subT <- "NO Aceptable"
+    item_icon <- "thumbs-down"
+    item_color <- "red"
+  }
+  #
+  valueBox(
+    value = sprintf("%.2f", item_val),
+    subtitle = paste("Indice de bondad de ajuste de parsimonia (PGFI):", item_subT),
+    icon = icon(item_icon),
+    color = item_color
+  )
+})
+#
+output$pnfiBoxOut <- renderValueBox({
+  item_val <- getMedidaAjusteValue("pnfi")
+  #
+  if(item_val >= 0.90)  {
+    item_subT <- "Aceptable"
+    item_icon <- "thumbs-up"
+    item_color <- "green"
+  } else if(item_val >= 0.60) {
+    item_subT <- "Ajuste Medio"
+    item_icon <- "thumbs-up"
+    item_color <- "orange"
+  } else {
+    item_subT <- "NO Aceptable"
+    item_icon <- "thumbs-down"
+    item_color <- "red"
+  }
+  #
+  valueBox(
+    value = sprintf("%.2f", item_val),
+    subtitle = paste("Indice normalizado de ajuste de parsimonia (PNFI):", item_subT),
+    icon = icon(item_icon),
+    color = item_color
+  )
+})
+#
+output$aicInfoOut <- renderValueBox({
+  item_val <- getMedidaAjusteValue("aic")
+  if(item_val <= 50)  {
+    item_subT <- "Aceptable"
+    item_icon <- "thumbs-up"
+    item_color <- "green"
+  } else if(item_val <= 100) {
+    item_subT <- "Ajuste Medio"
+    item_icon <- "thumbs-up"
+    item_color <- "orange"
+  } else {
+    item_subT <- "NO Aceptable"
+    item_icon <- "thumbs-down"
+    item_color <- "red"
+  }
+  #
+  valueBox(
+    value = sprintf("%.2f", item_val),
+    subtitle = paste("Criterio de Informaci\u00F3n de Akaike (AIC):", item_subT),
+    icon = icon(item_icon),
+    color = item_color
+  )
+})
+#
+output$bicInfoOut <- renderValueBox({
+  item_val <- getMedidaAjusteValue("bic")
+  if(item_val <= 50)  {
+    item_subT <- "Aceptable"
+    item_icon <- "thumbs-up"
+    item_color <- "green"
+  } else if(item_val <= 100) {
+    item_subT <- "Ajuste Medio"
+    item_icon <- "thumbs-up"
+    item_color <- "orange"
+  } else {
+    item_subT <- "NO Aceptable"
+    item_icon <- "thumbs-down"
+    item_color <- "red"
+  }
+  #
+  valueBox(
+    value = sprintf("%.2f", item_val),
+    subtitle = paste("Criterio de Informaci\u00F3n Bayesiano (BIC):", item_subT),
+    icon = icon(item_icon),
+    color = item_color
+  )
+})
+#
+output$barrasMedidasAjustePlotOut <- renderAmCharts({
+  cast_data <- semModelMedidasAjusteData() %>% filter(is_indice == T) %>%
+                                               mutate(name = toupper(name), value = value * 100)
+  #
+  if(input$barrasMedidasAjusteSortCheck == TRUE){
+    # ordena los datos de menor a mayor por columna !
+    cast_data <- cast_data %>% dplyr::arrange_at("value")
+  }
+  #
+  amBarplot(x = "name", y = "value", data = cast_data, xlab = "INDICE", ylab = "VALOR (%)",
+            horiz = input$barrasMedidasAjusteHorizCheck, main = "Bondad de Ajuste - Comparaci\u00F3n de Indices",
+            stack_type = if_else(input$barrasMedidasAjusteStackCheck == TRUE, "regular", "none"),
+            legend=F, show_values=T, zoom=T, scrollbar=T, precision=3)
+})
