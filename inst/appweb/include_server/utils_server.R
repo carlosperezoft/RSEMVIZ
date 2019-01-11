@@ -52,30 +52,43 @@ nodosModeloSEM <- function(fitModel) {
 # Para que sea de aplicacion a todos los NODOS debe usarse: visNodes(..)
 # al crear el grafo con visNetwork(..)
 #
-nodosGrafoSEM <- function(fitModel) {
+nodosGrafoSEM <- function(fitModel, nodes_labels) {
   param_nodes <- nodosModeloSEM(fitModel)
   nodesVis <- data.frame(
     id = param_nodes$node_name,
-    label = param_nodes$node_name,
+    label = param_nodes$node_name, # No se asigna el LABEL directamente debido al orden de aparicion, es diferente!
     group = if_else(param_nodes$latent, "LATENTE", "OBSERVADA"),
     # La figura escala con el "value" del nodo, verificar que valor usar en cada caso LAT/OBS?
     # POR_HACER: Sumar las cargas (beta) de las OBRs que explica el factor y asignar aqui para LAT.
     #            En caso de OBR, calcular su comunalidad (beta est.std^2), y asignar aqui.
     value = param_nodes$e +  10,
     # title equivale a un TOOLTIP !
-    title = paste0("<p><b>", param_nodes$node_name,"</b><br>VAR_EST:",format(round(param_nodes$e, 3), nsmall=3),"</p>"),
+    title = NA, # paste0("<p><b>", param_nodes$node_name,"</b><br>VAR_EST:",format(round(param_nodes$e, 3), nsmall=3),"</p>"),
     # SHAPE aqui tiene prioridad sobre el visGroups(..)
     #shape = if_else(param_nodes$latent, "dot", "square"),
     # COLOR aqui tiene prioridad sobre el visGroups(..), el atributo color por Nodo debe ser solo un valor.
     #color = if_else(param_nodes$latent, "orange", "lightblue")
     # Propiedades de color que aplican solo a nivel de nodo cuando se usa la funcion visNodes(..)
     color.highlight = "red",
-    color.hover = "grey"
+    color.hover = "grey",
+    stringsAsFactors=FALSE
     #shadow = param_nodes$latent
   )
+  # Se actualiza el Titulo descriptivo usado en cada NODO:
+  for(i in 1:nrow(nodesVis)) {
+    desc <- nodes_labels %>% filter(variable == nodesVis[i,]$label) %>% select("desc")
+    nodesVis[i,]$title <- paste0("<p><b>", nodesVis[i,]$label,"</b><br>",desc,"</p>")
+  }
+  #
   return(nodesVis)
 }
-
+#
+getNodeLabel <- function(nodes_labels, node_name){
+  label <- nodes_labels %>% filter(variable == node_name) %>% select("desc")
+  return(label)
+}
+#
+#
 # Las propiedades aqui especificadas aplican SOLO a la ruta de forma individual.
 # Para que sea de aplicacion a todos las RUTAS debe usarse: visEdges(..) al crear el grafo con visNetwork(..)
 #
@@ -86,7 +99,7 @@ rutasGrafoSEM <- function(fitModel) {
     to = param_edges$to,
     type = param_edges$type, # usado en menu medicion: Redes>>Hive
     # La flecha escala con la magnitud de "value"!
-    value  = param_edges$val,  # Se multiplica por 10 si es usado en menu medicion: Evolucion>>Sandkey
+    value  = param_edges$val,  # El value es usado para escalar el ancho del arco (edge), se controla con scaling en "visEdges"
     length = param_edges$val * 200, # Se multiplica debido a que el "valor" esta en el intervalo [0,1]
     # width  = param_edges$val, # Para aumentar el ancho de la linea en el arco...
     # NO es recomendable el LABEL, pues oculta mucho la "flecha"
@@ -104,10 +117,11 @@ rutasGrafoSEM <- function(fitModel) {
       param_edges$type == "correlation" ~ "middle"
     ),
     color = dplyr::case_when(
-      param_edges$type == "loading" ~ "red",
-      param_edges$type == "regression"  ~ "blue",
-      param_edges$type == "correlation" ~ "purple"
-    )
+      param_edges$type == "loading" ~ if_else(param_edges$val < 0.5, "pink", "red"),
+      param_edges$type == "regression"  ~ if_else(param_edges$val < 0.5, "cadetblue", "blue"),
+      param_edges$type == "correlation" ~ if_else(param_edges$val < 0.5, "purple4", "purple")
+    ),
+    stringsAsFactors=FALSE
   )
   return(edgesVis)
 }

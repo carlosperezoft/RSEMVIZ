@@ -74,3 +74,6 @@ for (file in list.files(system.file("R", package = "semviz"), pattern = "\\.(r|R
 # NOTA: El valor de 4 conserva el estandar de lavaan en los datos numericos.
 options(digits=4)
 #
+# Se establece el tema de fondo por defecto para los graficos con ggplot:
+theme_set(theme_bw())  # tema black_white !
+#

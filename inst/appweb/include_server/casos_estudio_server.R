@@ -4,10 +4,18 @@
 #
 casoEstudioData <- reactive({
   switch(input$casoEstudioSelect,
-     "Political_Democracy" = PoliticalDemocracy, # SET de datos de Caso SEM en lavaan
+     "Political_Democracy" = poli_dem_data, # SET de datos de Caso SEM en lavaan
      "Grupos_INVESTIGACION" = DATOS_GRUPOS_INVEST_UdeA,
      "Universidades_Estatales" = DATOS_GRUPOS_INVEST_UdeA
      )
+})
+
+casoEstudioLabels <- reactive({
+  switch(input$casoEstudioSelect,
+     "Political_Democracy" = poli_dem_labels,
+     "Grupos_INVESTIGACION" = grupos_invest_udea_model,
+     "Universidades_Estatales" = grupos_invest_udea_model
+  )
 })
 
 casoEstudioModel <- reactive({

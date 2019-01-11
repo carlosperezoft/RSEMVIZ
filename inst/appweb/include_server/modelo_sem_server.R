@@ -26,7 +26,7 @@ semFitLocal <- eventReactive(input$runSEMBtn, {
     # * En estimadorList: Se debe usar un entero como indice.El input$tipoEstimacionSEM tiene valor tipo String.
     #
     lavaanFit <- lavaan::sem(model = input$modeloSEMTxt, data = datasetInput(), mimic = "lavaan",
-                             std.ov = FALSE, std.lv=TRUE, meanstructure=TRUE,
+                             std.ov = FALSE, std.lv=TRUE, meanstructure=TRUE, likelihood = "wishart",
                              estimator = estimadorList[as.integer(input$tipoEstimacionSEM)])
     },
     error = function(e) {
