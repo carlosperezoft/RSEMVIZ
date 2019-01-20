@@ -22,6 +22,8 @@ output$barrasMedidaPlotOut <- renderAmCharts({
   # cm.colors(n, alpha = 1)
   # --> el atributo "zoom" activa el cursor comparativo, equivale al uso de: .. %>% setChartCursor()
   # --> el atributo "precision" define el numero de decimales en los datos numericos
+  # !!
+  # TODO: el caso de adicion de los LABELS para la barras, en poli_dem_data$row_label, usado aqui como x
   amBarplot(y = colnames(cast_data), data = cast_data, xlab = "Fila", ylab = "Score por Variable",
             groups_color = rainbow(ncol(cast_data), alpha = 0.7), horiz = input$barrasMedidaHorizCheck,
             stack_type = if_else(input$barrasMedidaStackCheck == TRUE, "regular", "none"),

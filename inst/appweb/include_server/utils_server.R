@@ -76,8 +76,10 @@ nodosGrafoSEM <- function(fitModel, nodes_labels) {
   )
   # Se actualiza el Titulo descriptivo usado en cada NODO:
   for(i in 1:nrow(nodesVis)) {
-    desc <- nodes_labels %>% filter(variable == nodesVis[i,]$label) %>% select("desc")
-    nodesVis[i,]$title <- paste0("<p><b>", nodesVis[i,]$label,"</b><br>",desc,"</p>")
+    if(!is.null(nodes_labels)) { # TODO: probar esta verficacion del NULL, es para los casos NO default
+      desc <- nodes_labels %>% filter(variable == nodesVis[i,]$label) %>% select("desc")
+      nodesVis[i,]$title <- paste0("<p><b>", nodesVis[i,]$label,"</b><br>",desc,"</p>")
+    }
   }
   #
   return(nodesVis)
@@ -116,6 +118,7 @@ rutasGrafoSEM <- function(fitModel) {
       param_edges$type == "regression"  ~ "to",
       param_edges$type == "correlation" ~ "middle"
     ),
+     # Se ajusta aqui el gradiente de color para el arco, segun la carga del factor o predictor:
     color = dplyr::case_when(
       param_edges$type == "loading" ~ if_else(param_edges$val < 0.5, "pink", "red"),
       param_edges$type == "regression"  ~ if_else(param_edges$val < 0.5, "cadetblue", "blue"),

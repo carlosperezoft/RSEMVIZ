@@ -82,6 +82,27 @@ tabItem(tabName = "modEstPredSubMTab",
               )
            ) # FIN fluidRow
         )
+      ),
+      navbarMenu("Mediaci\u00F3n",
+        tabPanel("Mediaci\u00F3n-Regresi\u00F3n Latentes", icon = icon("recycle"),
+           h4("An\u00E1lisis de Mediaci\u00F3n-Regresi\u00F3n sobre las variables LANTENTES del Modelo SEM"),
+           tags$i("Para activar el gr\u00E1fico seleccionar en el Modelo SEM tres variables LATENTES"),
+           fluidRow(
+              box(title = "Flujo de Latente.Score A", status = "success", solidHeader = TRUE, collapsible = TRUE,
+                dygraphOutput("mediacionRegreSerie1APlotOut", width = "100%", height = "400") %>%
+                              withSpinner(type=6, color="cadetblue")
+              )
+             # ,
+             #  box(title = "Flujo de Latente.Score B", status = "primary", solidHeader = TRUE, collapsible = TRUE,
+             #    dygraphOutput("mediacionRegreSerie1ABPlotOut", width = "100%", height = "400") %>%
+             #                  withSpinner(type=7, color="cadetblue")
+             #  ),
+             #  box(title = "Flujo de Latente.Score C", status = "warning", solidHeader = TRUE, collapsible = TRUE,
+             #    dygraphOutput("mediacionRegreSerie1ACPlotOut", width = "100%", height = "400") %>%
+             #                  withSpinner(type=6, color="cadetblue")
+             #  )
+           ) # FIN fluidRow
+        )
       )
     )  # FIN PANEL navbarPage
   ) # FIN PANEL fluidPage

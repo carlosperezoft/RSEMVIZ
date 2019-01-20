@@ -27,6 +27,10 @@ observeEvent(input$modeloLinealPanelToggle, ignoreNULL = TRUE, ignoreInit = TRUE
   shinyjs::toggle(id = "modeloLinealTabSet", anim = TRUE)
 })
 #
-# Graficos para el menu de Distribucion en el Modelo de Medicion:
+# Graficos para el menu de Estimacion en el Modelo Estructural:
 source('include_server/modelo_estructural_EDA/estimacion_graficos_server.R', local=TRUE)
 #
+# Graficos para el menu de Mediacion en el Modelo Estructural:
+source('include_server/modelo_estructural_EDA/mediacion_graficos_server.R', local=TRUE)
+#
+
