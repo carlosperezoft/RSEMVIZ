@@ -91,16 +91,15 @@ tabItem(tabName = "modEstPredSubMTab",
               box(title = "Flujo de Latente.Score A", status = "success", solidHeader = TRUE, collapsible = TRUE,
                 dygraphOutput("mediacionRegreSerie1APlotOut", width = "100%", height = "400") %>%
                               withSpinner(type=6, color="cadetblue")
+              ),
+              box(title = "Flujo de Latente.Score B", status = "primary", solidHeader = TRUE, collapsible = TRUE,
+                dygraphOutput("mediacionRegreSerie1ABPlotOut", width = "100%", height = "400") %>%
+                              withSpinner(type=7, color="cadetblue")
+              ),
+              box(title = "Flujo de Latente.Score C", status = "warning", solidHeader = TRUE, collapsible = TRUE,
+                dygraphOutput("mediacionRegreSerie1ACPlotOut", width = "100%", height = "400") %>%
+                              withSpinner(type=6, color="cadetblue")
               )
-             # ,
-             #  box(title = "Flujo de Latente.Score B", status = "primary", solidHeader = TRUE, collapsible = TRUE,
-             #    dygraphOutput("mediacionRegreSerie1ABPlotOut", width = "100%", height = "400") %>%
-             #                  withSpinner(type=7, color="cadetblue")
-             #  ),
-             #  box(title = "Flujo de Latente.Score C", status = "warning", solidHeader = TRUE, collapsible = TRUE,
-             #    dygraphOutput("mediacionRegreSerie1ACPlotOut", width = "100%", height = "400") %>%
-             #                  withSpinner(type=6, color="cadetblue")
-             #  )
            ) # FIN fluidRow
         )
       )
