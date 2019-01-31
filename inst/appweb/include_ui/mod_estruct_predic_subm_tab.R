@@ -93,12 +93,26 @@ tabItem(tabName = "modEstPredSubMTab",
                               withSpinner(type=6, color="cadetblue")
               ),
               box(title = "Flujo de Latente.Score B", status = "primary", solidHeader = TRUE, collapsible = TRUE,
-                dygraphOutput("mediacionRegreSerie1ABPlotOut", width = "100%", height = "400") %>%
+                dygraphOutput("mediacionRegreSerie2BPlotOut", width = "100%", height = "400") %>%
                               withSpinner(type=7, color="cadetblue")
               ),
               box(title = "Flujo de Latente.Score C", status = "warning", solidHeader = TRUE, collapsible = TRUE,
-                dygraphOutput("mediacionRegreSerie1ACPlotOut", width = "100%", height = "400") %>%
+                dygraphOutput("mediacionRegreSerie3CPlotOut", width = "100%", height = "400") %>%
                               withSpinner(type=6, color="cadetblue")
+              ),
+              box(title = "Datos Seleccionados Mediaci\u00F3n-Regresi\u00F3n", status = "danger",
+                solidHeader = TRUE, collapsible = TRUE,
+                div(strong("Desde: "), textOutput("medRegSer1AFrom", inline = TRUE)),
+                div(strong("Hasta: "), textOutput("medRegSer1ATo", inline = TRUE)),
+                ">> Latente.Score A <<",
+                div(strong("Observaci\u00F3n seleccionada: "), textOutput("medRegSer1AClicked", inline = TRUE)),
+                div(strong("Score seleccionado: "), textOutput("medRegSer1APoint", inline = TRUE)),
+                ">> Latente.Score B <<",
+                div(strong("Observaci\u00F3n seleccionada: "), textOutput("medRegSer2BClicked", inline = TRUE)),
+                div(strong("Score seleccionado: "), textOutput("medRegSer2BPoint", inline = TRUE)),
+                ">> Latente.Score C <<",
+                div(strong("Observaci\u00F3n seleccionada: "), textOutput("medRegSer3CClicked", inline = TRUE)),
+                div(strong("Score seleccionado: "), textOutput("medRegSer3CPoint", inline = TRUE))
               )
            ) # FIN fluidRow
         )

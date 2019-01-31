@@ -29,7 +29,7 @@ output$mediacionRegreSerie1APlotOut <- renderDygraph({
   #
 })
 #
-output$mediacionRegreSerie1ABPlotOut <- renderDygraph({
+output$mediacionRegreSerie2BPlotOut <- renderDygraph({
   # Verifica el objeto indicado. Dado el caso NULL: cancela cualquier proceso "reactive" asociado
   req(input$grafoModeloEstructuralOut_selectedBy)
   #
@@ -55,7 +55,7 @@ output$mediacionRegreSerie1ABPlotOut <- renderDygraph({
   #
 })
 #
-output$mediacionRegreSerie1ACPlotOut <- renderDygraph({
+output$mediacionRegreSerie3CPlotOut <- renderDygraph({
   # Verifica el objeto indicado. Dado el caso NULL: cancela cualquier proceso "reactive" asociado
   req(input$grafoModeloEstructuralOut_selectedBy)
   #
@@ -80,3 +80,42 @@ output$mediacionRegreSerie1ACPlotOut <- renderDygraph({
                  highlightSeriesOpts = list(strokeWidth = 3), hideOnMouseOut = TRUE)
   #
 })
+#
+output$medRegSer1AFrom <- renderText({
+  paste0(req(input$mediacionRegreSerie1APlotOut_date_window[[1]]))
+})
+#
+output$medRegSer1ATo <- renderText({
+  paste0(req(input$mediacionRegreSerie1APlotOut_date_window[[2]]))
+})
+#
+output$medRegSer1AClicked <- renderText({
+  req(input$mediacionRegreSerie1APlotOut_click$x)
+  paste0(casoEstudioData()[input$mediacionRegreSerie1APlotOut_click$x,]$row_label)
+})
+#
+output$medRegSer1APoint <- renderText({
+  paste0('X = ', req(input$mediacionRegreSerie1APlotOut_click$x_closest_point),
+         '; Y = ', req(input$mediacionRegreSerie1APlotOut_click$y_closest_point))
+})
+#
+output$medRegSer2BClicked <- renderText({
+  req(input$mediacionRegreSerie2BPlotOut_click$x)
+  paste0(casoEstudioData()[input$mediacionRegreSerie2BPlotOut_click$x,]$row_label)
+})
+#
+output$medRegSer2BPoint <- renderText({
+  paste0('X = ', req(input$mediacionRegreSerie2BPlotOut_click$x_closest_point),
+         '; Y = ', req(input$mediacionRegreSerie2BPlotOut_click$y_closest_point))
+})
+#
+output$medRegSer3CClicked <- renderText({
+  req(input$mediacionRegreSerie3CPlotOut_click$x)
+  paste0(casoEstudioData()[input$mediacionRegreSerie3CPlotOut_click$x,]$row_label)
+})
+#
+output$medRegSer3CPoint <- renderText({
+  paste0('X = ', req(input$mediacionRegreSerie3CPlotOut_click$x_closest_point),
+         '; Y = ', req(input$mediacionRegreSerie3CPlotOut_click$y_closest_point))
+})
+#
