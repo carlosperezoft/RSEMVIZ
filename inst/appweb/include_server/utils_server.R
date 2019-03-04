@@ -52,7 +52,7 @@ nodosModeloSEM <- function(fitModel) {
 # Para que sea de aplicacion a todos los NODOS debe usarse: visNodes(..)
 # al crear el grafo con visNetwork(..)
 #
-nodosGrafoSEM <- function(fitModel, nodes_labels) {
+nodosGrafoSEM <- function(fitModel, nodes_labels = NULL) {
   param_nodes <- nodosModeloSEM(fitModel)
   nodesVis <- data.frame(
     id = param_nodes$node_name,
@@ -76,7 +76,7 @@ nodosGrafoSEM <- function(fitModel, nodes_labels) {
   )
   # Se actualiza el Titulo descriptivo usado en cada NODO:
   for(i in 1:nrow(nodesVis)) {
-    if(!is.null(nodes_labels)) { # TODO: probar esta verficacion del NULL, es para los casos NO default
+    if(!is.null(nodes_labels)) { # TODO: probar esta verificacion del NULL, es para los casos NO default
       desc <- nodes_labels %>% filter(variable == nodesVis[i,]$label) %>% select("desc")
       nodesVis[i,]$title <- paste0("<p><b>", nodesVis[i,]$label,"</b><br>",desc,"</p>")
     }

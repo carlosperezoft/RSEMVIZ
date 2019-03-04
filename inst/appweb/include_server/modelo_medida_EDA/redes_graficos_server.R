@@ -11,7 +11,7 @@ output$corrnetMedidaPlotOut <- renderPlot({
                 "Este tipo de gr\u00E1fico aplica solamente para el conjunto de variables OBSERVADAS")
   )
   # Asigna conjunto de datos de VAR obervadas originales:
-  cast_data <- datasetInput()
+  cast_data <- datasetInput()[,-1]
   #
   # INICIO IMPORTANTE:
   # Estas lineas han sido pruebas para tratar de formar GRUPOS de las variables usando

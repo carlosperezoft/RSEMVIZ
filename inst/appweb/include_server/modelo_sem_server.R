@@ -69,7 +69,7 @@ output$semScoreDataDTOut <- renderDT({
 #
 # PENDIENTE: AJUSTAR LOS INDICES concretos por tipo de ajuste: 07-nov-2018
 semModelMedidasAjusteData <- reactive({
-  indlist <- fitMeasures(fit, c("chisq", "df", "pvalue", "gfi", "nfi", "tli", "pgfi", "rmsea",
+  indlist <- lavaan::fitMeasures(semFitLocal(), c("chisq", "df", "pvalue", "gfi", "nfi", "tli", "pgfi", "rmsea",
                                 "rmr", "ecvi", "agfi", "mfi", "pnfi", "nnfi", "aic", "bic"))
   indDFrame <- data.frame(name=c("chisq", "df", "pvalue", "gfi", "nfi", "tli", "pgfi", "rmsea",
                                  "rmr", "ecvi","agfi", "mfi", "pnfi", "nnfi", "aic", "bic"),
