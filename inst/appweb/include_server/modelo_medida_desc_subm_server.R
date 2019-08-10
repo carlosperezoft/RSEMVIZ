@@ -37,6 +37,9 @@ output$medicionSelectedNodesTxtOut <- renderUI({
 #   ggplotly(pm)
 #})
 #
+# Presentacion de menu grafico de forma dinamica, segun la pregunta de analisis seleccionada:
+source('include_server/modelo_medida_EDA/menu-dinamico-graficos.R', local=TRUE)
+#
 # Graficos para el menu de Distribucion en el Modelo de Medicion:
 source('include_server/modelo_medida_EDA/distribucion_graficos_server.R', local=TRUE)
 #

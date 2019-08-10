@@ -57,7 +57,7 @@ tabItem(tabName = "dashAVANSubMTab",
                plotlyOutput("heatmapSEMOut", width = "500", height = "500") %>% withSpinner()
             ),
             tabPanel("Informaci\u00F3n por Variable",
-              actionButton("getNodesSelBtn", "LEER Nodos Seleccionados..."),
+              actionButton("getNodesSelBtn", "Actualizar gr\u00E1ficos asociados..."),
               h4("NODOs SELECCIONADOs ACTUALMENTE:"),
               verbatimTextOutput("nodesListTxtOut"),
               formattableOutput("tablaGeneralSEMOut", width = "100%") %>% withSpinner()

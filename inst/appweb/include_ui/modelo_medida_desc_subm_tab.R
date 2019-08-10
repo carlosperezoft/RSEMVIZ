@@ -27,24 +27,35 @@ tabItem(tabName = "modMedDesSubMTab",
   h2(":: Modelo de Medici\u00F3n - SEM"),
   fluidPage(
     titlePanel("An\u00E1lisis de Puntuaciones (Score) para variables Latentes Ex\u00F3genas y variables Observadas"),
-    box(actionButton("selectedNodesModMedicionBtn", "Actualizar Nodos Seleccionados..."),
+    box(actionButton("selectedNodesModMedicionBtn", "Actualizar gr\u00E1ficos asociados..."),
         visNetworkOutput("grafoModeloMedicionOut", height=350) %>% withSpinner(type=8, color="cadetblue"),
         title = tagList(shiny::icon("gears"), "Modelo SEM"), status="primary",
         collapsible=TRUE, solidHeader=TRUE, width=NULL # NULL, ajusta el Box a su contenedor
     ),
-    box(htmlOutput("medicionSelectedNodesTxtOut"),
-        title = tagList(shiny::icon("list"), "Nodos SEM Seleccionados"), status="warning",
-        collapsible=TRUE, solidHeader=TRUE, width=NULL # NULL, ajusta el Box a su contenedor
+    box(htmlOutput("medicionSelectedNodesTxtOut"), hr(),
+      tags$div(tags$style(HTML( ".selectize-dropdown, .selectize-dropdown.form-control{z-index:10000;}"))),
+      selectInput("preguntasBaseSel", tags$b("Preguntas de an\u00E1lisis:"), width = "60%",
+        choices = c("1. \u00BFC\u00F3mo ser\u00E1n las distribuciones de los Score estimados?"=1,
+          "2. \u00BFLas correlaciones entre los score estimados son significativas?"=2,
+          "3. \u00BFAl comparar los score por ranquin hay diferencias significativas?"=3,
+          "4. \u00BFC\u00F3mo son las agrupaciones de los score de forma jer\u00E1rquica?"=4,
+          "5. \u00BFLas dependencias entre constructos son significativas?"=5,
+          "6. \u00BFLas cargas de factores y constructos sobre sus variables dependintes son significativos?"=6,
+          "7. \u00BFLos patrones de asociaci\u00F3n entre variables son significativos?"=7,
+          "8. \u00BF...?"=8
+        )
+      ), title = tagList(shiny::icon("list"), "Nodos SEM Seleccionados"), status="warning",
+      collapsible=TRUE, solidHeader=TRUE, width=NULL # NULL, ajusta el Box a su contenedor
     ),
-    navbarPage("An\u00E1lisis Gr\u00E1fico:",
-       navbarMenu("Distribuci\u00F3n",
-         tabPanel("Violin",icon = icon("music"), h4("Violin"),
+    navbarPage("An\u00E1lisis Gr\u00E1fico:", id = "medidaDescMenu",
+       navbarMenu("Distribuci\u00F3n", menuName="distribMenu",
+         tabPanel("Violin",icon = icon("music"), h4("Violin"), menuName="volin-menu",
             plotlyOutput("violinMedidaPlotOut", width = "100%", height = "500") %>% withSpinner(type=4, color="cadetblue")
          ),
-         tabPanel("Densidad 2D", icon = icon("pause"),h4("Densidad 2D"),
+         tabPanel("Densidad 2D", icon = icon("pause"), h4("Densidad 2D"),
             plotlyOutput("densidad2DMedidaPlotOut", width = "100%", height = "500") %>% withSpinner(type=5, color="cadetblue")
          ),
-         tabPanel("Histograma", icon = icon("signal"),h4("Histograma"),
+         tabPanel("Histograma", icon = icon("signal"), h4("Histograma"),
             dropdownButton(inputId = "histogramaMedidaOpsBtn",
                tags$h4("Opciones de Presentaci\u00F3n:"),
                awesomeCheckbox(inputId = "histogramaMedidaCheck",
@@ -77,7 +88,7 @@ tabItem(tabName = "modMedDesSubMTab",
             plotOutput("ridgelineMedidaPlotOut", width = "100%", height = "500") %>% withSpinner(type=4, color="cadetblue")
          )
        ),
-       navbarMenu("Correlaci\u00F3n",
+       navbarMenu("Correlaci\u00F3n", menuName="correlaMenu",
           tabPanel("Dispersi\u00F3n (Scatter)",icon = icon("braille"), h4("Dispersi\u00F3n (Scatter)"),
             plotlyOutput("scatterMedidaPlotOut", width = "100%", height = "500") %>% withSpinner(type=5, color="cadetblue")
           ),
@@ -145,7 +156,7 @@ tabItem(tabName = "modMedDesSubMTab",
              plotlyOutput("contourMedidaPlotOut", width = "100%", height = "500") %>% withSpinner(type=5, color="cadetblue")
           )
        ),
-       navbarMenu("Barras",
+       navbarMenu("Barras", menuName="barrasMenu",
           tabPanel("Barras",icon = icon("signal"), h4("Barras"),
              dropdownButton(inputId = "barrasMedidaOpsBtn",
                 tags$h4("Opciones de Presentaci\u00F3n:"),
@@ -197,7 +208,7 @@ tabItem(tabName = "modMedDesSubMTab",
                         content = "paralelasMedidaPlot_help", size = "m") # size: define el ancho (s,m,l) del "popup"
           )
        ),
-       navbarMenu("Jer\u00E1rquicos",
+       navbarMenu("Jer\u00E1rquicos", menuName="jerarqMenu",
           tabPanel("Treemap",icon = icon("tree"),
              h4("An\u00E1lisis Jer\u00E1rquico de los Score seleccionados del Modelo SEM (Treemap)"),
              plotOutput("treemapMedidaPlotOut", width = "100%", height = "500") %>% withSpinner(type=5, color="cadetblue")
@@ -260,7 +271,7 @@ tabItem(tabName = "modMedDesSubMTab",
              plotlyOutput("clusterMedidaPlotOut", width = "100%", height = "500") %>% withSpinner(type=4, color="cadetblue")
           )
        ),
-       navbarMenu("Redes",
+       navbarMenu("Redes", menuName="redesMenu",
           tabPanel("Red de Correlaci\u00F3n",icon = icon("connectdevelop"),
              h4("Red de Correlaci\u00F3n (an\u00E1lisis exploratorio/confirmatorio para las variables OBSERVADAS iniciales)"),
              tags$i("Para activar el gr\u00E1fico seleccionar en el Modelo SEM el grupo: OBSERVADA"),
@@ -290,7 +301,7 @@ tabItem(tabName = "modMedDesSubMTab",
              plotOutput("arcosMedidaPlotOut", width = "100%", height = "500") %>% withSpinner(type=4, color="cadetblue")
           )
        ),
-       navbarMenu("Evoluci\u00F3n",
+       navbarMenu("Evoluci\u00F3n",menuName="evolucionMenu",
           tabPanel("Flujo de cargas de coeficientes (Sankey)",icon = icon("key"),
              h4("An\u00E1lisis de Flujo de cargas de coeficientes del Modelo SEM (Representaci\u00F3n tipo Sankey)"),
              tags$i("Para activar el gr\u00E1fico seleccionar en el Modelo SEM el grupo: LATENTE"),
@@ -352,7 +363,7 @@ tabItem(tabName = "modMedDesSubMTab",
                            withSpinner(type=5, color="cadetblue")
           )
        ),
-       navbarMenu("Circularizar",
+       navbarMenu("Circularizar",menuName="circularMenu",
           tabPanel("Circular Packing de un Nivel", icon = icon("circle"),
              h4("An\u00E1lisis Circular Packing de un nivel para los Score de los elementos seleccionados"),
              plotlyOutput("circlePackOneLevelMedidaPlotOut", width = "100%", height = "500") %>%

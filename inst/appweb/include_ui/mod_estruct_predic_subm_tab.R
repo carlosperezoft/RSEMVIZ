@@ -9,7 +9,7 @@ tabItem(tabName = "modEstPredSubMTab",
     materialSwitch(inputId = "modeloLinealPanelToggle", label = tags$b("USAR An\u00E1lisis Detallado..."),
                    value = FALSE, status = "success", right = TRUE),
     fluidRow(id="modeloLinealTabSet",
-       box(actionButton("selectedNodesEstructuralBtn", "Actualizar Nodos Seleccionados..."),
+       box(actionButton("selectedNodesEstructuralBtn", "Actualizar gr\u00E1ficos asociados..."),
           visNetworkOutput("grafoModeloEstructuralOut", height=400) %>% withSpinner(type=8, color="cadetblue"),
           title = tagList(shiny::icon("gears"), "Modelo SEM"),  status = "success",
           collapsible = TRUE, solidHeader = TRUE, width = 5 # width: es por columnas en Shiny, de 1 a 12
