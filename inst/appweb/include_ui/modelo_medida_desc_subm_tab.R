@@ -36,15 +36,17 @@ tabItem(tabName = "modMedDesSubMTab",
         title = tagList(shiny::icon("list"), "Nodos SEM Seleccionados"), status="warning",
         collapsible=TRUE, solidHeader=TRUE, width=NULL # NULL, ajusta el Box a su contenedor
     ),
-    navbarPage("An\u00E1lisis Gr\u00E1fico:",
-       navbarMenu("Distribuci\u00F3n",
+    actionButton("hideMenu", "Hide 'More' navbarMenu"),
+    actionButton("showMenu", "Show 'More' navbarMenu"),
+    navbarPage("An\u00E1lisis Gr\u00E1fico:", id = "tabs",
+       navbarMenu("Distribuci\u00F3n", menuName="distribMenu",
          tabPanel("Violin",icon = icon("music"), h4("Violin"),
             plotlyOutput("violinMedidaPlotOut", width = "100%", height = "500") %>% withSpinner(type=4, color="cadetblue")
          ),
-         tabPanel("Densidad 2D", icon = icon("pause"),h4("Densidad 2D"),
+         tabPanel("Densidad 2D", icon = icon("pause"), h4("Densidad 2D"),
             plotlyOutput("densidad2DMedidaPlotOut", width = "100%", height = "500") %>% withSpinner(type=5, color="cadetblue")
          ),
-         tabPanel("Histograma", icon = icon("signal"),h4("Histograma"),
+         tabPanel("Histograma", icon = icon("signal"), h4("Histograma"),
             dropdownButton(inputId = "histogramaMedidaOpsBtn",
                tags$h4("Opciones de Presentaci\u00F3n:"),
                awesomeCheckbox(inputId = "histogramaMedidaCheck",
@@ -77,7 +79,7 @@ tabItem(tabName = "modMedDesSubMTab",
             plotOutput("ridgelineMedidaPlotOut", width = "100%", height = "500") %>% withSpinner(type=4, color="cadetblue")
          )
        ),
-       navbarMenu("Correlaci\u00F3n",
+       navbarMenu("Correlaci\u00F3n", menuName="correlaMenu",
           tabPanel("Dispersi\u00F3n (Scatter)",icon = icon("braille"), h4("Dispersi\u00F3n (Scatter)"),
             plotlyOutput("scatterMedidaPlotOut", width = "100%", height = "500") %>% withSpinner(type=5, color="cadetblue")
           ),

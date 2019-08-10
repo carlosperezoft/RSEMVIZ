@@ -21,7 +21,7 @@ output$violinMedidaPlotOut <- renderPlotly({
    #
    return(gpy)
 })
-# El grafico de densidad, es como un histograma (frecuencia acumnulada de los score) "suavizado":
+# El grafico de densidad, es como un histograma (frecuencia acumulada de los score) "suavizado":
 output$densidad2DMedidaPlotOut <- renderPlotly({
   # verifica que tenga informacion. Cancela la invocacion dado el caso, y evita cualquier proceso "reactive" asociado
   req(input$grafoModeloMedicionOut_selectedNodes)
@@ -106,5 +106,15 @@ output$ridgelineMedidaPlotOut <- renderPlot({
     scale_y_discrete(expand=c(0.01, 0)) +
     scale_x_continuous(expand=c(0.01, 0))
   #
+})
+#
+observeEvent(input$hideMenu, {
+  hideTab(inputId = "tabs", target = "distribMenu")
+  hideTab(inputId = "tabs", target = "correlaMenu")
+})
+#
+observeEvent(input$showMenu, {
+  showTab(inputId = "tabs", target = "distribMenu")
+  showTab(inputId = "tabs", target = "correlaMenu")
 })
 #
