@@ -41,8 +41,7 @@ tabItem(tabName = "modMedDesSubMTab",
           "4. \u00BFC\u00F3mo son las agrupaciones de los score de forma jer\u00E1rquica?"=4,
           "5. \u00BFLas dependencias entre constructos son significativas?"=5,
           "6. \u00BFLas cargas de factores y constructos sobre sus variables dependintes son significativos?"=6,
-          "7. \u00BFLos patrones de asociaci\u00F3n entre variables son significativos?"=7,
-          "8. \u00BF...?"=8
+          "7. \u00BFLos patrones de asociaci\u00F3n entre variables son significativos?"=7
         )
       ), title = tagList(shiny::icon("list"), "Nodos SEM Seleccionados"), status="warning",
       collapsible=TRUE, solidHeader=TRUE, width=NULL # NULL, ajusta el Box a su contenedor

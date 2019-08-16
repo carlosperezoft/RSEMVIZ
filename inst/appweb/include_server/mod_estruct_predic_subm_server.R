@@ -27,6 +27,9 @@ observeEvent(input$modeloLinealPanelToggle, ignoreNULL = TRUE, ignoreInit = TRUE
   shinyjs::toggle(id = "modeloLinealTabSet", anim = TRUE)
 })
 #
+# Presentacion de menu grafico de forma dinamica, segun la pregunta de analisis seleccionada:
+source('include_server/modelo_estructural_EDA/menu-dinamico-graficos.R', local=TRUE)
+#
 # Graficos para el menu de Estimacion en el Modelo Estructural:
 source('include_server/modelo_estructural_EDA/estimacion_graficos_server.R', local=TRUE)
 #

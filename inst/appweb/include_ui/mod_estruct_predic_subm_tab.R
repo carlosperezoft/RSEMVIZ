@@ -6,7 +6,7 @@ tabItem(tabName = "modEstPredSubMTab",
   h2(":: Modelo de Estructural - SEM"),
   fluidPage(
     titlePanel("An\u00E1lisis de Puntuaciones (Score) para variables Latentes End\u00F3genas (Regresi\u00F3n)"),
-    materialSwitch(inputId = "modeloLinealPanelToggle", label = tags$b("USAR An\u00E1lisis Detallado..."),
+    materialSwitch(inputId = "modeloLinealPanelToggle", label = tags$b("VER Preguntas de An\u00E1lisis..."),
                    value = FALSE, status = "success", right = TRUE),
     fluidRow(id="modeloLinealTabSet",
        box(actionButton("selectedNodesEstructuralBtn", "Actualizar gr\u00E1ficos asociados..."),
@@ -54,19 +54,25 @@ tabItem(tabName = "modEstPredSubMTab",
           )
        )
     ),
-    box(htmlOutput("estructuralSelectedNodesTxtOut"),
-        title = tagList(shiny::icon("list"), "Nodos SEM Seleccionados"), status="warning",
-        collapsible=TRUE, solidHeader=TRUE, width=NULL # NULL, ajusta el Box a su contenedor
+    box(htmlOutput("estructuralSelectedNodesTxtOut"), hr(),
+      tags$div(tags$style(HTML( ".selectize-dropdown, .selectize-dropdown.form-control{z-index:10000;}"))),
+      selectInput("pregEstructuralSel", tags$b("Preguntas de an\u00E1lisis:"), width = "60%",
+        choices = c("1. \u00BFLos score estimados tienen diferencias significativas con respecto a los valores observados?"=1,
+          "2. \u00BFLos valores de predicci\u00F3n para los constructos permiten obtener inferencias importantes?"=2,
+          "3. \u00BFQu\u00E9 tipos y niveles de significancia se tienen entre las mediaciones de los constructos?"=3
+        )
+      ), title = tagList(shiny::icon("list"), "Nodos SEM Seleccionados"), status="warning",
+         collapsible=TRUE, solidHeader=TRUE, width=NULL # NULL, ajusta el Box a su contenedor
     ),
-    navbarPage("An\u00E1lisis Gr\u00E1fico:",
-      navbarMenu("Estimaci\u00F3n",
+    navbarPage("An\u00E1lisis Gr\u00E1fico:", id = "estructRegMenu",
+      navbarMenu("Estimaci\u00F3n", menuName="estimaMenu",
         tabPanel("Densidad 2D", icon = icon("pause"),
            h4("An\u00E1lisis de densidad 2D para datos Observados (izquierda) vs Score Estimados (derecha)"),
            plotlyOutput("densidad2DEstructPlotOut", width = "100%", height = "500") %>%
                         withSpinner(type=6, color="cadetblue")
         )
       ),
-      navbarMenu("Predicci\u00F3n",
+      navbarMenu("Predicci\u00F3n", menuName="predicMenu",
         tabPanel("Predicci\u00F3n Latentes", icon = icon("paper-plane"),
            h4("An\u00E1lisis de Predicci\u00F3n sobre las variables LANTENTES del Modelo SEM"),
            tags$i("Para activar el gr\u00E1fico seleccionar en el Modelo SEM una variable LATENTE"),
@@ -83,7 +89,7 @@ tabItem(tabName = "modEstPredSubMTab",
            ) # FIN fluidRow
         )
       ),
-      navbarMenu("Mediaci\u00F3n",
+      navbarMenu("Mediaci\u00F3n", menuName="mediacMenu",
         tabPanel("Mediaci\u00F3n-Regresi\u00F3n Latentes", icon = icon("recycle"),
            h4("An\u00E1lisis de Mediaci\u00F3n-Regresi\u00F3n sobre las variables LANTENTES del Modelo SEM"),
            tags$i("Para activar el gr\u00E1fico seleccionar en el Modelo SEM tres variables LATENTES"),

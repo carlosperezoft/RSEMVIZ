@@ -4,14 +4,18 @@
 #
 # NOTA: las inclusiones son relativas a la ubicion del archivo. "ui.R"
 source('include_ui/utils_ui.R', local=TRUE)
-
+# ------------------------------------------------------------------------------
 # Declaracion del encabezado para la aplicacion WEB:
-header <- dashboardHeaderPlus(
+# Se activa el dashboardHeader/dashboardHeaderPlus caso de usar "rightsidebar".
+# IMPORTANTE: dashboardPagePlus permite presenrar el menu abreviado de iconos
+# a la izquierda al minimizar el encabezado
+# ------------------------------------------------------------------------------
+header <- dashboardHeaderPlus( # dashboardHeaderPlus(
   # El titulo usado aqui es el presentado en el menu de la app web:
   title = tagList(shiny::icon("gear"), "SEMVIZ \u00AE"),
-  titleWidth = "260px", disable = FALSE, linkedInHead, msgHelpMenu,
-  enable_rightsidebar = TRUE,
-  rightSidebarIcon = "gears"
+  titleWidth = "260px", disable = FALSE, linkedInHead, msgHelpMenu
+# , enable_rightsidebar = FALSE
+# , rightSidebarIcon = "gears"
 )
 
 # menu_general ------------------------------------------------------------
@@ -52,30 +56,34 @@ body <- dashboardBody(setShadow("box"), useShinyjs(),
 
 # DEFINICION ELEMENTO DASHBOARD -------------------------------------------------
 # El titulo usado aqui es el presentado en la pagina de Navegador WEB:
-dashboardPagePlus(title = "SEMVIZ", header, sidebar, body, skin = "green",
-  rightsidebar = rightSidebar(
-    background = "dark", width = 260,
-    rightSidebarTabContent(
-      id = 1,
-      title = "Modelo SEM",
-      icon = "desktop",
-      active = TRUE,
-      sliderInput(
-        "obs",
-        "Number of observations:",
-        min = 0, max = 1000, value = 500
-      )
-    ),
-    rightSidebarTabContent(
-      id = 2,
-      title = "Tab 2",
-      textInput("caption", "Caption", "Data Summary")
-    ),
-    rightSidebarTabContent(
-      id = 3,
-      icon = "paint-brush",
-      title = "Tab 3",
-      numericInput("obs", "Observations:", 10, min = 1, max = 100)
-    )
-  )
+# Se activa el dashboardPage/dashboardPagePlus caso de usar "rightsidebar".
+# IMPORTANTE: dashboardPagePlus permite presenrar el menu abreviado de iconos
+# a la izquierda al minimizar el encabezado
+# -------------------------------------------------------------------------------
+dashboardPagePlus(title = "SEMVIZ", header, sidebar, body, skin = "green"
+  # ,rightsidebar = rightSidebar(
+  #   background = "dark", width = 260,
+  #   rightSidebarTabContent(
+  #     id = 1,
+  #     title = "Modelo SEM",
+  #     icon = "desktop",
+  #     active = TRUE,
+  #     sliderInput(
+  #       "obs",
+  #       "Number of observations:",
+  #       min = 0, max = 1000, value = 500
+  #     )
+  #   ),
+  #   rightSidebarTabContent(
+  #     id = 2,
+  #     title = "Tab 2",
+  #     textInput("caption", "Caption", "Data Summary")
+  #   ),
+  #   rightSidebarTabContent(
+  #     id = 3,
+  #     icon = "paint-brush",
+  #     title = "Tab 3",
+  #     numericInput("obs", "Observations:", 10, min = 1, max = 100)
+  #   )
+  # )
 )
