@@ -108,3 +108,13 @@ output$ridgelineMedidaPlotOut <- renderPlot({
   #
 })
 #
+observeEvent(input$hideMenu, {
+  hideTab(inputId = "tabs", target = "distribMenu")
+  hideTab(inputId = "tabs", target = "correlaMenu")
+})
+#
+observeEvent(input$showMenu, {
+  showTab(inputId = "tabs", target = "distribMenu")
+  showTab(inputId = "tabs", target = "correlaMenu")
+})
+#

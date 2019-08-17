@@ -50,7 +50,7 @@ tabItem(tabName = "modMedDesSubMTab",
     ),
     navbarPage("An\u00E1lisis Gr\u00E1fico:", id = "medidaDescMenu",
        navbarMenu("Distribuci\u00F3n", menuName="distribMenu",
-         tabPanel("Violin",icon = icon("music"), h4("Violin"), menuName="volin-menu",
+         tabPanel("Violin",icon = icon("music"), h4("Violin"),
             plotlyOutput("violinMedidaPlotOut", width = "100%", height = "500") %>% withSpinner(type=4, color="cadetblue")
          ),
          tabPanel("Densidad 2D", icon = icon("pause"), h4("Densidad 2D"),
