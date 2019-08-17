@@ -15,18 +15,20 @@ tabItem(tabName = "casosEstudioTab",
       #       esto con el fin de ajustarse al tamaño de los elementos contenidos en cada panel.
       #      * IMPORTANTE el total son 12 columnas para ajustar los dos Paneles,
       #      * se ha usado 5 en el sidebar (grafo) y 7 en el main (tablas).
-      sidebarPanel(width = 5,
+      sidebarPanel(width = 4,
          fluidRow(
-           selectInput("casoEstudioSelect", "Casos de Estudio:", selected = "Seleccionar...",
-             choices = c("Seleccionar...", "Political_Democracy",
-                         "Grupos_INVESTIGACION", "Universidades_Estatales")
+           selectInput("casoEstudioSelect", tags$b("Casos de Estudio:"), selected = "Seleccionar...", width="100%",
+              choices = c("Seleccionar...",
+                 "BOLLEN: Pol\u00EDtica Democr\u00E1tica de pa\u00EDses en v\u00EDa de Desarrollo" = "Political_Democracy",
+                 "U.de A.: Estudio de Grupos Investigaci\u00F3n en la Universidad" = "Grupos_INVESTIGACION"
+              )
            ),
-           checkboxInput("usarCasoEstudioChk", "Usar Caso de Estudio en SEMVIZ", value = FALSE)
+           checkboxInput("usarCasoEstudioChk", "Usar Caso de Estudio seleccionado en SEMVIZ", value = FALSE)
          )
       ), # fin sidebarPanel
 
       # Main panel for displaying outputs ----
-      mainPanel(width = 7,
+      mainPanel(width = 8,
         wellPanel(
           h3("Informaci\u00F3n sobre el Caso de Estudio seleccionado:"),
           ##

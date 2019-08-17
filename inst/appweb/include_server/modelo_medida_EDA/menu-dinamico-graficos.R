@@ -8,7 +8,16 @@
 # title en un tabPanel.
 #
 observeEvent(input$preguntasBaseSel, {
-  if(input$preguntasBaseSel == 1) {
+  if(input$preguntasBaseSel == 0) {
+      hideTab(inputId = "medidaDescMenu", target = "distribMenu") # navbarMenu
+      hideTab(inputId = "medidaDescMenu", target = "correlaMenu")
+      hideTab(inputId = "medidaDescMenu", target = "barrasMenu")
+      hideTab(inputId = "medidaDescMenu", target = "jerarqMenu")
+      hideTab(inputId = "medidaDescMenu", target = "redesMenu")
+      hideTab(inputId = "medidaDescMenu", target = "evolucionMenu")
+      hideTab(inputId = "medidaDescMenu", target = "circularMenu")
+  }
+  else if(input$preguntasBaseSel == 1) {
       showTab(inputId = "medidaDescMenu", target = "distribMenu") # navbarMenu
       hideTab(inputId = "medidaDescMenu", target = "correlaMenu")
       hideTab(inputId = "medidaDescMenu", target = "barrasMenu")

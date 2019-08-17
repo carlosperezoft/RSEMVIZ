@@ -5,24 +5,21 @@
 casoEstudioData <- reactive({
   switch(input$casoEstudioSelect,
      "Political_Democracy" = poli_dem_data, # SET de datos de Caso SEM en lavaan
-     "Grupos_INVESTIGACION" = DATOS_GRUPOS_INVEST_UdeA,
-     "Universidades_Estatales" = DATOS_GRUPOS_INVEST_UdeA
+     "Grupos_INVESTIGACION" = DATOS_GRUPOS_INVEST_UdeA
      )
 })
 
 casoEstudioLabels <- reactive({
   switch(input$casoEstudioSelect,
      "Political_Democracy" = poli_dem_labels,
-     "Grupos_INVESTIGACION" = grupos_invest_udea_model,
-     "Universidades_Estatales" = grupos_invest_udea_model
+     "Grupos_INVESTIGACION" = GRUPOS_UdeA_VAR_Labels
   )
 })
 
 casoEstudioModel <- reactive({
   switch(input$casoEstudioSelect,
      "Political_Democracy" = political_democracy_model,
-     "Grupos_INVESTIGACION" = grupos_invest_udea_model,
-     "Universidades_Estatales" = grupos_invest_udea_model
+     "Grupos_INVESTIGACION" = grupos_invest_udea_model
   )
 })
 
@@ -44,7 +41,6 @@ output$resumenCasoEstudoTxtOut <- renderPrint({
 output$detalleCasoEstudioHTMLOut <- renderPrint({
   switch(input$casoEstudioSelect,
      "Political_Democracy" = includeMarkdown("help_files/plot_help.md"),
-     "Grupos_INVESTIGACION" = includeMarkdown("help_files/controls_help.md"),
-     "Universidades_Estatales" = includeMarkdown("help_files/plot_help.md")
+     "Grupos_INVESTIGACION" = includeMarkdown("help_files/controls_help.md")
   )
 })

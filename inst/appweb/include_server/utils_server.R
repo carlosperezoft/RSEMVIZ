@@ -77,7 +77,7 @@ nodosGrafoSEM <- function(fitModel, nodes_labels = NULL) {
   # Se actualiza el Titulo descriptivo usado en cada NODO:
   for(i in 1:nrow(nodesVis)) {
     if(!is.null(nodes_labels)) { # TODO: probar esta verificacion del NULL, es para los casos NO default
-      desc <- nodes_labels %>% filter(variable == nodesVis[i,]$label) %>% select("desc")
+      desc <- nodes_labels %>% filter(variable == nodesVis[i,]$label) %>% select("desc") # variable: es columna del nodes_labels
       nodesVis[i,]$title <- paste0("<p><b>", nodesVis[i,]$label,"</b><br>",desc,"</p>")
     }
   }
@@ -85,7 +85,7 @@ nodosGrafoSEM <- function(fitModel, nodes_labels = NULL) {
   return(nodesVis)
 }
 #
-getNodeLabel <- function(nodes_labels, node_name){
+getNodeLabel <- function(nodes_labels, node_name){ # variable: es columna del nodes_labels
   label <- nodes_labels %>% filter(variable == node_name) %>% select("desc")
   return(label)
 }

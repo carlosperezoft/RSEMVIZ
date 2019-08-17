@@ -7,7 +7,7 @@ source('include_ui/utils_ui.R', local=TRUE)
 # ------------------------------------------------------------------------------
 # Declaracion del encabezado para la aplicacion WEB:
 # Se activa el dashboardHeader/dashboardHeaderPlus caso de usar "rightsidebar".
-# IMPORTANTE: dashboardPagePlus permite presenrar el menu abreviado de iconos
+# IMPORTANTE: dashboardPagePlus permite presentar el menu abreviado de iconos
 # a la izquierda al minimizar el encabezado
 # ------------------------------------------------------------------------------
 header <- dashboardHeaderPlus( # dashboardHeaderPlus(
@@ -57,7 +57,7 @@ body <- dashboardBody(setShadow("box"), useShinyjs(),
 # DEFINICION ELEMENTO DASHBOARD -------------------------------------------------
 # El titulo usado aqui es el presentado en la pagina de Navegador WEB:
 # Se activa el dashboardPage/dashboardPagePlus caso de usar "rightsidebar".
-# IMPORTANTE: dashboardPagePlus permite presenrar el menu abreviado de iconos
+# IMPORTANTE: dashboardPagePlus permite presentar el menu abreviado de iconos
 # a la izquierda al minimizar el encabezado
 # -------------------------------------------------------------------------------
 dashboardPagePlus(title = "SEMVIZ", header, sidebar, body, skin = "green"

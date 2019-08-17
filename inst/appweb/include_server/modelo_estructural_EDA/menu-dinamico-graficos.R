@@ -8,7 +8,12 @@
 # title en un tabPanel.
 #
 observeEvent(input$pregEstructuralSel, {
-  if(input$pregEstructuralSel == 1) {
+  if(input$pregEstructuralSel == 0) {
+      hideTab(inputId = "estructRegMenu", target = "estimaMenu") # navbarMenu
+      hideTab(inputId = "estructRegMenu", target = "predicMenu")
+      hideTab(inputId = "estructRegMenu", target = "mediacMenu")
+  }
+  else if(input$pregEstructuralSel == 1) {
       showTab(inputId = "estructRegMenu", target = "estimaMenu") # navbarMenu
       hideTab(inputId = "estructRegMenu", target = "predicMenu")
       hideTab(inputId = "estructRegMenu", target = "mediacMenu")

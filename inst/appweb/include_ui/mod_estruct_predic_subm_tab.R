@@ -56,8 +56,10 @@ tabItem(tabName = "modEstPredSubMTab",
     ),
     box(htmlOutput("estructuralSelectedNodesTxtOut"), hr(),
       tags$div(tags$style(HTML( ".selectize-dropdown, .selectize-dropdown.form-control{z-index:10000;}"))),
-      selectInput("pregEstructuralSel", tags$b("Preguntas de an\u00E1lisis:"), width = "60%",
-        choices = c("1. \u00BFLos score estimados tienen diferencias significativas con respecto a los valores observados?"=1,
+      selectInput("pregEstructuralSel", tags$b("Preguntas de an\u00E1lisis:"),
+                  width = "60%", selected = 0,
+        choices = c("NO TENGO Dudas..."=0,
+          "1. \u00BFLos score estimados tienen diferencias significativas con respecto a los valores observados?"=1,
           "2. \u00BFLos valores de predicci\u00F3n para los constructos permiten obtener inferencias importantes?"=2,
           "3. \u00BFQu\u00E9 tipos y niveles de significancia se tienen entre las mediaciones de los constructos?"=3
         )
