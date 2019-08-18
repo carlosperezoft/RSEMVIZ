@@ -10,7 +10,7 @@ paramsSemFit <- reactive({
 # Se usa "reactive" para auto-reprocesar la "funcion" cuando cambie algun "input" interno !
 getGrafoModelSEMBase <- reactive({
   fitModel <- paramsSemFit()
-  nodesLabels <- casoEstudioLabels()
+  nodesLabels <- datasetLabelsInput()
   visNetwork(nodosGrafoSEM(fitModel, nodesLabels), rutasGrafoSEM(fitModel),
     main = "Graphical Analysis Driven SEM", width = "100%") %>%
     # darkblue square with shadow for group "LATENTE" (la figura es un "circulo" que escala con el "value" del nodo)

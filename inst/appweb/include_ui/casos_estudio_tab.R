@@ -20,7 +20,7 @@ tabItem(tabName = "casosEstudioTab",
            selectInput("casoEstudioSelect", tags$b("Casos de Estudio:"), selected = "Seleccionar...", width="100%",
               choices = c("Seleccionar...",
                  "BOLLEN: Pol\u00EDtica Democr\u00E1tica de pa\u00EDses en v\u00EDa de Desarrollo" = "Political_Democracy",
-                 "U.de A.: Estudio de Grupos Investigaci\u00F3n en la Universidad" = "Grupos_INVESTIGACION"
+                 "U. de A.: Grupos de Investigaci\u00F3n en la Universidad" = "Grupos_INVESTIGACION"
               )
            ),
            checkboxInput("usarCasoEstudioChk", "Usar Caso de Estudio seleccionado en SEMVIZ", value = FALSE)
@@ -36,7 +36,7 @@ tabItem(tabName = "casosEstudioTab",
             tabPanel("DETALLES", h3("Destalles propios del Caso de Estudio"),
               htmlOutput("detalleCasoEstudioHTMLOut")
             ),
-            tabPanel("REMUMEN", h3("Resumen informativo del modelo y los datos asociados"),
+            tabPanel("REMUMEN", h2("Resumen informativo sobre los datos asociados"),
               verbatimTextOutput("resumenCasoEstudoTxtOut")
             )
           )

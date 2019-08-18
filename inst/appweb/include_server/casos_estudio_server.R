@@ -34,7 +34,7 @@ observe({
 
 # Generate a summary of the dataset ----
 output$resumenCasoEstudoTxtOut <- renderPrint({
-  dataset <- casoEstudioData() # [c("profes", "est", "salario")]
+  dataset <- casoEstudioData()[,-1] # Se evita la columna row_label
   summary(dataset)
 })
 

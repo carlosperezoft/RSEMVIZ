@@ -39,12 +39,14 @@ sidebar <- dashboardSidebar(width = "260px",
 
 
 # TABS ASOCIADOS A CADA MENU ITEM DEL SIDE BAR PARA LA APPWEB -----------------
+# IMPORTANTE: Se debe usar un archivo ".R" por cada TAB de forma independiente.
 body <- dashboardBody(setShadow("box"), useShinyjs(),
   tabItems(
     # MENU ITEM PARA EL MENU ITEM: INICIO
     source("include_ui/home_tab.R", local = TRUE)$value,
     source("include_ui/casos_estudio_tab.R", local = TRUE)$value,
     source("include_ui/set_datos_subm_tab.R", local = TRUE)$value,
+    source("include_ui/set_datos_labels_subm_tab.R", local = TRUE)$value,
     source("include_ui/modelo_sem_tab.R", local = TRUE)$value,
     source("include_ui/dashbas_subm_tab.R", local = TRUE)$value,
     source("include_ui/dashavan_subm_tab.R", local = TRUE)$value,

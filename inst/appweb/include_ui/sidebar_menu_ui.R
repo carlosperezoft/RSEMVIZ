@@ -18,12 +18,11 @@ sidebarMenu(id = "sidebarMenu",
     hr(), # ":: BASES",
     menuItem(text = "Casos de Estudio", tabName = "casosEstudioTab", icon = icon("book"),
              badgeLabel = "CASOS", badgeColor = "orange"),
-    menuItem(text = "Gesti\u00F3n SET de Datos", tabName = "setDatosSubMTab", icon = icon("database"),
-             badgeLabel = "DATOS", badgeColor = "purple"),
-    # menuItem(text = "Gesti\u00F3n de Datos", icon = icon("database"),
-    #    menuSubItem(text = "SET de Datos", tabName = "setDatosSubMTab", icon = icon("save")), # <- "file"
-    #    menuSubItem(text = "An\u00E1lisis Exploratorio", tabName = "EDASubMTab", icon = icon("search"))
-    # ),
+    menuItem(text = "Gesti\u00F3n SET de Datos", icon = icon("database"),
+    #        tabName = "setDatosSubMTab", badgeLabel = "DATOS", badgeColor = "purple"),
+       menuSubItem(text = "Variables Explicativas", tabName = "setDatosObsSubMTab", icon = icon("columns")), # <- "file"
+       menuSubItem(text = "Etiquetas del Modelo", tabName = "setDatosLabelSubMTab", icon = icon("tags"))
+    ),
     menuItem(text = "Especificar y Estimar", tabName = "modeloSEMTab", icon = icon("edit"),
              badgeLabel = "Modelo SEM", badgeColor = "green"),
     hr(), ":: RESULTADOS Visual-Interactivo ::",

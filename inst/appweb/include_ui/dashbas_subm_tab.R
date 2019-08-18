@@ -18,8 +18,24 @@ tabItem(tabName = "dashBASSubMTab",
          fluidRow(
            # NOTA: NO usar box(..) para contener un elemento tipo valueBoxOutput(..)
            #       El valueBoxOutput se activa cuando el SEM model ha sido estimado (tiene datos)
-           valueBoxOutput("statChi2Out", width = 3), valueBoxOutput("pValueChi2Out", width = 3),
-           valueBoxOutput("statRazonChi2Out", width = 3), infoBoxOutput("gradosLibertadOut", width = 3)
+           column(3, valueBoxOutput("statChi2Out", width = NULL) %>%
+                 helper(type = "inline", title = "SEMVIZ: statChi2Out", colour = "black",
+                        content = "redCorrelacionMedidaPlot_help", size = "m")
+           ),
+           column(3, valueBoxOutput("pValueChi2Out", width = NULL) %>%
+                 helper(type = "inline", title = "SEMVIZ: pValueChi2Out", colour = "black",
+                        content = "redCorrelacionMedidaPlot_help", size = "m")
+           ),
+           column(3, valueBoxOutput("statRazonChi2Out", width = NULL) %>%
+                 helper(type = "inline", title = "SEMVIZ: statRazonChi2Out", colour = "black",
+                        content = "redCorrelacionMedidaPlot_help", size = "m")
+           ),
+           column(3, infoBoxOutput("gradosLibertadOut", width = NULL) %>%
+               helper(type = "inline", title = "SEMVIZ: gradosLibertadOut", colour = "black",
+                      size = "s", content = paste("gradosLibertadOut: Eval\u00FAa si el modelo debe ser ajustado.",
+                                                  "Entre m\u00E1s se acerque a cero (0) indica un MAL ajuste.")
+               )
+           )
          ),
          fluidRow(
            uiOutput("gfiBoxOut") %>% withSpinner(type=7, color="cadetblue"),
@@ -39,8 +55,22 @@ tabItem(tabName = "dashBASSubMTab",
       ),
       tabPanel("Ajuste Parsimonioso", height = 200, h4("Criterios de Referencia para el Ajuste Parsimonioso"),
          fluidRow(
-            valueBoxOutput("pgfiBoxOut", width = 3), valueBoxOutput("pnfiBoxOut", width = 3),
-            valueBoxOutput("aicInfoOut", width = 3), valueBoxOutput("bicInfoOut", width = 3)
+           column( 3, valueBoxOutput("pgfiBoxOut", width = NULL) %>%
+                 helper(type = "inline", title = "SEMVIZ: pgfiBoxOut", colour = "black",
+                        content = "redCorrelacionMedidaPlot_help", size = "m")
+           ),
+           column(3, valueBoxOutput("pnfiBoxOut", width = NULL) %>%
+                 helper(type = "inline", title = "SEMVIZ: pnfiBoxOut", colour = "black",
+                        content = "redCorrelacionMedidaPlot_help", size = "m")
+           ),
+           column(3, valueBoxOutput("aicInfoOut", width = NULL) %>%
+                 helper(type = "inline", title = "SEMVIZ: aicInfoOut", colour = "black",
+                        content = "redCorrelacionMedidaPlot_help", size = "m")
+           ),
+           column(3, valueBoxOutput("bicInfoOut", width = NULL) %>%
+                 helper(type = "inline", title = "SEMVIZ: bicInfoOut", colour = "black",
+                        content = "redCorrelacionMedidaPlot_help", size = "m")
+           )
          ),
          dropdownButton(inputId = "barrasMedidasAjusteOpsBtn",
             tags$h4("Opciones de Presentaci\u00F3n:"),

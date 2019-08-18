@@ -45,11 +45,17 @@ output$fitElementSEMTxtOut <- renderPrint({
 })
 # Se usa el objeto visNetworkProxy para establecer los elementos seleccionados en el Grafo:
 # Para actualizar la seleccion de varios nodos, se hace necesario el Boton:
-observe({
-  input$getNodesSelBtn
-  visNetworkProxy("grafoAvanzSEMOut") %>% visGetSelectedNodes()
+# observe({
+#   input$getNodesSelBtn
+#   visNetworkProxy("grafoAvanzSEMOut") %>% visGetSelectedNodes()
+# })
+#
+# Aqui se observan cambios en la seleccion de un solo NODO (para varios se debe usar un Boton):
+observeEvent(input$grafoAvanzSEMOut_selected, ignoreNULL = TRUE, ignoreInit = TRUE,
+{
+  visNetworkProxy("grafoAvanzSEMOut") %>% visGetSelectedNodes() # actualiza contenedores...
 })
-
+#
 # paste0(..) es una funcion vetorizadas, luego recorre _selectedNodes
 # por cada item que tenga y concatenda por cada fila:
 output$nodesListTxtOut <- renderText({

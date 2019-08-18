@@ -205,10 +205,22 @@ output$rmseaBoxOut <- renderUI({
     collapsible = TRUE, status = item_color, solidHeader = TRUE, closable = FALSE,
     amChartsOutput("rmseaBulletOut", height = "150"), # Es necesario usar un amChartsOutput... por el UI dinamico!
     footer = tagList( # SECCION DE EXPLICACION DEL CRITERIO:
-      tags$b("Error de Aproximaci\u00F3n Cuadr\u00E1tico Medio (RMSEA)")
+      tags$b("Error de Aproximaci\u00F3n Cuadr\u00E1tico Medio (RMSEA)"),
+      awesomeCheckbox(inputId = "rmseaHelpSwitch", label = "Ver Criterio",
+                      value = FALSE, status = item_color),
+      shinyjs::hidden( # Oculta el criterio inicialmente
+        helpText(id = "rmseaHelpTxt",
+                 paste("?? (RMSEA): Eval\u00FAa si el modelo debe ser ajustado.",
+                 "Entre m\u00E1s se acerque a cero (0) indica un MAL ajuste."
+                 )
+        )
+      ) # cierra hidden
     ) # FIN footer
   )
 })
+#
+shinyjs::onclick("rmseaHelpSwitch", shinyjs::toggle(id = "rmseaHelpTxt", anim = TRUE, animType = "fade"))
+#
 # amBullet usado en el UI dinamico: "rmseaBoxOut"
 output$rmseaBulletOut <- renderAmCharts({
     amBullet(value = as.numeric(sprintf("%.3f", getMedidaAjusteValue("rmsea"))),
@@ -237,10 +249,22 @@ output$rmrBoxOut <- renderUI({
     collapsible = TRUE, status = item_color, solidHeader = TRUE, closable = FALSE,
     amChartsOutput("rmrBulletOut", height = "150"), # Es necesario usar un amChartsOutput... por el UI dinamico!
     footer = tagList( # SECCION DE EXPLICACION DEL CRITERIO:
-      tags$b("Indice de Error Cuadr\u00E1tico Medio (RMR)")
+      tags$b("Indice de Error Cuadr\u00E1tico Medio (RMR)"),
+      awesomeCheckbox(inputId = "rmrHelpSwitch", label = "Ver Criterio",
+                      value = FALSE, status = item_color),
+      shinyjs::hidden( # Oculta el criterio inicialmente
+        helpText(id = "rmrHelpTxt",
+                 paste("?? (RMR): Eval\u00FAa si el modelo debe ser ajustado.",
+                 "Entre m\u00E1s se acerque a cero (0) indica un MAL ajuste."
+                 )
+        )
+      ) # cierra hidden
     ) # FIN footer
   )
 })
+#
+shinyjs::onclick("rmrHelpSwitch", shinyjs::toggle(id = "rmrHelpTxt", anim = TRUE, animType = "fade"))
+#
 # amBullet usado en el UI dinamico: "rmrBoxOut"
 output$rmrBulletOut <- renderAmCharts({
     amBullet(value = as.numeric(sprintf("%.3f", getMedidaAjusteValue("rmr"))),
@@ -269,10 +293,22 @@ output$ecviBoxOut <- renderUI({
     collapsible = TRUE, status = item_color, solidHeader = TRUE, closable = FALSE,
     amChartsOutput("ecviBulletOut", height = "150"), # Es necesario usar un amChartsOutput... por el UI dinamico!
     footer = tagList( # SECCION DE EXPLICACION DEL CRITERIO:
-      tags$b("Indice de Validaci\u00F3n Cruzada Esperada (ECVI)")
+      tags$b("Indice de Validaci\u00F3n Cruzada Esperada (ECVI)"),
+      awesomeCheckbox(inputId = "ecviHelpSwitch", label = "Ver Criterio",
+                      value = FALSE, status = item_color),
+      shinyjs::hidden( # Oculta el criterio inicialmente
+        helpText(id = "ecviHelpTxt",
+                 paste("?? (ECVI): Eval\u00FAa si el modelo debe ser ajustado.",
+                 "Entre m\u00E1s se acerque a cero (0) indica un MAL ajuste."
+                 )
+        )
+      ) # cierra hidden
     ) # FIN footer
   )
 })
+#
+shinyjs::onclick("ecviHelpSwitch", shinyjs::toggle(id = "ecviHelpTxt", anim = TRUE, animType = "fade"))
+#
 # amBullet usado en el UI dinamico: "ecviBoxOut"
 output$ecviBulletOut <- renderAmCharts({
     amBullet(value = as.numeric(sprintf("%.3f", getMedidaAjusteValue("ecvi"))),
@@ -301,10 +337,22 @@ output$nfiBoxOut <- renderUI({
     collapsible = TRUE, status = item_color, solidHeader = TRUE, closable = FALSE,
     amChartsOutput("nfiBulletOut", height = "150"), # Es necesario usar un amChartsOutput... por el UI dinamico!
     footer = tagList( # SECCION DE EXPLICACION DEL CRITERIO:
-      tags$b("Indice de ajuste normalizado (NFI)")
+      tags$b("Indice de ajuste normalizado (NFI)"),
+      awesomeCheckbox(inputId = "nfiHelpSwitch", label = "Ver Criterio",
+                      value = FALSE, status = item_color),
+      shinyjs::hidden( # Oculta el criterio inicialmente
+        helpText(id = "nfiHelpTxt",
+                 paste("?? (NFI): Eval\u00FAa si el modelo debe ser ajustado.",
+                 "Entre m\u00E1s se acerque a cero (0) indica un MAL ajuste."
+                 )
+        )
+      ) # cierra hidden
     ) # FIN footer
   )
 })
+#
+shinyjs::onclick("nfiHelpSwitch", shinyjs::toggle(id = "nfiHelpTxt", anim = TRUE, animType = "fade"))
+#
 # amBullet usado en el UI dinamico: "nfiBoxOut"
 output$nfiBulletOut <- renderAmCharts({
     amBullet(value = as.numeric(sprintf("%.3f", 100*getMedidaAjusteValue("nfi"))),
@@ -333,10 +381,22 @@ output$tliBoxOut <- renderUI({
     collapsible = TRUE, status = item_color, solidHeader = TRUE, closable = FALSE,
     amChartsOutput("tliBulletOut", height = "150"), # Es necesario usar un amChartsOutput... por el UI dinamico!
     footer = tagList( # SECCION DE EXPLICACION DEL CRITERIO:
-      tags$b("Indice de ajuste NO normalizado - Tucker Lewis (NNFI-TLI)")
+      tags$b("Indice de ajuste NO normalizado - Tucker Lewis (NNFI-TLI)"),
+      awesomeCheckbox(inputId = "tliHelpSwitch", label = "Ver Criterio",
+                      value = FALSE, status = item_color),
+      shinyjs::hidden( # Oculta el criterio inicialmente
+        helpText(id = "tliHelpTxt",
+                 paste("?? (NNFI-TLI): Eval\u00FAa si el modelo debe ser ajustado.",
+                 "Entre m\u00E1s se acerque a cero (0) indica un MAL ajuste."
+                 )
+        )
+      ) # cierra hidden
     ) # FIN footer
   )
 })
+#
+shinyjs::onclick("tliHelpSwitch", shinyjs::toggle(id = "tliHelpTxt", anim = TRUE, animType = "fade"))
+#
 # amBullet usado en el UI dinamico: "tliBoxOut"
 output$tliBulletOut <- renderAmCharts({
     amBullet(value = as.numeric(sprintf("%.3f", 100*getMedidaAjusteValue("tli"))),
@@ -365,10 +425,22 @@ output$agfiBoxOut <- renderUI({
     collapsible = TRUE, status = item_color, solidHeader = TRUE, closable = FALSE,
     amChartsOutput("agfiBulletOut", height = "150"), # Es necesario usar un amChartsOutput... por el UI dinamico!
     footer = tagList( # SECCION DE EXPLICACION DEL CRITERIO:
-      tags$b("Indice de bondad de ajuste corregido (AGFI)")
+      tags$b("Indice de bondad de ajuste corregido (AGFI)"),
+      awesomeCheckbox(inputId = "agfiHelpSwitch", label = "Ver Criterio",
+                      value = FALSE, status = item_color),
+      shinyjs::hidden( # Oculta el criterio inicialmente
+        helpText(id = "agfiHelpTxt",
+                 paste("?? (AGFI): Eval\u00FAa si el modelo debe ser ajustado.",
+                 "Entre m\u00E1s se acerque a cero (0) indica un MAL ajuste."
+                 )
+        )
+      ) # cierra hidden
     ) # FIN footer
   )
 })
+#
+shinyjs::onclick("agfiHelpSwitch", shinyjs::toggle(id = "agfiHelpTxt", anim = TRUE, animType = "fade"))
+#
 # amBullet usado en el UI dinamico: "agfiBoxOut"
 output$agfiBulletOut <- renderAmCharts({
     amBullet(value = as.numeric(sprintf("%.3f", 100*getMedidaAjusteValue("agfi"))),
@@ -397,10 +469,22 @@ output$gfiCmpBoxOut <- renderUI({
     collapsible = TRUE, status = item_color, solidHeader = TRUE, closable = FALSE,
     amChartsOutput("gfiCmpBulletOut", height = "150"), # Es necesario usar un amChartsOutput... por el UI dinamico!
     footer = tagList( # SECCION DE EXPLICACION DEL CRITERIO:
-      tags$b("Indice de bondad de ajuste (GFI)")
+      tags$b("Indice de bondad de ajuste (GFI)"),
+      awesomeCheckbox(inputId = "gfiCmpHelpSwitch", label = "Ver Criterio",
+                      value = FALSE, status = item_color),
+      shinyjs::hidden( # Oculta el criterio inicialmente
+        helpText(id = "gfiCmpHelpTxt",
+                 paste("?? (GFI): Eval\u00FAa si el modelo debe ser ajustado.",
+                 "Entre m\u00E1s se acerque a cero (0) indica un MAL ajuste."
+                 )
+        )
+      ) # cierra hidden
     ) # FIN footer
   )
 })
+#
+shinyjs::onclick("gfiCmpHelpSwitch", shinyjs::toggle(id = "gfiCmpHelpTxt", anim = TRUE, animType = "fade"))
+#
 # amBullet usado en el UI dinamico: "gfiCmpBulletOut"
 output$gfiCmpBulletOut <- renderAmCharts({
     amBullet(value = as.numeric(sprintf("%.3f", 100*getMedidaAjusteValue("gfi"))),
