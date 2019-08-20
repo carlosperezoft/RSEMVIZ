@@ -90,11 +90,11 @@ output$gradosLibertadOut <- renderInfoBox({
 output$gfiBoxOut <- renderUI({
   item_val <- getMedidaAjusteValue("gfi")
   #
-  if(item_val >= 0.90)  {
+  if(item_val >= 0.95)  {
     item_subT <- "Aceptable"
     item_icon <- "thumbs-up"
     item_color <- "success"
-  } else if(item_val >= 0.70) {
+  } else if(item_val >= 0.75) {
     item_subT <- "Ajuste Medio"
     item_icon <- "thumbs-up"
     item_color <- "warning"
@@ -135,7 +135,7 @@ output$gfiBoxOut <- renderUI({
 #
 shinyjs::onclick("gfiHelpSwitch", shinyjs::toggle(id = "gfiHelpTxt", anim = TRUE, animType = "fade"))
 #
-output$tipoGraficoOut  <- renderUI({
+output$tipoGraficoOut <- renderUI({
   choicesList = NULL
   if(input$indPorcentSwitch) { # Opciones de Grafico en Porcentaje
     choicesList = c("Gauge",  "Angular-Gauge", "Bullet")
@@ -151,21 +151,21 @@ output$gfiGaugeOut <- flexdashboard::renderGauge({
   if(input$indPorcentSwitch) { # Gauge en Porcentaje
     flexdashboard::gauge(value = sprintf("%.1f", 100*getMedidaAjusteValue("gfi")),
        min = 0, max = 100, symbol = '%', label = paste("GFI"),
-       flexdashboard::gaugeSectors(success = c(90, 100), warning = c(70,89), danger = c(0, 69),
+       flexdashboard::gaugeSectors(success = c(95, 100), warning = c(75,95), danger = c(0, 75),
                                    colors = c("success", "warning", "danger")))
   } else {
     flexdashboard::gauge(value = sprintf("%.3f", getMedidaAjusteValue("gfi")),
        min = 0, max = 1,  symbol = '', label = paste("GFI"),
-       flexdashboard::gaugeSectors(success = c(0.90, 1), warning = c(0.70,0.89), danger = c(0, 0.69),
+       flexdashboard::gaugeSectors(success = c(0.95, 1), warning = c(0.75,0.95), danger = c(0, 0.75),
                                    colors = c("success", "warning", "danger")))
-
   }
 })
 #
 output$gfiAngularGaugeOut <- renderAmCharts({
-  bands <- data.frame(start = c(0, 40, 60), end = c(40, 60, 100),
-                      color = c("#00CC00", "#ffac29", "#ea3838"), stringsAsFactors = FALSE)
-
+  bands <- data.frame(start = c(0, 75, 95), end = c(75, 95, 100),
+                      #         "danger", "warning", "success"
+                      color = c("#ea3838", "#ffac29", "#00CC00"), stringsAsFactors = FALSE)
+  #
   amAngularGauge(x = as.numeric(sprintf("%.1f", 100*getMedidaAjusteValue("gfi"))),
                  bands = bands, text = "%", textSize = 10,
                  main = "GFI", mainColor = "#68838B", mainSize = 16,
@@ -176,11 +176,11 @@ output$gfiBulletOut <- renderAmCharts({
   if(input$indPorcentSwitch) { # Bullet en Porcentaje
     amBullet(value = as.numeric(sprintf("%.3f", 100*getMedidaAjusteValue("gfi"))),
              val_color = "blue", limit_color = "black",
-             min = 0, max = 100, limit = 90, label = "GFI")
+             min = 0, max = 100, limit = 95, label = "GFI")
   } else {
     amBullet(value = as.numeric(sprintf("%.3f", getMedidaAjusteValue("gfi"))),
              val_color = "blue", limit_color = "black",
-             min = 0, max = 1, limit = 0.8, label = "GFI")
+             min = 0, max = 1, limit = 0.95, label = "GFI")
   }
 })
 ####### NUEVOS - FALTANTES
@@ -201,16 +201,27 @@ output$rmseaBoxOut <- renderUI({
     item_color <- "danger"
   }
   #
+  req(input$grafPorcentRadio) # Valida que este activo
+  #
+  graficoUI <- NULL
+  if(input$grafPorcentRadio == "Gauge") {
+    graficoUI <- flexdashboard::gaugeOutput("rmseaGaugeOut", height = "150")
+  } else if(input$grafPorcentRadio == "Angular-Gauge") {
+    graficoUI <- amChartsOutput("rmseaAngularGaugeOut", height = "150")
+  } else if(input$grafPorcentRadio == "Bullet") {
+    graficoUI <- amChartsOutput("rmseaBulletOut", height = "150")
+  }
+  #
   boxPlus(title = tagList(shiny::icon(item_icon), "RMSEA: ", item_subT), width = 3,
     collapsible = TRUE, status = item_color, solidHeader = TRUE, closable = FALSE,
-    amChartsOutput("rmseaBulletOut", height = "150"), # Es necesario usar un amChartsOutput... por el UI dinamico!
+    graficoUI, # Usa el amChartsOutput dinamico!
     footer = tagList( # SECCION DE EXPLICACION DEL CRITERIO:
-      tags$b("Error de Aproximaci\u00F3n Cuadr\u00E1tico Medio (RMSEA)"),
+      tags$b("Aproximaci\u00F3n del Error de la Ra\u00EDz de la Media Cuadr\u00E1tica (RMSEA)"),
       awesomeCheckbox(inputId = "rmseaHelpSwitch", label = "Ver Criterio",
                       value = FALSE, status = item_color),
       shinyjs::hidden( # Oculta el criterio inicialmente
         helpText(id = "rmseaHelpTxt",
-                 paste("?? (RMSEA): Eval\u00FAa si el modelo debe ser ajustado.",
+                 paste("Root Mean Square Error of	Approximation (RMSEA): Eval\u00FAa s\u00ED el modelo debe ser ajustado.",
                  "Entre m\u00E1s se acerque a cero (0) indica un MAL ajuste."
                  )
         )
@@ -221,21 +232,53 @@ output$rmseaBoxOut <- renderUI({
 #
 shinyjs::onclick("rmseaHelpSwitch", shinyjs::toggle(id = "rmseaHelpTxt", anim = TRUE, animType = "fade"))
 #
-# amBullet usado en el UI dinamico: "rmseaBoxOut"
+# amBullet usado en el UI dinamico:
+#
+output$rmseaGaugeOut <- flexdashboard::renderGauge({
+  if(input$indPorcentSwitch) { # Gauge en Porcentaje
+    flexdashboard::gauge(value = sprintf("%.1f", 100*getMedidaAjusteValue("rmsea")),
+       min = 0, max = 100, symbol = '%', label = paste("RMSEA"),
+       flexdashboard::gaugeSectors(success = c(0, 5), warning = c(5,10), danger = c(10, 100),
+                                   colors = c("success", "warning", "danger")))
+  } else {
+    flexdashboard::gauge(value = sprintf("%.3f", getMedidaAjusteValue("rmsea")),
+       min = 0, max = 1,  symbol = '', label = paste("RMSEA"),
+       flexdashboard::gaugeSectors(success = c(0, 0.05), warning = c(0.05,0.10), danger = c(0.10, 1),
+                                   colors = c("success", "warning", "danger")))
+  }
+})
+#
+output$rmseaAngularGaugeOut <- renderAmCharts({
+  bands <- data.frame(start = c(0, 5, 10), end = c(5, 10, 100),
+                      #         "success", "warning", "danger"
+                      color = c("#00CC00", "#ffac29", "#ea3838"), stringsAsFactors = FALSE)
+  #
+  amAngularGauge(x = as.numeric(sprintf("%.1f", 100*getMedidaAjusteValue("rmsea"))),
+                 bands = bands, text = "%", textSize = 10,
+                 main = "RMSEA", mainColor = "#68838B", mainSize = 16,
+                 creditsPosition = "bottom-right")
+})
+#
 output$rmseaBulletOut <- renderAmCharts({
+  if(input$indPorcentSwitch) { # Bullet en Porcentaje
+    amBullet(value = as.numeric(sprintf("%.3f", 100*getMedidaAjusteValue("rmsea"))),
+             val_color = "blue", limit_color = "black",
+             min = 0, max = 100, limit = 5, label = "RMSEA") # Error aceptable debajo del 5%
+  } else {
     amBullet(value = as.numeric(sprintf("%.3f", getMedidaAjusteValue("rmsea"))),
              val_color = "blue", limit_color = "black",
              min = 0, max = 1, limit = 0.05, label = "RMSEA")
+  }
 })
 #
-output$rmrBoxOut <- renderUI({
-  item_val <- getMedidaAjusteValue("rmr")
+output$srmrBoxOut <- renderUI({
+  item_val <- getMedidaAjusteValue("srmr")
   #
-  if(item_val <= 0.05)  {
+  if(item_val <= 0.08)  {
     item_subT <- "Aceptable"
     item_icon <- "thumbs-up"
     item_color <- "success"
-  } else if(item_val <= 0.10) {
+  } else if(item_val <= 0.15) {
     item_subT <- "Ajuste Medio"
     item_icon <- "thumbs-up"
     item_color <- "warning"
@@ -245,16 +288,27 @@ output$rmrBoxOut <- renderUI({
     item_color <- "danger"
   }
   #
-  boxPlus(title = tagList(shiny::icon(item_icon), "RMR: ", item_subT), width = 3,
+  req(input$grafPorcentRadio) # Valida que este activo
+  #
+  graficoUI <- NULL
+  if(input$grafPorcentRadio == "Gauge") {
+    graficoUI <- flexdashboard::gaugeOutput("srmrGaugeOut", height = "150")
+  } else if(input$grafPorcentRadio == "Angular-Gauge") {
+    graficoUI <- amChartsOutput("srmrAngularGaugeOut", height = "150")
+  } else if(input$grafPorcentRadio == "Bullet") {
+    graficoUI <- amChartsOutput("srmrBulletOut", height = "150")
+  }
+  #
+  boxPlus(title = tagList(shiny::icon(item_icon), "SRMR: ", item_subT), width = 3,
     collapsible = TRUE, status = item_color, solidHeader = TRUE, closable = FALSE,
-    amChartsOutput("rmrBulletOut", height = "150"), # Es necesario usar un amChartsOutput... por el UI dinamico!
+    graficoUI, # amChartsOutput UI dinamico!
     footer = tagList( # SECCION DE EXPLICACION DEL CRITERIO:
-      tags$b("Indice de Error Cuadr\u00E1tico Medio (RMR)"),
-      awesomeCheckbox(inputId = "rmrHelpSwitch", label = "Ver Criterio",
+      tags$b("(Estandarizada) Ra\u00EDz de la Media Cuadr\u00E1tica de los Residuales (SRMR)"),
+      awesomeCheckbox(inputId = "srmrHelpSwitch", label = "Ver Criterio",
                       value = FALSE, status = item_color),
       shinyjs::hidden( # Oculta el criterio inicialmente
-        helpText(id = "rmrHelpTxt",
-                 paste("?? (RMR): Eval\u00FAa si el modelo debe ser ajustado.",
+        helpText(id = "srmrHelpTxt",
+                 paste("(Standardized) Root Mean Square Residual (SRMR): Eval\u00FAa si el modelo debe ser ajustado.",
                  "Entre m\u00E1s se acerque a cero (0) indica un MAL ajuste."
                  )
         )
@@ -263,23 +317,53 @@ output$rmrBoxOut <- renderUI({
   )
 })
 #
-shinyjs::onclick("rmrHelpSwitch", shinyjs::toggle(id = "rmrHelpTxt", anim = TRUE, animType = "fade"))
+shinyjs::onclick("srmrHelpSwitch", shinyjs::toggle(id = "srmrHelpTxt", anim = TRUE, animType = "fade"))
 #
-# amBullet usado en el UI dinamico: "rmrBoxOut"
-output$rmrBulletOut <- renderAmCharts({
-    amBullet(value = as.numeric(sprintf("%.3f", getMedidaAjusteValue("rmr"))),
-             val_color = "blue", limit_color = "black",
-             min = 0, max = 1, limit = 0.05, label = "RMR")
+# amBullet usado en el UI dinamico: "srmrBoxOut"
+output$srmrGaugeOut <- flexdashboard::renderGauge({
+  if(input$indPorcentSwitch) { # Gauge en Porcentaje
+    flexdashboard::gauge(value = sprintf("%.1f", 100*getMedidaAjusteValue("srmr")),
+       min = 0, max = 100, symbol = '%', label = paste("SRMR"),
+       flexdashboard::gaugeSectors(success = c(0,8), warning = c(8,15), danger = c(15,100),
+                                   colors = c("success", "warning", "danger")))
+  } else {
+    flexdashboard::gauge(value = sprintf("%.3f", getMedidaAjusteValue("srmr")),
+       min = 0, max = 1,  symbol = '', label = paste("SRMR"),
+       flexdashboard::gaugeSectors(success = c(0,0.08), warning = c(0.09,0.15), danger = c(0.16,1),
+                                   colors = c("success", "warning", "danger")))
+  }
 })
 #
-output$ecviBoxOut <- renderUI({
-  item_val <- getMedidaAjusteValue("ecvi")
+output$srmrAngularGaugeOut <- renderAmCharts({
+  bands <- data.frame(start = c(0, 8, 15), end = c(8, 15, 100),
+                      color = c("#00CC00", "#ffac29", "#ea3838"), stringsAsFactors = FALSE)
   #
-  if(item_val <= 2)  {
+  amAngularGauge(x = as.numeric(sprintf("%.1f", 100*getMedidaAjusteValue("srmr"))),
+                 bands = bands, text = "%", textSize = 10,
+                 main = "SRMR", mainColor = "#68838B", mainSize = 16,
+                 creditsPosition = "bottom-right")
+})
+#
+output$srmrBulletOut <- renderAmCharts({
+  if(input$indPorcentSwitch) { # Bullet en Porcentaje
+    amBullet(value = as.numeric(sprintf("%.3f", 100*getMedidaAjusteValue("srmr"))),
+             val_color = "blue", limit_color = "black",
+             min = 0, max = 100, limit = 8, label = "SRMR") # Error aceptable debajo del 5%
+  } else {
+    amBullet(value = as.numeric(sprintf("%.3f", getMedidaAjusteValue("srmr"))),
+             val_color = "blue", limit_color = "black",
+             min = 0, max = 1, limit = 0.08, label = "SRMR")
+  }
+})
+#
+output$cfiBoxOut <- renderUI({
+  item_val <- getMedidaAjusteValue("cfi")
+  #
+  if(item_val >= 0.95)  {
     item_subT <- "Aceptable"
     item_icon <- "thumbs-up"
     item_color <- "success"
-  } else if(item_val <= 4) {
+  } else if(item_val >= 0.75) {
     item_subT <- "Ajuste Medio"
     item_icon <- "thumbs-up"
     item_color <- "warning"
@@ -289,16 +373,27 @@ output$ecviBoxOut <- renderUI({
     item_color <- "danger"
   }
   #
-  boxPlus(title = tagList(shiny::icon(item_icon), "ECVI: ", item_subT), width = 3,
+  req(input$grafPorcentRadio) # Valida que este activo
+  #
+  graficoUI <- NULL
+  if(input$grafPorcentRadio == "Gauge") {
+    graficoUI <- flexdashboard::gaugeOutput("cfiGaugeOut", height = "150")
+  } else if(input$grafPorcentRadio == "Angular-Gauge") {
+    graficoUI <- amChartsOutput("cfiAngularGaugeOut", height = "150")
+  } else if(input$grafPorcentRadio == "Bullet") {
+    graficoUI <- amChartsOutput("cfiBulletOut", height = "150")
+  }
+  #
+  boxPlus(title = tagList(shiny::icon(item_icon), "CFI: ", item_subT), width = 3,
     collapsible = TRUE, status = item_color, solidHeader = TRUE, closable = FALSE,
-    amChartsOutput("ecviBulletOut", height = "150"), # Es necesario usar un amChartsOutput... por el UI dinamico!
+    graficoUI, #  UI dinamico!
     footer = tagList( # SECCION DE EXPLICACION DEL CRITERIO:
-      tags$b("Indice de Validaci\u00F3n Cruzada Esperada (ECVI)"),
-      awesomeCheckbox(inputId = "ecviHelpSwitch", label = "Ver Criterio",
+      tags$b("Indice de Ajsute Comparativo (CFI)"),
+      awesomeCheckbox(inputId = "cfiHelpSwitch", label = "Ver Criterio",
                       value = FALSE, status = item_color),
       shinyjs::hidden( # Oculta el criterio inicialmente
-        helpText(id = "ecviHelpTxt",
-                 paste("?? (ECVI): Eval\u00FAa si el modelo debe ser ajustado.",
+        helpText(id = "cfiHelpTxt",
+                 paste("Comparative	Fit	Index (CFI): Eval\u00FAa si el modelo debe ser ajustado.",
                  "Entre m\u00E1s se acerque a cero (0) indica un MAL ajuste."
                  )
         )
@@ -307,23 +402,53 @@ output$ecviBoxOut <- renderUI({
   )
 })
 #
-shinyjs::onclick("ecviHelpSwitch", shinyjs::toggle(id = "ecviHelpTxt", anim = TRUE, animType = "fade"))
+shinyjs::onclick("cfiHelpSwitch", shinyjs::toggle(id = "cfiHelpTxt", anim = TRUE, animType = "fade"))
 #
-# amBullet usado en el UI dinamico: "ecviBoxOut"
-output$ecviBulletOut <- renderAmCharts({
-    amBullet(value = as.numeric(sprintf("%.3f", getMedidaAjusteValue("ecvi"))),
+# UI dinamico: "cfiBoxOut"
+output$cfiGaugeOut <- flexdashboard::renderGauge({
+  if(input$indPorcentSwitch) { # Gauge en Porcentaje
+    flexdashboard::gauge(value = sprintf("%.1f", 100*getMedidaAjusteValue("cfi")),
+       min = 0, max = 100, symbol = '%', label = paste("CFI"),
+       flexdashboard::gaugeSectors(success = c(95, 100), warning = c(75,95), danger = c(0, 75),
+                                   colors = c("success", "warning", "danger")))
+  } else {
+    flexdashboard::gauge(value = sprintf("%.3f", getMedidaAjusteValue("cfi")),
+       min = 0, max = 1,  symbol = '', label = paste("CFI"),
+       flexdashboard::gaugeSectors(success = c(0.95, 1), warning = c(0.75,0.95), danger = c(0, 0.75),
+                                   colors = c("success", "warning", "danger")))
+  }
+})
+#
+output$cfiAngularGaugeOut <- renderAmCharts({
+  bands <- data.frame(start = c(0, 75, 95), end = c(75, 95, 100),
+                      color = c("#ea3838", "#ffac29", "#00CC00"), stringsAsFactors = FALSE)
+  #
+  amAngularGauge(x = as.numeric(sprintf("%.1f", 100*getMedidaAjusteValue("cfi"))),
+                 bands = bands, text = "%", textSize = 10,
+                 main = "CFI", mainColor = "#68838B", mainSize = 16,
+                 creditsPosition = "bottom-right")
+})
+#
+output$cfiBulletOut <- renderAmCharts({
+  if(input$indPorcentSwitch) { # Bullet en Porcentaje
+    amBullet(value = as.numeric(sprintf("%.3f", 100*getMedidaAjusteValue("cfi"))),
              val_color = "blue", limit_color = "black",
-             min = 0, max = 6, limit = 2, label = "ECVI")
+             min = 0, max = 100, limit = 95, label = "CFI")
+  } else {
+    amBullet(value = as.numeric(sprintf("%.3f", getMedidaAjusteValue("cfi"))),
+             val_color = "blue", limit_color = "black",
+             min = 0, max = 1, limit = 0.95, label = "CFI")
+  }
 })
 #
 output$nfiBoxOut <- renderUI({
   item_val <- getMedidaAjusteValue("nfi")
   #
-  if(item_val >= 0.90)  {
+  if(item_val >= 0.95)  {
     item_subT <- "Aceptable"
     item_icon <- "thumbs-up"
     item_color <- "success"
-  } else if(item_val >= 0.70) {
+  } else if(item_val >= 0.75) {
     item_subT <- "Ajuste Medio"
     item_icon <- "thumbs-up"
     item_color <- "warning"
@@ -333,9 +458,20 @@ output$nfiBoxOut <- renderUI({
     item_color <- "danger"
   }
   #
+  req(input$grafPorcentRadio) # Valida que este activo
+  #
+  graficoUI <- NULL
+  if(input$grafPorcentRadio == "Gauge") {
+    graficoUI <- flexdashboard::gaugeOutput("nfiGaugeOut", height = "150")
+  } else if(input$grafPorcentRadio == "Angular-Gauge") {
+    graficoUI <- amChartsOutput("nfiAngularGaugeOut", height = "150")
+  } else if(input$grafPorcentRadio == "Bullet") {
+    graficoUI <- amChartsOutput("nfiBulletOut", height = "150")
+  }
+  #
   boxPlus(title = tagList(shiny::icon(item_icon), "NFI: ", item_subT), width = 3,
     collapsible = TRUE, status = item_color, solidHeader = TRUE, closable = FALSE,
-    amChartsOutput("nfiBulletOut", height = "150"), # Es necesario usar un amChartsOutput... por el UI dinamico!
+    graficoUI, # amChartsOutput UI dinamico!
     footer = tagList( # SECCION DE EXPLICACION DEL CRITERIO:
       tags$b("Indice de ajuste normalizado (NFI)"),
       awesomeCheckbox(inputId = "nfiHelpSwitch", label = "Ver Criterio",
@@ -353,11 +489,42 @@ output$nfiBoxOut <- renderUI({
 #
 shinyjs::onclick("nfiHelpSwitch", shinyjs::toggle(id = "nfiHelpTxt", anim = TRUE, animType = "fade"))
 #
-# amBullet usado en el UI dinamico: "nfiBoxOut"
+# UI dinamico: "nfiBoxOut"
+#
+output$nfiGaugeOut <- flexdashboard::renderGauge({
+  if(input$indPorcentSwitch) { # Gauge en Porcentaje
+    flexdashboard::gauge(value = sprintf("%.1f", 100*getMedidaAjusteValue("nfi")),
+       min = 0, max = 100, symbol = '%', label = paste("NFI"),
+       flexdashboard::gaugeSectors(success = c(95, 100), warning = c(75,95), danger = c(0, 75),
+                                   colors = c("success", "warning", "danger")))
+  } else {
+    flexdashboard::gauge(value = sprintf("%.3f", getMedidaAjusteValue("nfi")),
+       min = 0, max = 1,  symbol = '', label = paste("NFI"),
+       flexdashboard::gaugeSectors(success = c(0.95, 1), warning = c(0.75,0.95), danger = c(0, 0.75),
+                                   colors = c("success", "warning", "danger")))
+  }
+})
+#
+output$nfiAngularGaugeOut <- renderAmCharts({
+  bands <- data.frame(start = c(0, 75, 95), end = c(75, 95, 100),
+                      color = c("#ea3838", "#ffac29", "#00CC00"), stringsAsFactors = FALSE)
+  #
+  amAngularGauge(x = as.numeric(sprintf("%.1f", 100*getMedidaAjusteValue("nfi"))),
+                 bands = bands, text = "%", textSize = 10,
+                 main = "NFI", mainColor = "#68838B", mainSize = 16,
+                 creditsPosition = "bottom-right")
+})
+#
 output$nfiBulletOut <- renderAmCharts({
+  if(input$indPorcentSwitch) { # Bullet en Porcentaje
     amBullet(value = as.numeric(sprintf("%.3f", 100*getMedidaAjusteValue("nfi"))),
              val_color = "blue", limit_color = "black",
-             min = 0, max = 100, limit = 90, label = "NFI")
+             min = 0, max = 100, limit = 95, label = "NFI")
+  } else {
+    amBullet(value = as.numeric(sprintf("%.3f", getMedidaAjusteValue("nfi"))),
+             val_color = "blue", limit_color = "black",
+             min = 0, max = 1, limit = 0.95, label = "NFI")
+  }
 })
 #
 output$tliBoxOut <- renderUI({
@@ -377,9 +544,20 @@ output$tliBoxOut <- renderUI({
     item_color <- "danger"
   }
   #
+  req(input$grafPorcentRadio) # Valida que este activo
+  #
+  graficoUI <- NULL
+  if(input$grafPorcentRadio == "Gauge") {
+    graficoUI <- flexdashboard::gaugeOutput("tliGaugeOut", height = "150")
+  } else if(input$grafPorcentRadio == "Angular-Gauge") {
+    graficoUI <- amChartsOutput("tliAngularGaugeOut", height = "150")
+  } else if(input$grafPorcentRadio == "Bullet") {
+    graficoUI <- amChartsOutput("tliBulletOut", height = "150")
+  }
+  #
   boxPlus(title = tagList(shiny::icon(item_icon), "TLI: ", item_subT), width = 3,
     collapsible = TRUE, status = item_color, solidHeader = TRUE, closable = FALSE,
-    amChartsOutput("tliBulletOut", height = "150"), # Es necesario usar un amChartsOutput... por el UI dinamico!
+    graficoUI, # UI dinamico!
     footer = tagList( # SECCION DE EXPLICACION DEL CRITERIO:
       tags$b("Indice de ajuste NO normalizado - Tucker Lewis (NNFI-TLI)"),
       awesomeCheckbox(inputId = "tliHelpSwitch", label = "Ver Criterio",
@@ -398,10 +576,41 @@ output$tliBoxOut <- renderUI({
 shinyjs::onclick("tliHelpSwitch", shinyjs::toggle(id = "tliHelpTxt", anim = TRUE, animType = "fade"))
 #
 # amBullet usado en el UI dinamico: "tliBoxOut"
+#
+output$tliGaugeOut <- flexdashboard::renderGauge({
+  if(input$indPorcentSwitch) { # Gauge en Porcentaje
+    flexdashboard::gauge(value = sprintf("%.1f", 100*getMedidaAjusteValue("tli")),
+       min = 0, max = 100, symbol = '%', label = paste("TLI"),
+       flexdashboard::gaugeSectors(success = c(95, 100), warning = c(75,95), danger = c(0, 75),
+                                   colors = c("success", "warning", "danger")))
+  } else {
+    flexdashboard::gauge(value = sprintf("%.3f", getMedidaAjusteValue("tli")),
+       min = 0, max = 1,  symbol = '', label = paste("TLI"),
+       flexdashboard::gaugeSectors(success = c(0.95, 1), warning = c(0.75,0.95), danger = c(0, 0.75),
+                                   colors = c("success", "warning", "danger")))
+  }
+})
+#
+output$tliAngularGaugeOut <- renderAmCharts({
+  bands <- data.frame(start = c(0, 75, 95), end = c(75, 95, 100),
+                      color = c("#ea3838", "#ffac29", "#00CC00"), stringsAsFactors = FALSE)
+  #
+  amAngularGauge(x = as.numeric(sprintf("%.1f", 100*getMedidaAjusteValue("tli"))),
+                 bands = bands, text = "%", textSize = 10,
+                 main = "TLI", mainColor = "#68838B", mainSize = 16,
+                 creditsPosition = "bottom-right")
+})
+#
 output$tliBulletOut <- renderAmCharts({
+  if(input$indPorcentSwitch) { # Bullet en Porcentaje
     amBullet(value = as.numeric(sprintf("%.3f", 100*getMedidaAjusteValue("tli"))),
              val_color = "blue", limit_color = "black",
-             min = 0, max = 100, limit = 90, label = "TLI")
+             min = 0, max = 100, limit = 95, label = "TLI")
+  } else {
+    amBullet(value = as.numeric(sprintf("%.3f", getMedidaAjusteValue("tli"))),
+             val_color = "blue", limit_color = "black",
+             min = 0, max = 1, limit = 0.95, label = "TLI")
+  }
 })
 #
 output$agfiBoxOut <- renderUI({
@@ -421,9 +630,20 @@ output$agfiBoxOut <- renderUI({
     item_color <- "danger"
   }
   #
+  req(input$grafPorcentRadio) # Valida que este activo
+  #
+  graficoUI <- NULL
+  if(input$grafPorcentRadio == "Gauge") {
+    graficoUI <- flexdashboard::gaugeOutput("agfiGaugeOut", height = "150")
+  } else if(input$grafPorcentRadio == "Angular-Gauge") {
+    graficoUI <- amChartsOutput("agfiAngularGaugeOut", height = "150")
+  } else if(input$grafPorcentRadio == "Bullet") {
+    graficoUI <- amChartsOutput("agfiBulletOut", height = "150")
+  }
+  #
   boxPlus(title = tagList(shiny::icon(item_icon), "AGFI: ", item_subT), width = 3,
     collapsible = TRUE, status = item_color, solidHeader = TRUE, closable = FALSE,
-    amChartsOutput("agfiBulletOut", height = "150"), # Es necesario usar un amChartsOutput... por el UI dinamico!
+    graficoUI, # UI dinamico!
     footer = tagList( # SECCION DE EXPLICACION DEL CRITERIO:
       tags$b("Indice de bondad de ajuste corregido (AGFI)"),
       awesomeCheckbox(inputId = "agfiHelpSwitch", label = "Ver Criterio",
@@ -441,21 +661,51 @@ output$agfiBoxOut <- renderUI({
 #
 shinyjs::onclick("agfiHelpSwitch", shinyjs::toggle(id = "agfiHelpTxt", anim = TRUE, animType = "fade"))
 #
-# amBullet usado en el UI dinamico: "agfiBoxOut"
+# UI dinamico: "agfiBoxOut"
+output$agfiGaugeOut <- flexdashboard::renderGauge({
+  if(input$indPorcentSwitch) { # Gauge en Porcentaje
+    flexdashboard::gauge(value = sprintf("%.1f", 100*getMedidaAjusteValue("agfi")),
+       min = 0, max = 100, symbol = '%', label = paste("AGFI"),
+       flexdashboard::gaugeSectors(success = c(90, 100), warning = c(70,90), danger = c(0, 70),
+                                   colors = c("success", "warning", "danger")))
+  } else {
+    flexdashboard::gauge(value = sprintf("%.3f", getMedidaAjusteValue("agfi")),
+       min = 0, max = 1,  symbol = '', label = paste("AGFI"),
+       flexdashboard::gaugeSectors(success = c(0.90, 1), warning = c(0.70,0.90), danger = c(0, 0.70),
+                                   colors = c("success", "warning", "danger")))
+  }
+})
+#
+output$agfiAngularGaugeOut <- renderAmCharts({
+  bands <- data.frame(start = c(0, 70, 90), end = c(70, 90, 100),
+                      color = c("#ea3838", "#ffac29", "#00CC00"), stringsAsFactors = FALSE)
+  #
+  amAngularGauge(x = as.numeric(sprintf("%.1f", 100*getMedidaAjusteValue("agfi"))),
+                 bands = bands, text = "%", textSize = 10,
+                 main = "AGFI", mainColor = "#68838B", mainSize = 16,
+                 creditsPosition = "bottom-right")
+})
+#
 output$agfiBulletOut <- renderAmCharts({
+  if(input$indPorcentSwitch) { # Bullet en Porcentaje
     amBullet(value = as.numeric(sprintf("%.3f", 100*getMedidaAjusteValue("agfi"))),
              val_color = "blue", limit_color = "black",
              min = 0, max = 100, limit = 90, label = "AGFI")
+  } else {
+    amBullet(value = as.numeric(sprintf("%.3f", getMedidaAjusteValue("agfi"))),
+             val_color = "blue", limit_color = "black",
+             min = 0, max = 1, limit = 0.90, label = "AGFI")
+  }
 })
 #
 output$gfiCmpBoxOut <- renderUI({
   item_val <- getMedidaAjusteValue("gfi")
   #
-  if(item_val >= 0.90)  {
+  if(item_val >= 0.95)  {
     item_subT <- "Aceptable"
     item_icon <- "thumbs-up"
     item_color <- "success"
-  } else if(item_val >= 0.70) {
+  } else if(item_val >= 0.75) {
     item_subT <- "Ajuste Medio"
     item_icon <- "thumbs-up"
     item_color <- "warning"
@@ -465,9 +715,20 @@ output$gfiCmpBoxOut <- renderUI({
     item_color <- "danger"
   }
   #
+  req(input$grafPorcentRadio) # Valida que este activo
+  #
+  graficoUI <- NULL
+  if(input$grafPorcentRadio == "Gauge") {
+    graficoUI <- flexdashboard::gaugeOutput("gfiCmpGaugeOut", height = "150")
+  } else if(input$grafPorcentRadio == "Angular-Gauge") {
+    graficoUI <- amChartsOutput("gfiCmpAngularGaugeOut", height = "150")
+  } else if(input$grafPorcentRadio == "Bullet") {
+    graficoUI <- amChartsOutput("gfiCmpBulletOut", height = "150")
+  }
+  #
   boxPlus(title = tagList(shiny::icon(item_icon), "GFI: ", item_subT), width = 3,
     collapsible = TRUE, status = item_color, solidHeader = TRUE, closable = FALSE,
-    amChartsOutput("gfiCmpBulletOut", height = "150"), # Es necesario usar un amChartsOutput... por el UI dinamico!
+    graficoUI, # UI dinamico!
     footer = tagList( # SECCION DE EXPLICACION DEL CRITERIO:
       tags$b("Indice de bondad de ajuste (GFI)"),
       awesomeCheckbox(inputId = "gfiCmpHelpSwitch", label = "Ver Criterio",
@@ -485,11 +746,42 @@ output$gfiCmpBoxOut <- renderUI({
 #
 shinyjs::onclick("gfiCmpHelpSwitch", shinyjs::toggle(id = "gfiCmpHelpTxt", anim = TRUE, animType = "fade"))
 #
-# amBullet usado en el UI dinamico: "gfiCmpBulletOut"
+# UI dinamico: "gfiCmpOut"
+output$gfiCmpGaugeOut <- flexdashboard::renderGauge({
+  if(input$indPorcentSwitch) { # Gauge en Porcentaje
+    flexdashboard::gauge(value = sprintf("%.1f", 100*getMedidaAjusteValue("gfi")),
+       min = 0, max = 100, symbol = '%', label = paste("GFI"),
+       flexdashboard::gaugeSectors(success = c(95, 100), warning = c(75,95), danger = c(0, 75),
+                                   colors = c("success", "warning", "danger")))
+  } else {
+    flexdashboard::gauge(value = sprintf("%.3f", getMedidaAjusteValue("gfi")),
+       min = 0, max = 1,  symbol = '', label = paste("GFI"),
+       flexdashboard::gaugeSectors(success = c(0.95, 1), warning = c(0.75,0.95), danger = c(0, 0.75),
+                                   colors = c("success", "warning", "danger")))
+  }
+})
+#
+output$gfiCmpAngularGaugeOut <- renderAmCharts({
+  bands <- data.frame(start = c(0, 75, 95), end = c(75, 95, 100),
+                      #         "danger", "warning", "success"
+                      color = c("#ea3838", "#ffac29", "#00CC00"), stringsAsFactors = FALSE)
+  #
+  amAngularGauge(x = as.numeric(sprintf("%.1f", 100*getMedidaAjusteValue("gfi"))),
+                 bands = bands, text = "%", textSize = 10,
+                 main = "GFI", mainColor = "#68838B", mainSize = 16,
+                 creditsPosition = "bottom-right")
+})
+#
 output$gfiCmpBulletOut <- renderAmCharts({
+  if(input$indPorcentSwitch) { # Bullet en Porcentaje
     amBullet(value = as.numeric(sprintf("%.3f", 100*getMedidaAjusteValue("gfi"))),
              val_color = "blue", limit_color = "black",
-             min = 0, max = 100, limit = 90, label = "GFI")
+             min = 0, max = 100, limit = 95, label = "GFI")
+  } else {
+    amBullet(value = as.numeric(sprintf("%.3f", getMedidaAjusteValue("gfi"))),
+             val_color = "blue", limit_color = "black",
+             min = 0, max = 1, limit = 0.95, label = "GFI")
+  }
 })
 #
 output$pgfiBoxOut <- renderValueBox({

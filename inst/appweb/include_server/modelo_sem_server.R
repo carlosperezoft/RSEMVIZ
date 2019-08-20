@@ -70,15 +70,15 @@ output$semScoreDataDTOut <- renderDT({
 # PENDIENTE: AJUSTAR LOS INDICES concretos por tipo de ajuste: 07-nov-2018
 semModelMedidasAjusteData <- reactive({
   indlist <- lavaan::fitMeasures(semFitLocal(), c("chisq", "df", "pvalue", "gfi", "nfi", "tli", "pgfi", "rmsea",
-                                "rmr", "ecvi", "agfi", "mfi", "pnfi", "nnfi", "aic", "bic"))
+                                "srmr", "cfi", "agfi", "mfi", "pnfi", "nnfi", "aic", "bic"))
   indDFrame <- data.frame(name=c("chisq", "df", "pvalue", "gfi", "nfi", "tli", "pgfi", "rmsea",
-                                 "rmr", "ecvi","agfi", "mfi", "pnfi", "nnfi", "aic", "bic"),
+                                 "srmr", "cfi","agfi", "mfi", "pnfi", "nnfi", "aic", "bic"),
                     value=c(indlist[["chisq"]], indlist[["df"]], indlist[["pvalue"]], indlist[["gfi"]],
                             indlist[["nfi"]], indlist[["tli"]], indlist[["pgfi"]], indlist[["rmsea"]],
-                            indlist[["rmr"]], indlist[["ecvi"]], indlist[["agfi"]], indlist[["mfi"]],
+                            indlist[["srmr"]], indlist[["cfi"]], indlist[["agfi"]], indlist[["mfi"]],
                             indlist[["pnfi"]], indlist[["nnfi"]], indlist[["aic"]], indlist[["bic"]]),
-                    is_indice=c(F,F,F,T,T,T,T,F,F,F,T,F,T,T,F,F)
-               ) # NOTA: se toman como indices: c("gfi", "nfi", "tli", "pgfi", "agfi", "pnfi", "nnfi")
+                    is_indice=c(F,F,F,T,T,T,T,F,F,T,T,F,T,T,F,F)
+               ) # NOTA: se toman como indices: c("gfi", "nfi", "tli", "pgfi", "cfi", agfi", "pnfi", "nnfi")
   #
   # Data Frame con las medidas (indices) de bondad de ajuste del modelo:
   return(indDFrame)

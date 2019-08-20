@@ -40,16 +40,16 @@ tabItem(tabName = "dashBASSubMTab",
          fluidRow(
            uiOutput("gfiBoxOut") %>% withSpinner(type=7, color="cadetblue"),
            uiOutput("rmseaBoxOut") %>% withSpinner(type=7, color="cadetblue"),
-           uiOutput("rmrBoxOut") %>% withSpinner(type=7, color="cadetblue"),
-           uiOutput("ecviBoxOut") %>% withSpinner(type=7, color="cadetblue")
+           uiOutput("srmrBoxOut") %>% withSpinner(type=7, color="cadetblue"),
+           uiOutput("agfiBoxOut") %>% withSpinner(type=7, color="cadetblue")
          )
       ),
       tabPanel("Ajuste Incremental",
-         h4("Criterios de Referencia para el Ajuste Incremental (Comparativo), presentado en porcentaje (%)"),
+         h4("Criterios de Referencia para el Ajuste Incremental (Comparativo)"),
          fluidRow(
            uiOutput("nfiBoxOut") %>% withSpinner(type=7, color="cadetblue"),
            uiOutput("tliBoxOut") %>% withSpinner(type=7, color="cadetblue"),
-           uiOutput("agfiBoxOut") %>% withSpinner(type=7, color="cadetblue"),
+           uiOutput("cfiBoxOut") %>% withSpinner(type=7, color="cadetblue"),
            uiOutput("gfiCmpBoxOut") %>% withSpinner(type=7, color="cadetblue")
          )
       ),
