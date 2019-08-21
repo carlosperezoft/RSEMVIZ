@@ -24,7 +24,7 @@ output$estructuralSelectedNodesTxtOut <- renderUI({
 # NOTA: Se ha usado "observeEvent" para que SOLO al hacer clic en el "materialSwitch" se realice el "toggle"
 observeEvent(input$modeloLinealPanelToggle, ignoreNULL = TRUE, ignoreInit = TRUE,
 {
-  shinyjs::toggle(id = "modeloLinealTabSet", anim = TRUE)
+  shinyjs::toggle(id = "modeloLinealTabSet", anim = TRUE, animType = "slide")
 })
 #
 # Presentacion de menu grafico de forma dinamica, segun la pregunta de analisis seleccionada:

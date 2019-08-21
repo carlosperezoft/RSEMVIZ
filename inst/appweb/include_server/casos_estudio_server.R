@@ -8,21 +8,21 @@ casoEstudioData <- reactive({
      "Grupos_INVESTIGACION" = DATOS_GRUPOS_INVEST_UdeA
      )
 })
-
+#
 casoEstudioLabels <- reactive({
   switch(input$casoEstudioSelect,
      "Political_Democracy" = poli_dem_labels,
      "Grupos_INVESTIGACION" = GRUPOS_UdeA_VAR_Labels
   )
 })
-
+#
 casoEstudioModel <- reactive({
   switch(input$casoEstudioSelect,
      "Political_Democracy" = political_democracy_model,
      "Grupos_INVESTIGACION" = grupos_invest_udea_model
   )
 })
-
+#
 observe({
   if((input$usarCasoEstudioChk == TRUE) &&
      (input$casoEstudioSelect  != "Seleccionar...")) {
@@ -31,16 +31,24 @@ observe({
     updateTextInput(session, "modeloSEMTxt", value = "")
   }
 })
-
 # Generate a summary of the dataset ----
 output$resumenCasoEstudoTxtOut <- renderPrint({
   dataset <- casoEstudioData()[,-1] # Se evita la columna row_label
   summary(dataset)
 })
-
+#
 output$detalleCasoEstudioHTMLOut <- renderPrint({
   switch(input$casoEstudioSelect,
      "Political_Democracy" = includeMarkdown("help_files/plot_help.md"),
      "Grupos_INVESTIGACION" = includeMarkdown("help_files/controls_help.md")
   )
 })
+#
+shinyjs::onclick("casosEstudioSwitch",
+  if(input$casosEstudioSwitch) {
+    shinyjs::hide(id = "casosEstudioTab", anim = TRUE, animType = "fade")
+  } else {
+    shinyjs::show(id = "casosEstudioTab", anim = TRUE, animType = "fade")
+  }
+)
+#

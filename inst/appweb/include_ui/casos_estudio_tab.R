@@ -7,14 +7,15 @@ tabItem(tabName = "casosEstudioTab",
   # Elementos de Carga de informacion para el SET de DATOS:
   fluidPage(
     titlePanel("An\u00E1lisis de proyectos predefinidos"),
-
+    materialSwitch(inputId = "casosEstudioSwitch", label = tags$b("Ocultar selector de Casos..."),
+                   value = FALSE, status = "danger", right = TRUE),
     sidebarLayout(
-
       # Sidebar panel for inputs ----
       # NOTA: Es posible indicar el numero de columnas para el sidebarPanel y el mainPanel,
       #       esto con el fin de ajustarse al tamaño de los elementos contenidos en cada panel.
       #      * IMPORTANTE el total son 12 columnas para ajustar los dos Paneles,
       #      * se ha usado 5 en el sidebar (grafo) y 7 en el main (tablas).
+      div(id ="casosEstudioTab",
       sidebarPanel(width = 4,
          fluidRow(
            selectInput("casoEstudioSelect", tags$b("Casos de Estudio:"), selected = "Seleccionar...", width="100%",
@@ -25,8 +26,7 @@ tabItem(tabName = "casosEstudioTab",
            ),
            checkboxInput("usarCasoEstudioChk", "Usar Caso de Estudio seleccionado en SEMVIZ", value = FALSE)
          )
-      ), # fin sidebarPanel
-
+      )), # fin sidebarPanel
       # Main panel for displaying outputs ----
       mainPanel(width = 8,
         wellPanel(
@@ -46,3 +46,4 @@ tabItem(tabName = "casosEstudioTab",
     ) # fin sidebarLayout
   ) ## fin fluidPage ===========
 )
+#
