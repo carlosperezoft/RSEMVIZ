@@ -136,9 +136,9 @@ getParamEstimatesByName <- function(fitModel, paramName) {
     filter(op %in% c("=~", "~", "~~")) %>% # ,pvalue < .10
     transmute(desde = lhs,
       tipo = dplyr::case_when(
-        op == "=~" ~ "loading",
-        op == "~"  ~ "regression",
-        op == "~~" ~ "correlation",
+        op == "=~" ~ "carga-factor",
+        op == "~"  ~ "regresi\u00F3n",
+        op == "~~" ~ "correlaci\u00F3n",
         TRUE ~ NA_character_),
       hacia = rhs, estimado = est, valor_p = pvalue
     )

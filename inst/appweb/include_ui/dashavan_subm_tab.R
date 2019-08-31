@@ -40,8 +40,8 @@ tabItem(tabName = "dashAVANSubMTab",
                  tags$i("Actualizaci\u00F3n autom\u00E1tica..."),
                  circle = TRUE, status = "danger", icon = icon("gear"), width = "250px",
                  size = "xs", tooltip = tooltipOptions(title = "Cambiar opciones...")
-             ),
-             plotOutput("correlogramSEMOut", width = "100%", height = "500") %>% withSpinner()
+               ),
+               plotOutput("correlogramSEMOut", width = "100%", height = "500") %>% withSpinner()
             ),
             tabPanel("Heatmap",h4("An\u00E1lisis de Matrices del Modelo SEM"),
                dropdownButton(inputId = "heatmapOpsBtn",
@@ -54,14 +54,22 @@ tabItem(tabName = "dashAVANSubMTab",
                  circle = TRUE, status = "danger", icon = icon("gear"), width = "250px",
                  size = "xs", tooltip = tooltipOptions(title = "Cambiar opciones...")
                ),
-               plotlyOutput("heatmapSEMOut", width = "500", height = "500") %>% withSpinner()
+               plotlyOutput("heatmapSEMOut", width = "500", height = "500") %>% withSpinner(type=5, color="cadetblue")
             ),
             tabPanel("Informaci\u00F3n por Variable",
               # No se usa el boton, pues se usa un observeEvent sobre grafoAvanzSEMOut.
               #actionButton("getNodesSelBtn", "Actualizar gr\u00E1ficos asociados..."),
-              h4("NODOs SELECCIONADOs ACTUALMENTE:"),
+              h4("An\u00E1lisis seleccionando un NODO a la vez en el modelo SEM:"),
+              materialSwitch(inputId = "convenNodosSwitch", label = tags$b("Ver Convenciones"),
+                             status = "primary", right = TRUE, value = FALSE),
               verbatimTextOutput("nodesListTxtOut"),
-              formattableOutput("tablaGeneralSEMOut", width = "100%") %>% withSpinner()
+              formattableOutput("tablaGeneralSEMOut", width = "100%") %>% withSpinner(color="cadetblue"),
+              shinyjs::hidden( # Inicialmente oculta las convenciones:
+                 # Usar el DIV es mejor para shiny-js y el materialSwitch:
+                 div(id="convenNodosDIV", tags$b("Convenciones de Elementos SEM presentados:"),
+                     formattableOutput("convenNodosTablaOut", width = "100%") %>% withSpinner(type=5, color="cadetblue")
+                 )
+              )
             ),
             tabPanel("Elementos internos SEM", h3("Valores de indicadores de ajuste obtenidos"),
                # Adicionar un SELECT para especificar que elementos leer del FIT SEM:

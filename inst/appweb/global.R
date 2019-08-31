@@ -16,6 +16,7 @@ suppressPackageStartupMessages({
   library(shinydashboard, quietly=TRUE)
   library(shinydashboardPlus, quietly=TRUE)
   library(shinyjs, quietly=TRUE)
+  library(shinyBS, quietly=TRUE)
   library(shinycssloaders, quietly=TRUE)
   library(shinyhelper, quietly=TRUE)
   library(DT, quietly=TRUE)

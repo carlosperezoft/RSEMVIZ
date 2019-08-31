@@ -13,9 +13,8 @@
 sidebarMenu(id = "sidebarMenu",
     menuItem(text = "Inicio", tabName = "homeTab", icon = icon("home"),
              badgeLabel = "HOME", badgeColor = "teal", selected = TRUE),
-    #
+    "- BASES -",
     # SECCION DE MENUS OPERATIVOS PARA EL USO DE SEM GUIADO POR EL ANALISIS GRAFICO
-    hr(), # ":: BASES",
     menuItem(text = "Casos de Estudio", tabName = "casosEstudioTab", icon = icon("book"),
              badgeLabel = "CASOS", badgeColor = "orange"),
     menuItem(text = "Gesti\u00F3n SET de Datos", icon = icon("database"),
@@ -25,7 +24,7 @@ sidebarMenu(id = "sidebarMenu",
     ),
     menuItem(text = "Especificar y Estimar", tabName = "modeloSEMTab", icon = icon("edit"),
              badgeLabel = "Modelo SEM", badgeColor = "green"),
-    hr(), ":: RESULTADOS Visual-Interactivo ::",
+    hr(), "- RESULTADOS Visual-Interactivo -",
     menuItem(text = "An\u00E1lisis Bondad de Ajuste", icon = icon("superscript"),
        menuSubItem(text = "Ajuste del Modelo", tabName = "dashBASSubMTab", icon = shiny::icon("stats", lib = "glyphicon")),
        menuSubItem(text = "Complementos Ajuste", tabName = "dashAVANSubMTab", icon = icon("wrench"))
@@ -42,8 +41,7 @@ sidebarMenu(id = "sidebarMenu",
        tabName = "modEstPredSubMTab", badgeLabel = "Regresi\u00F3n", badgeColor = "green"
        #menuSubItem(text = "1. Predicci\u00F3n - Regresi\u00F3n", tabName = "modEstPredSubMTab", icon = icon("paper-plane"))
        #,menuSubItem(text = "2. Distribuci\u00F3n", tabName = "modEstSenSubMTab", icon = icon("thumbs-up")) # Pos-estimacion
-    ),
-    hr(),
+    ), hr(),
     # FIN SECCION
     #
     # NOTA: El uso de "href", es excluyente con el uso de "tabName" y de "subitems". Se debe usar uno de ellos.

@@ -15,7 +15,7 @@ tabItem(tabName = "casosEstudioTab",
       #       esto con el fin de ajustarse al tamaño de los elementos contenidos en cada panel.
       #      * IMPORTANTE el total son 12 columnas para ajustar los dos Paneles,
       #      * se ha usado 5 en el sidebar (grafo) y 7 en el main (tablas).
-      div(id ="casosEstudioTab",
+      div(id ="casosEstudioTab", # Se debe usar el DIV en el caso de sidebarPanel, para el Shiny-JS
       sidebarPanel(width = 4,
          fluidRow(
            selectInput("casoEstudioSelect", tags$b("Casos de Estudio:"), selected = "Seleccionar...", width="100%",
@@ -36,7 +36,7 @@ tabItem(tabName = "casosEstudioTab",
             tabPanel("DETALLES", h3("Destalles propios del Caso de Estudio"),
               htmlOutput("detalleCasoEstudioHTMLOut")
             ),
-            tabPanel("REMUMEN", h2("Resumen informativo sobre los datos asociados"),
+            tabPanel("RESUMEN", h2("Resumen informativo sobre los datos asociados"),
               verbatimTextOutput("resumenCasoEstudoTxtOut")
             )
           )

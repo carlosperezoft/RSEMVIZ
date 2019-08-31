@@ -32,8 +32,8 @@ output$tablaHipotesisModeloOut <- renderFormattable({
                           x ~ sprintf("%.2f (rank: %02d)", x, rank(-x)))
   pvalueFormat <- formatter("span",
                             style = x ~ style(color = ifelse(x <= 0.05, "green", "red")),
-                            x ~ icontext(ifelse(x <= 0.05, "ok", "remove"),
-                                         ifelse(x <= 0.05, "Yes", "No")))
+                            x ~ icontext(ifelse(x <= 0.05, "ok", "eliminar"),
+                                         ifelse(x <= 0.05, "Si", "No")))
   ciLFormat <- formatter("span",x~ style(digits(x,3)))
   ciUFormat <- formatter("span",x~ style(digits(x,3)))
   ciUFmt <- x ~ round(x, digits=2)
