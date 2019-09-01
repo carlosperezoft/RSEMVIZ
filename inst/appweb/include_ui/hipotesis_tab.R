@@ -27,14 +27,31 @@ tabItem(tabName = "hipotesisTab",
           wellPanel(
             h3("Validaci\u00F3n de H0 y H1:"),
             tabsetPanel(type = "tabs",
-              tabPanel("H0 vs H1 - FACTORES", h4("Tabla Estimaci\u00F3n Factorial Confirmatorio"), br(),
+              tabPanel("H0 vs H1 - FACTORES",
+                 h4("Tabla Estimaci\u00F3n Factorial Confirmatorio"), br(),
+                 materialSwitch(inputId = "convenNodosHipoFacSwitch", label = tags$b("Ver Convenciones"),
+                                status = "info", right = TRUE, value = FALSE),
                  formattableOutput("tablaHipotesisModeloOut", width = "100%") %>% withSpinner(),
-                 htmlOutput("ecuacionFactHipoTxtOut")
+                 htmlOutput("ecuacionFactHipoTxtOut"), br(), # antes: verbatimTextOutput(..)
+                 shinyjs::hidden( # Inicialmente oculta las convenciones:
+                   # Usar el DIV es mejor para shiny-js y el materialSwitch:
+                   div(id="convenNodosHipoFacDIV", tags$b("Convenciones de Elementos SEM presentados:"),
+                      formattableOutput("convenNodosHipoFacTablaOut", width = "100%") %>% withSpinner(type=5, color="cadetblue")
+                   )
+                 )
               ),
-              tabPanel("H0 vs H1 - ESTRUCTURAL ",
-                 h4("Tabla Estimaci\u00F3n Modelo Estructural (Regresiones)"), br(),
+              tabPanel("H0 vs H1 - ESTRUCTURAL",
+                 h4("Tabla Estimaci\u00F3n Modelo Estructural (Regresiones)"),
+                 materialSwitch(inputId = "convenNodosHipoRegSwitch", label = tags$b("Ver Convenciones"),
+                                status = "info", right = TRUE, value = FALSE),
                  formattableOutput("tablaHipotesisParamsOut", width = "100%") %>% withSpinner(),
-                 htmlOutput("ecuacionEstrHipoTxtOut") # antes: verbatimTextOutput(..)
+                 htmlOutput("ecuacionEstrHipoTxtOut"), br(), # antes: verbatimTextOutput(..)
+                 shinyjs::hidden( # Inicialmente oculta las convenciones:
+                   # Usar el DIV es mejor para shiny-js y el materialSwitch:
+                   div(id="convenNodosHipoRegDIV", tags$b("Convenciones de Elementos SEM presentados:"),
+                      formattableOutput("convenNodosHipoRegTablaOut", width = "100%") %>% withSpinner(type=5, color="cadetblue")
+                   )
+                 )
               )
             )
           ) # FIN wellpanel

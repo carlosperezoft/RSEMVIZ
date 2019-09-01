@@ -31,17 +31,18 @@ output$tablaGeneralSEMOut <- renderFormattable({
                     op == "~~" ~ "correl./varianza",
                     op == "~1" ~ "intercepto",
                     TRUE ~ NA_character_),
-                  hacia = rhs, estimado = est.std, ic.inferior = ci.lower, ic.superior = ci.upper,
+                  hacia = rhs, estimado = est.std,
+                  ic.inferior = ci.lower, ic.superior = ci.upper,
                   error = se, valor_p = pvalue, valor_z = z
                )
   #
   formattable(param_data,
     list(
       desde = latentFormat, tipo = typeFormat, hacia = obsFormat,
-      area(col = c(estimado)) ~ normalize_bar("pink", 0.2),
+      area(col = c(estimado)) ~ normalize_bar("lightblue", 0.2),
       ic.inferior = ciLFormat,
       ic.superior = ciUFormat,
-      area(col = c(error)) ~ proportion_bar("lightblue"),
+      area(col = c(error)) ~ proportion_bar("pink"),
       valor_p = pvalueFormat
   ))
 })
@@ -109,3 +110,4 @@ output$convenNodosTablaOut <- renderFormattable({
 #
 shinyjs::onclick("convenNodosSwitch", shinyjs::toggle(id = "convenNodosDIV", anim = TRUE, animType = "fade"))
 #
+

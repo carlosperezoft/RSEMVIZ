@@ -3,6 +3,7 @@
 # 19/09/2018 17:08:28 p. m.
 #
 # Se usa "reactive" para auto-reprocesar la "funcion" cuando cambie algun "input" !
+# IMPORTANTE: El modelo SEM se visualiza con los datos estimados en formato estandarizado.
 paramsSemFit <- reactive({
   lavaan::standardizedSolution(semFitLocal())
 })

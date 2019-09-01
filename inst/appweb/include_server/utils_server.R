@@ -138,9 +138,11 @@ getParamEstimatesByName <- function(fitModel, paramName) {
       tipo = dplyr::case_when(
         op == "=~" ~ "carga-factor",
         op == "~"  ~ "regresi\u00F3n",
-        op == "~~" ~ "correlaci\u00F3n",
+        op == "~~" ~ "correl./varianza",
         TRUE ~ NA_character_),
-      hacia = rhs, estimado = est, valor_p = pvalue
+      hacia = rhs, estimado = est, # est.std
+      ic.inferior = ci.lower, ic.superior = ci.upper,
+      error = se, valor_p = pvalue, valor_z = z
     )
   return(paramData)
 }

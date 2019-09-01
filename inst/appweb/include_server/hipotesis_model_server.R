@@ -2,8 +2,11 @@
 # carlos.perez7@udea.edu.co
 # 10/09/2018 18:55:28 p. m.
 #
+# IMPORTANTE: Validar el caso de que trae los datos NO estandarizados (hipotSEMFit) para su validación:
+# ** El modelo SEM se visualiza con los datos estimados en formato estandarizado.
 hipotSEMFit <- function() {
   lavaan::parameterEstimates(semFitLocal(), standardized = FALSE, rsquare = FALSE)
+  #lavaan::standardizedSolution(semFitLocal()) # Validar si usar siempre estandarizado, se deden ajustar las ecuaciones!
 }
 #
 output$grafoHipotSEMOut <- renderVisNetwork({
@@ -26,45 +29,67 @@ observeEvent(input$grafoHipotSEMOut_selected, ignoreNULL = TRUE, ignoreInit = TR
 output$tablaHipotesisModeloOut <- renderFormattable({
   # ESPECIFICACIONES DE FORMATO Y PRESENTACION PARA LA TABLA SEM DE LAVAAN:
   latentFormat <- formatter("span", style = style(color = "green", font.weight = "bold"))
+  typeFormat <- formatter("span", style = style(color = "teal", font.weight = "bold"))
   obsFormat <- formatter("span", style = style(color = "red", font.weight = "bold"))
-  zetaFormat <- formatter("span",
-                          style = x ~ style(color = ifelse(rank(-x) <= 3, "green", "gray")),
-                          x ~ sprintf("%.2f (rank: %02d)", x, rank(-x)))
   pvalueFormat <- formatter("span",
                             style = x ~ style(color = ifelse(x <= 0.05, "green", "red")),
-                            x ~ icontext(ifelse(x <= 0.05, "ok", "eliminar"),
-                                         ifelse(x <= 0.05, "Si", "No")))
+                            x ~ icontext(ifelse(x <= 0.05, "ok", "remove"),
+                                         ifelse(x <= 0.05, paste("Si:", digits(x,3)), paste("No:", digits(x,3))))
+                            )
   ciLFormat <- formatter("span",x~ style(digits(x,3)))
   ciUFormat <- formatter("span",x~ style(digits(x,3)))
-  ciUFmt <- x ~ round(x, digits=2)
+  # ciUFmt <- x ~ round(x, digits=2)
   # Se filtran los elementos por medio de la lista de nodos seleccionados en el grafo:
+  # IMPORTANTE: Validar el caso de que trae los datos NO estandarizados (hipotSEMFit) para su validación:
   param_data <- hipotSEMFit() %>%
-                     filter(lhs %in% input$grafoHipotSEMOut_selectedNodes)
+                     filter(lhs %in% input$grafoHipotSEMOut_selectedNodes) %>%
+                     transmute(desde = lhs,
+                        tipo = dplyr::case_when(
+                          op == "=~" ~ "carga-factor",
+                          op == "~"  ~ "regresi\u00F3n",
+                          op == "~~" ~ "correl./varianza",
+                          op == "~1" ~ "intercepto",
+                          TRUE ~ NA_character_),
+                      hacia = rhs, estimado = est,
+                      ic.inferior = ci.lower, ic.superior = ci.upper,
+                      error = se, valor_p = pvalue, valor_z = z)
   #
   formattable(param_data, list(
-    lhs = latentFormat, rhs = obsFormat,
-    area(col = c(est)) ~ normalize_bar("pink", 0.2),
-    area(col = c(se)) ~ proportion_bar(),
-    z = zetaFormat,
-    pvalue = pvalueFormat,
-    ci.lower = ciLFormat,
-    ci.upper = ciUFmt
+      desde = latentFormat, tipo = typeFormat, hacia = obsFormat,
+      area(col = c(estimado)) ~ normalize_bar("lightblue", 0.2),
+      ic.inferior = ciLFormat,
+      ic.superior = ciUFormat,
+      area(col = c(error)) ~ proportion_bar("pink"),
+      valor_p = pvalueFormat
   ))
 })
 #
 output$tablaHipotesisParamsOut <- renderFormattable({
   # ESPECIFICACIONES DE FORMATO Y PRESENTACION PARA LA TABLA SEM DE LAVAAN:
-  nodeFormat <- formatter("span", style = style(color = "green", font.weight = "bold"))
-  operFormat <- formatter("span", style = style(color = "red", font.weight = "bold"))
-  pValFmt <- x ~ round(x, digits=3)
+  latentFormat <- formatter("span", style = style(color = "green", font.weight = "bold"))
+  typeFormat <- formatter("span", style = style(color = "teal", font.weight = "bold"))
+  obsFormat <- formatter("span", style = style(color = "red", font.weight = "bold"))
+  pvalueFormat <- formatter("span",
+                            style = x ~ style(color = ifelse(x <= 0.05, "green", "red")),
+                            x ~ icontext(ifelse(x <= 0.05, "ok", "remove"),
+                                         ifelse(x <= 0.05, paste("Si:", digits(x,3)), paste("No:", digits(x,3))))
+                            )
+  ciLFormat <- formatter("span",x~ style(digits(x,3)))
+  ciUFormat <- formatter("span",x~ style(digits(x,3)))
+  #pValFmt <- x ~ round(x, digits=3)
   # Se filtra la tabla solo por un elemento seleccionado en el grafo:
-  formattable(getParamEstimatesByName(hipotSEMFit(), input$grafoHipotSEMOut_selected), list(
-    desde = nodeFormat, tipo = operFormat, hacia = nodeFormat,
-    area(col = c(estimado)) ~ normalize_bar("pink", 0.2),
-    valor_p = pValFmt
+  formattable(getParamEstimatesByName(hipotSEMFit(), input$grafoHipotSEMOut_selected),
+    list(
+      desde = latentFormat, tipo = typeFormat, hacia = obsFormat,
+      area(col = c(estimado)) ~ normalize_bar("lightblue", 0.2),
+      ic.inferior = ciLFormat,
+      ic.superior = ciUFormat,
+      area(col = c(error)) ~ proportion_bar("pink"),
+      valor_p = pvalueFormat
   ))
 })
-#
+# IMPORTANTE: Validar si usar siempre estandarizado, se deden ajustar las ecuaciones.
+# En estandarizado el valor estimado de las cargas es: est.std (de lo contrario: est)
 output$ecuacionFactHipoTxtOut <- renderUI({
   req(input$grafoHipotSEMOut_selected) # verifica que tenga informacion...
   #
@@ -94,7 +119,8 @@ output$ecuacionFactHipoTxtOut <- renderUI({
   }
   HTML(paste(tags$b("Ecuaci\u00F3n Var. Observada:"), ecuFac, sep="<br/>"))
 })
-#
+# IMPORTANTE: Validar si usar siempre estandarizado, se deden ajustar las ecuaciones.
+# En estandarizado el valor estimado de las cargas es: est.std (de lo contrario: est)
 output$ecuacionEstrHipoTxtOut <- renderUI({  # antes: renderText(..)
   req(input$grafoHipotSEMOut_selected) # verifica que tenga informacion...
   #
@@ -137,3 +163,32 @@ output$ecuacionEstrHipoTxtOut <- renderUI({  # antes: renderText(..)
   #
 })
 #
+output$convenNodosHipoRegTablaOut <- renderFormattable({
+  convencionesHipotesis()
+})
+#
+shinyjs::onclick("convenNodosHipoRegSwitch", shinyjs::toggle(id="convenNodosHipoRegDIV",anim=TRUE,animType="fade"))
+#
+output$convenNodosHipoFacTablaOut <- renderFormattable({
+  convencionesHipotesis()
+})
+#
+shinyjs::onclick("convenNodosHipoFacSwitch", shinyjs::toggle(id="convenNodosHipoFacDIV",anim=TRUE,animType="fade"))
+#
+#
+convencionesHipotesis <- function() {
+   varFormat <- formatter("span", style = style(color = "green", font.weight = "bold"))
+   descFormat <- formatter("span", style = style(color = "blue", font.weight = "bold"))
+   nodesLabels <- datasetLabelsInput()
+   #
+   param_data <- hipotSEMFit() %>% filter(lhs %in% input$grafoHipotSEMOut_selectedNodes)
+   #
+   #  Multiples condiciones en el filtro equivalen a un AND,
+   #  por tanto se debe usar el operador: & (and) u | (or):
+   #  TIP: "variable" es una columna de nodesLabels.
+   selected_labels <- nodesLabels %>%
+                      filter(variable %in% param_data$lhs |
+                             variable %in% param_data$rhs) %>% arrange(variable)
+   #
+   formattable(selected_labels, list(variable = varFormat, desc = descFormat))
+}

@@ -18,28 +18,40 @@ tabItem(tabName = "dashBASSubMTab",
          fluidRow(
            # NOTA: NO usar box(..) para contener un elemento tipo valueBoxOutput(..)
            #       El valueBoxOutput se activa cuando el SEM model ha sido estimado (tiene datos)
-           column(3, valueBoxOutput("statChi2Out", width = NULL) %>%
+           column(3,
+             bsPopover(id = "statChi2Out", title="Ajuste Chi Cuadrado",
+                       content = "un texto de prueba", placement = "top", trigger = "hover"),
+             valueBoxOutput("statChi2Out", width = NULL) %>%
              helper(type = "inline", title = "Ajuste Chi Cuadrado", colour = "black",
                     content=paste("Evalua la Hip\u00F3tesis Nula: La cual indica que el estimador de la matriz de covarianza",
                         "del modelo, indicando que tan cercano es a la matriz de covarianza real de los datos.",
                         "Por lo cual es preferible un p mayor a 0.05 para no rechazar H. nula."),
                     size = "s")
            ),
-           column(3, valueBoxOutput("pValueChi2Out", width = NULL) %>%
-                 helper(type = "inline", title = "Valor p para Chi Cuadrado", colour = "black",
-                    content=paste("Evalua la Hip\u00F3tesis Nula: La cual indica que el estimador de la matriz de covarianza",
-                        "del modelo, indicando que tan cercano es a la matriz de covarianza real de los datos.",
-                        "Por lo cual es preferible un p mayor a 0.05 para no rechazar H. nula."),
-                    size = "s")
+           column(3,
+             bsPopover(id = "pValueChi2Out", title="Valor p para Chi Cuadrado",
+                       content = "un texto de prueba", placement = "top", trigger = "hover"),
+             valueBoxOutput("pValueChi2Out", width = NULL) %>%
+             helper(type = "inline", title = "Valor p para Chi Cuadrado", colour = "black",
+                content=paste("Evalua la Hip\u00F3tesis Nula: La cual indica que el estimador de la matriz de covarianza",
+                    "del modelo, indicando que tan cercano es a la matriz de covarianza real de los datos.",
+                    "Por lo cual es preferible un p mayor a 0.05 para no rechazar H. nula."),
+                size = "s")
            ),
-           column(3, valueBoxOutput("statRazonChi2Out", width = NULL) %>%
-                 helper(type = "inline", title = "Razon Chi cuadrado / Grados de Libertad", colour = "black",
-                    content=paste("Evalua la Hip\u00F3tesis Nula: La cual indica que el estimador de la matriz de covarianza",
-                        "del modelo, indicando que tan cercano es a la matriz de covarianza real de los datos.",
-                        "Por lo cual es preferible un p mayor a 0.05 para no rechazar H. nula."),
-                    size = "s")
+           column(3,
+             bsPopover(id = "statRazonChi2Out", title="Raz\u00F3n Chi cuadrado / Grados de Libertad",
+                       content = "un texto de prueba", placement = "top", trigger = "hover"),
+             valueBoxOutput("statRazonChi2Out", width = NULL) %>%
+             helper(type = "inline", title = "Raz\u00F3n Chi cuadrado / Grados de Libertad", colour = "black",
+                content=paste("Evalua la Hip\u00F3tesis Nula: La cual indica que el estimador de la matriz de covarianza",
+                    "del modelo, indicando que tan cercano es a la matriz de covarianza real de los datos.",
+                    "Por lo cual es preferible un p mayor a 0.05 para no rechazar H. nula."),
+                size = "s")
            ),
-           column(3, infoBoxOutput("gradosLibertadOut", width = NULL) %>%
+           column(3,
+               bsPopover(id = "gradosLibertadOut", title="Grados de Libertad",
+                       content = "un texto de prueba", placement = "top", trigger = "hover"),
+               infoBoxOutput("gradosLibertadOut", width = NULL) %>%
                helper(type = "inline", title = "Grados de Libertad", colour = "black",
                     content=paste("Evalua la Hip\u00F3tesis Nula: La cual indica que el estimador de la matriz de covarianza",
                         "del modelo, indicando que tan cercano es a la matriz de covarianza real de los datos.",
@@ -65,30 +77,42 @@ tabItem(tabName = "dashBASSubMTab",
       ),
       tabPanel("Ajuste Parsimonioso", height = 200, h4("Criterios de Referencia para el Ajuste Parsimonioso"),
          fluidRow(
-           column( 3, valueBoxOutput("pgfiBoxOut", width = NULL) %>%
+           column( 3,
+             bsPopover(id = "pgfiBoxOut", title="Indice de Bondad de Ajuste de Parsimonia",
+                   content = "un texto de prueba", placement = "top", trigger = "hover"),
+             valueBoxOutput("pgfiBoxOut", width = NULL) %>%
                  helper(type = "inline", title = "Indice de Bondad de Ajuste de Parsimonia", colour = "black",
                     content=paste("Evalua la Hip\u00F3tesis Nula: La cual indica que el estimador de la matriz de covarianza",
                         "del modelo, indicando que tan cercano es a la matriz de covarianza real de los datos.",
                         "Por lo cual es preferible un p mayor a 0.05 para no rechazar H. nula."),
                     size = "s")
            ),
-           column(3, valueBoxOutput("pnfiBoxOut", width = NULL) %>%
+           column(3,
+             bsPopover(id = "pnfiBoxOut", title="Indice normalizado de Ajuste de Parsimonia",
+                   content = "un texto de prueba", placement = "top", trigger = "hover"),
+             valueBoxOutput("pnfiBoxOut", width = NULL) %>%
                  helper(type = "inline", title = "Indice normalizado de Ajuste de Parsimonia", colour = "black",
                     content=paste("Evalua la Hip\u00F3tesis Nula: La cual indica que el estimador de la matriz de covarianza",
                         "del modelo, indicando que tan cercano es a la matriz de covarianza real de los datos.",
                         "Por lo cual es preferible un p mayor a 0.05 para no rechazar H. nula."),
                     size = "s")
            ),
-           column(3, valueBoxOutput("aicInfoOut", width = NULL) %>%
-                 helper(type = "inline", title = "Criterio de Información de AKAIKE", colour = "black",
+           column(3,
+             bsPopover(id = "aicInfoOut", title="Criterio de Informaci\u00F3n de AKAIKE",
+                   content = "un texto de prueba", placement = "top", trigger = "hover"),
+             valueBoxOutput("aicInfoOut", width = NULL) %>%
+                 helper(type = "inline", title = "Criterio de Informaci\u00F3n de AKAIKE", colour = "black",
                     content=paste("Evalua la Hip\u00F3tesis Nula: La cual indica que el estimador de la matriz de covarianza",
                         "del modelo, indicando que tan cercano es a la matriz de covarianza real de los datos.",
                         "Por lo cual es preferible un p mayor a 0.05 para no rechazar H. nula."),
                     size = "s")
            ),
-           column(3, valueBoxOutput("bicInfoOut", width = NULL) %>%
-                 helper(type = "inline", title = "Criterio de Información Bayesiano", colour = "black",
-                    content=paste("Evalua la Hip\u00F3tesis Nula: La cual indica que el estimador de la matriz de covarianza",
+           column(3,
+             bsPopover(id = "bicInfoOut", title="Criterio de Informaci\u00F3n Bayesiano",
+                   content = "un texto de prueba", placement = "top", trigger = "hover"),
+             valueBoxOutput("bicInfoOut", width = NULL) %>%
+                 helper(type = "inline", title = "Criterio de Informaci\u00F3n Bayesiano", colour = "black",
+                    content=paste("Evalua la Hip\u00F3tesis Nula: sLa cual indica que el estimador de la matriz de covarianza",
                         "del modelo, indicando que tan cercano es a la matriz de covarianza real de los datos.",
                         "Por lo cual es preferible un p mayor a 0.05 para no rechazar H. nula."),
                     size = "s")
