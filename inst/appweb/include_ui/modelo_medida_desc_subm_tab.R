@@ -41,8 +41,8 @@ tabItem(tabName = "modMedDesSubMTab",
           "2. \u00BFLas correlaciones entre los score estimados son significativas?"=2,
           "3. \u00BFAl comparar los score por ranquin hay diferencias significativas?"=3,
           "4. \u00BFC\u00F3mo son las agrupaciones de los score de forma jer\u00E1rquica?"=4,
-          "5. \u00BFLas dependencias entre constructos son significativas?"=5,
-          "6. \u00BFLas cargas de factores y constructos sobre sus variables dependintes son significativos?"=6,
+          "5. \u00BFLas variables observadas confirman dependencias entre constructos?"=5,
+          "6. \u00BFLas cargas de factores y constructos sobre sus variables dependientes son significativas?"=6,
           "7. \u00BFLos patrones de asociaci\u00F3n entre variables son significativos?"=7
         )
       ), title = tagList(shiny::icon("list"), "Nodos SEM Seleccionados"), status="warning",

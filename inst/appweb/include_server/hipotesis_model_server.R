@@ -167,13 +167,19 @@ output$convenNodosHipoRegTablaOut <- renderFormattable({
   convencionesHipotesis()
 })
 #
-shinyjs::onclick("convenNodosHipoRegSwitch", shinyjs::toggle(id="convenNodosHipoRegDIV",anim=TRUE,animType="fade"))
+observeEvent(input$convenNodosHipoRegSwitch, ignoreNULL = TRUE, ignoreInit = TRUE,
+{
+  shinyjs::toggle(id="convenNodosHipoRegDIV", anim = TRUE, animType = "fade")
+})
 #
 output$convenNodosHipoFacTablaOut <- renderFormattable({
   convencionesHipotesis()
 })
 #
-shinyjs::onclick("convenNodosHipoFacSwitch", shinyjs::toggle(id="convenNodosHipoFacDIV",anim=TRUE,animType="fade"))
+observeEvent(input$convenNodosHipoFacSwitch, ignoreNULL = TRUE, ignoreInit = TRUE,
+{
+  shinyjs::toggle(id="convenNodosHipoFacDIV", anim = TRUE, animType = "fade")
+})
 #
 #
 convencionesHipotesis <- function() {
@@ -192,3 +198,4 @@ convencionesHipotesis <- function() {
    #
    formattable(selected_labels, list(variable = varFormat, desc = descFormat))
 }
+#

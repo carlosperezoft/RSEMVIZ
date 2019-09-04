@@ -155,4 +155,12 @@ makeRandomString <- function(n=1, lenght=12){
   }
   return(randomString)
 }
+# Funcion que permite validar si un data.frame tiene un conjunto de columnas,
+# esto para evitar errores al consultarlas en dicho DF.
+# TIP: all() funcion de R que valida si TODOS los valores en un
+# "logical vector" (%in% retorna uno, p.ej: c(T,T,F)) son "true" o no.
+#
+existenColumnas <- function(dataFrame, columnas) {
+  return(all(columnas %in% colnames(dataFrame)))
+}
 #

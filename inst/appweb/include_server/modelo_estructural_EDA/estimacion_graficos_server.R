@@ -6,7 +6,11 @@ output$seriesEstructuralPlotOut <- renderDygraph({
   # Verifica el objeto indicado. Dado el caso NULL: cancela cualquier proceso "reactive" asociado
   req(input$grafoModeloEstructuralOut_selectedNodes)
   #
+  if(!existenColumnas(semModelScoreData(), input$grafoModeloEstructuralOut_selectedNodes)) {
+    return(NULL)
+  }
   score_data <- semModelScoreData()[c("row_id", input$grafoModeloEstructuralOut_selectedNodes)]
+  #
   scr_names <- paste(colnames(score_data), "SCR", sep=".")
   colnames(score_data) <- scr_names
   #

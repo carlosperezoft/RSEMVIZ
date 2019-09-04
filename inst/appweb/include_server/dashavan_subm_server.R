@@ -108,6 +108,11 @@ output$convenNodosTablaOut <- renderFormattable({
    formattable(selected_labels, list(variable = varFormat, desc = descFormat))
 })
 #
-shinyjs::onclick("convenNodosSwitch", shinyjs::toggle(id = "convenNodosDIV", anim = TRUE, animType = "fade"))
-#
+#shinyjs::onclick("convenNodosSwitch", shinyjs::toggle(id = "convenNodosDIV", anim = TRUE, animType = "fade"))
+# NOTA: Se ha usado "observeEvent" para que SOLO al hacer clic en el "materialSwitch" se realice el "toggle"
+observeEvent(input$convenNodosSwitch, ignoreNULL = TRUE, ignoreInit = TRUE,
+{
+  shinyjs::toggle(id = "convenNodosDIV", anim = TRUE, animType = "fade")
+})
+
 

@@ -19,6 +19,7 @@ suppressPackageStartupMessages({
   library(shinyBS, quietly=TRUE)
   library(shinycssloaders, quietly=TRUE)
   library(shinyhelper, quietly=TRUE)
+  #library(shinyjqui, quietly=TRUE)
   library(DT, quietly=TRUE)
   library(dplyr, quietly=TRUE)
   library(parcoords, quietly=TRUE)

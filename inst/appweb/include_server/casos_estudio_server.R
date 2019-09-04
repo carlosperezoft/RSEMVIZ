@@ -3,10 +3,12 @@
 # 11/09/2018 13:55:28 p. m.
 #
 casoEstudioData <- reactive({
+  # El valor retornado es el SET de Datos:
   switch(input$casoEstudioSelect,
      "Political_Democracy" = poli_dem_data, # SET de datos de Caso SEM en lavaan
      "Grupos_INVESTIGACION" = DATOS_GRUPOS_INVEST_UdeA
      )
+  #
 })
 #
 casoEstudioLabels <- reactive({
