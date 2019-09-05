@@ -19,6 +19,26 @@ output$medicionSelectedNodesTxtOut <- renderUI({
   HTML(paste(tags$b("Variables SEM:"), nodesListTxt))
 })
 #
+output$convenModelMedicionTablaOut <- renderFormattable({
+   varFormat <- formatter("span", style = style(color = "green", font.weight = "bold"))
+   descFormat <- formatter("span", style = style(color = "blue", font.weight = "bold"))
+   nodesLabels <- datasetLabelsInput()
+   #
+   #  Multiples condiciones en el filtro equivalen a un AND,
+   #  por tanto se debe usar el operador: & (and) u | (or).
+   #  NOTA: Se filtra por 'grafoModeloMedicionOut_selectedNodes' ya que contiene la lista de
+   #  los nombres de los nodos seleccionados.
+   selected_labels <- nodesLabels %>%
+                      filter(variable %in% input$grafoModeloMedicionOut_selectedNodes) %>% arrange(variable)
+   #
+   formattable(selected_labels, list(variable = varFormat, desc = descFormat))
+})
+#
+observeEvent(input$convenModelMedicionSwitch, ignoreNULL = TRUE, ignoreInit = TRUE,
+{
+  shinyjs::toggle(id = "convenModelMedicionDIV", anim = TRUE, animType = "slide")
+})
+#
 # NOTA: FUNCION USADA DE PRUEBA PARA FILTRAR EN GRAFICOS CON SE PUEDA APLICAR ELEMENTOS AGRUPADOS POR LATENTE/OBSERVADA
 # output$splomFactorOut <- renderPlotly({
 #   # verifica que tenga informacion. Cancela la invocacion dado el caso, y evita cualquier proceso "reactive" asociado
@@ -59,5 +79,5 @@ source('include_server/modelo_medida_EDA/redes_graficos_server.R', local=TRUE)
 source('include_server/modelo_medida_EDA/evolucion_graficos_server.R', local=TRUE)
 #
 # Graficos para el menu de Cicularizar en el Modelo de Medicion:
-source('include_server/modelo_medida_EDA/cicularizar_graficos_server.R', local=TRUE)
+source('include_server/modelo_medida_EDA/circularizar_graficos_server.R', local=TRUE)
 #

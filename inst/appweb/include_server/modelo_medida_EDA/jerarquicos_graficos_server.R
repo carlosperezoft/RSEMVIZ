@@ -6,6 +6,10 @@ output$treemapMedidaPlotOut <- renderPlot({
   # verifica que tenga informacion. Cancela la invocacion dado el caso, y evita cualquier proceso "reactive" asociado
   req(input$grafoModeloMedicionOut_selectedNodes)
   #
+  if(!existenColumnas(semModelScoreData(), input$grafoModeloMedicionOut_selectedNodes)) {
+    return(NULL)
+  }
+  #
   cast_data <- semModelScoreData()[input$grafoModeloMedicionOut_selectedNodes]
   #
   dendro_data <- as.dendrogram(hclust(dist(cast_data, method = "euclidean"), method = "average"))
@@ -20,6 +24,10 @@ output$treemapMedidaPlotOut <- renderPlot({
 output$dendrogramMedidaPlotOut <- renderPlot({
   # verifica que tenga informacion. Cancela la invocacion dado el caso, y evita cualquier proceso "reactive" asociado
   req(input$grafoModeloMedicionOut_selectedNodes)
+  #
+  if(!existenColumnas(semModelScoreData(), input$grafoModeloMedicionOut_selectedNodes)) {
+    return(NULL)
+  }
   #
   cast_data <- semModelScoreData()[input$grafoModeloMedicionOut_selectedNodes]
   #
@@ -49,6 +57,10 @@ output$dendrogramMedidaPlotOut <- renderPlot({
 output$dendroInterMedidaPlotOut <- renderPlot({
   # verifica que tenga informacion. Cancela la invocacion dado el caso, y evita cualquier proceso "reactive" asociado
   req(input$grafoModeloMedicionOut_selectedNodes)
+  #
+  if(!existenColumnas(semModelScoreData(), input$grafoModeloMedicionOut_selectedNodes)) {
+    return(NULL)
+  }
   #
   cast_data <- semModelScoreData()[input$grafoModeloMedicionOut_selectedNodes]
   #
@@ -84,6 +96,10 @@ output$dendroInterMedidaPlotOut <- renderPlot({
 output$dendroCompaMedidaPlotOut<- renderPlot({
   # verifica que tenga informacion. Cancela la invocacion dado el caso, y evita cualquier proceso "reactive" asociado
   req(input$grafoModeloMedicionOut_selectedNodes)
+  #
+  if(!existenColumnas(semModelScoreData(), input$grafoModeloMedicionOut_selectedNodes)) {
+    return(NULL)
+  }
   #
   cast_data <- semModelScoreData()[input$grafoModeloMedicionOut_selectedNodes]
   #
@@ -123,6 +139,10 @@ output$dendroCompaMedidaPlotOut<- renderPlot({
 output$clusterMedidaPlotOut <- renderPlotly({
   # verifica que tenga informacion. Cancela la invocacion dado el caso, y evita cualquier proceso "reactive" asociado
   req(input$grafoModeloMedicionOut_selectedNodes)
+  #
+  if(!existenColumnas(semModelScoreData(), input$grafoModeloMedicionOut_selectedNodes)) {
+    return(NULL)
+  }
   #
   cast_data <- semModelScoreData()[input$grafoModeloMedicionOut_selectedNodes]
   #

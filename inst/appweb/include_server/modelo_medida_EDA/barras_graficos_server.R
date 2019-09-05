@@ -6,6 +6,10 @@ output$barrasMedidaPlotOut <- renderAmCharts({
   # verifica que tenga informacion. Cancela la invocacion dado el caso, y evita cualquier proceso "reactive" asociado
   req(input$grafoModeloMedicionOut_selectedNodes)
   #
+  if(!existenColumnas(semModelScoreData(), input$grafoModeloMedicionOut_selectedNodes)) {
+    return(NULL)
+  }
+  #
   cast_data <- semModelScoreData()[input$grafoModeloMedicionOut_selectedNodes]
   # Valida ordenamiento de los score en los datos seleccionados:
   if(input$barrasMedidaSortCheck == TRUE){
@@ -36,6 +40,10 @@ output$circleBarMedidaPlotOut <- renderPlot({
   # verifica que tenga informacion. Cancela la invocacion dado el caso, y evita cualquier proceso "reactive" asociado
   req(input$grafoModeloMedicionOut_selectedNodes)
   #
+  if(!existenColumnas(semModelScoreData(), input$grafoModeloMedicionOut_selectedNodes)) {
+    return(NULL)
+  }
+  #
   cast_data <- semModelScoreData()[c("row_id", input$grafoModeloMedicionOut_selectedNodes)]
   #
   shiny::validate( # NOTA: el "row_id" mas el nodo seleccionado !
@@ -64,6 +72,10 @@ output$circleBarMedidaPlotOut <- renderPlot({
 output$histoBarMedidaPlotOut <- renderPlot({
   req(input$grafoModeloMedicionOut_selectedNodes)
   #
+  if(!existenColumnas(semModelScoreData(), input$grafoModeloMedicionOut_selectedNodes)) {
+    return(NULL)
+  }
+  #
   melt_data <- melt(semModelScoreData()[c("row_id", input$grafoModeloMedicionOut_selectedNodes)],
                                id = "row_id", variable.name = "variable", value.name = "score")
   #
@@ -84,6 +96,10 @@ output$histoBarMedidaPlotOut <- renderPlot({
 output$lollipopMedidaPlotOut <- renderPlotly({
   # verifica que tenga informacion. Cancela la invocacion dado el caso, y evita cualquier proceso "reactive" asociado
   req(input$grafoModeloMedicionOut_selectedNodes)
+  #
+  if(!existenColumnas(semModelScoreData(), input$grafoModeloMedicionOut_selectedNodes)) {
+    return(NULL)
+  }
   #
   cast_data <- semModelScoreData()[input$grafoModeloMedicionOut_selectedNodes]
   #
@@ -115,6 +131,10 @@ output$lollipopMedidaPlotOut <- renderPlotly({
 output$paralelasMedidaPlotOut <- renderParcoords({
   # verifica que tenga informacion. Cancela la invocacion dado el caso, y evita cualquier proceso "reactive" asociado
   req(input$grafoModeloMedicionOut_selectedNodes)
+  #
+  if(!existenColumnas(semModelScoreData(), input$grafoModeloMedicionOut_selectedNodes)) {
+    return(NULL)
+  }
   #
   cast_data <- semModelScoreData()[input$grafoModeloMedicionOut_selectedNodes]
   #

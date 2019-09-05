@@ -6,6 +6,10 @@ output$circlePackOneLevelMedidaPlotOut <- renderPlotly({
   # Verifica el objeto indicado. Dado el caso NULL: cancela cualquier proceso "reactive" asociado
   req(input$grafoModeloMedicionOut_selectedNodes)
   #
+  if(!existenColumnas(semModelScoreData(), input$grafoModeloMedicionOut_selectedNodes)) {
+    return(NULL)
+  }
+  #
   melt_data <- melt(semModelScoreData()[c("row_id", input$grafoModeloMedicionOut_selectedNodes)],
                     id = "row_id", variable.name = "variable", value.name = "score")
   #
@@ -50,6 +54,10 @@ output$circlePackJerarqMedidaPlotOut <- renderCirclepackeR({
 output$circlePackDendroMedidaPlotOut <- renderCirclepackeR({
   # Verifica el objeto indicado. Dado el caso NULL: cancela cualquier proceso "reactive" asociado
   req(input$grafoModeloMedicionOut_selectedNodes)
+  #
+  if(!existenColumnas(semModelScoreData(), input$grafoModeloMedicionOut_selectedNodes)) {
+    return(NULL)
+  }
   #
   cast_data <- semModelScoreData()[input$grafoModeloMedicionOut_selectedNodes]
   #

@@ -15,10 +15,14 @@ tabItem(tabName = "hipotesisTab",
       #      * se ha usado 5 en el sidebar (grafo) y 7 en el main (tablas).
       sidebarPanel(id="hipotSidebarPanel", width = 5, style="background-color: white;",
          fluidRow(
-           box(visNetworkOutput("grafoHipotSEMOut", height = 600) %>% withSpinner(type=8, color="cadetblue"),
-              title = tagList(shiny::icon("gears"), "Modelo SEM"), width = NULL,
-              collapsible = TRUE, status = "success", solidHeader = TRUE
-           )
+           box(actionButton("dashHipotSEMBtn", "Actualizar Informaci\u00F3n por Variable..."),
+             visNetworkOutput("grafoHipotSEMOut", height = 600) %>% withSpinner(type=8, color="cadetblue"),
+                title = tagList(shiny::icon("gears"), "Modelo SEM"), width = NULL,
+                collapsible = TRUE, status = "success", solidHeader = TRUE
+           ) %>%
+          popify(title = "Modelo SEM Interactivo",
+            content = "Seleccione usando CTRL+clic los elementos que desea analizar...",
+            placement = "top", trigger = "hover")
          )
       ), # fin sidebarPanel
 
@@ -28,7 +32,7 @@ tabItem(tabName = "hipotesisTab",
             h3("Validaci\u00F3n de H0 y H1:"),
             tabsetPanel(type = "tabs",
               tabPanel("H0 vs H1 - FACTORES",
-                 h4("Tabla Estimaci\u00F3n Factorial Confirmatorio"), br(),
+                 h4("Tabla Estimaci\u00F3n Factorial Confirmatorio"),
                  materialSwitch(inputId = "convenNodosHipoFacSwitch", label = tags$b("Ver Convenciones"),
                                 status = "info", right = TRUE, value = FALSE),
                  formattableOutput("tablaHipotesisModeloOut", width = "100%") %>% withSpinner(),

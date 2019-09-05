@@ -21,7 +21,7 @@ output$grafoHipotSEMOut <- renderVisNetwork({
 # observeEvent(input$grafoHipotSEMOut_selected, {  # Util en caso de un solo elemento...
 # eventReactive(..), no funciona con el tipo "_selected"
 # Aqui se observan cambios en la seleccion de un solo NODO (para varios se debe usar un Boton):
-observeEvent(input$grafoHipotSEMOut_selected, ignoreNULL = TRUE, ignoreInit = TRUE,
+observeEvent(input$dashHipotSEMBtn, ignoreNULL = TRUE, ignoreInit = TRUE,
 {
   visNetworkProxy("grafoHipotSEMOut") %>% visGetSelectedNodes() # actualiza contenedores...
 })
@@ -192,6 +192,8 @@ convencionesHipotesis <- function() {
    #  Multiples condiciones en el filtro equivalen a un AND,
    #  por tanto se debe usar el operador: & (and) u | (or):
    #  TIP: "variable" es una columna de nodesLabels.
+   #  NOTA: Se filtra por 'lhs' y 'rhs' debido a las columnas 'desde' y 'hacia' de la
+   #        tabla presentada que contienen nombres de variables.
    selected_labels <- nodesLabels %>%
                       filter(variable %in% param_data$lhs |
                              variable %in% param_data$rhs) %>% arrange(variable)

@@ -43,6 +43,10 @@ output$streamgraphMedidaPlotOut <- renderStreamgraph({
   # Verifica el objeto indicado. Dado el caso NULL: cancela cualquier proceso "reactive" asociado
   req(input$grafoModeloMedicionOut_selectedNodes)
   #
+  if(!existenColumnas(semModelScoreData(), input$grafoModeloMedicionOut_selectedNodes)) {
+    return(NULL)
+  }
+  #
   melt_data <- melt(semModelScoreData()[c("row_id", input$grafoModeloMedicionOut_selectedNodes)],
                     id = "row_id", variable.name = "variable", value.name = "score")
   #
@@ -56,6 +60,10 @@ output$streamgraphMedidaPlotOut <- renderStreamgraph({
 output$signalMedidaPlotOut <- renderPlotly({
   # Verifica el objeto indicado. Dado el caso NULL: cancela cualquier proceso "reactive" asociado
   req(input$grafoModeloMedicionOut_selectedNodes)
+  #
+  if(!existenColumnas(semModelScoreData(), input$grafoModeloMedicionOut_selectedNodes)) {
+    return(NULL)
+  }
   #
   melt_data <- melt(semModelScoreData()[c("row_id", input$grafoModeloMedicionOut_selectedNodes)],
                     id = "row_id", variable.name = "variable", value.name = "score")
@@ -71,6 +79,10 @@ output$stackedAreaMedidaPlotOut <- renderPlotly({
   # Verifica el objeto indicado. Dado el caso NULL: cancela cualquier proceso "reactive" asociado
   req(input$grafoModeloMedicionOut_selectedNodes)
   #
+  if(!existenColumnas(semModelScoreData(), input$grafoModeloMedicionOut_selectedNodes)) {
+    return(NULL)
+  }
+  #
   melt_data <- melt(semModelScoreData()[c("row_id", input$grafoModeloMedicionOut_selectedNodes)],
                     id = "row_id", variable.name = "variable", value.name = "score")
   #
@@ -84,6 +96,10 @@ output$stackedAreaMedidaPlotOut <- renderPlotly({
 output$seriesMedidaPlotOut <- renderDygraph({
   # Verifica el objeto indicado. Dado el caso NULL: cancela cualquier proceso "reactive" asociado
   req(input$grafoModeloMedicionOut_selectedNodes)
+  #
+  if(!existenColumnas(semModelScoreData(), input$grafoModeloMedicionOut_selectedNodes)) {
+    return(NULL)
+  }
   #
   cast_data <- semModelScoreData()[c("row_id", input$grafoModeloMedicionOut_selectedNodes)]
   #

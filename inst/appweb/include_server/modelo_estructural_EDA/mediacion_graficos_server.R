@@ -17,6 +17,10 @@ output$mediacionRegreSerie1APlotOut <- renderDygraph({
                  "Este tipo de gr\u00E1fico aplica para TRES variables solamente.")
   )
   #
+  if(!existenColumnas(semModelScoreData(), input$grafoModeloEstructuralOut_selectedNodes)) {
+    return(NULL)
+  }
+  #
   score_data <- semModelScoreData()[c("row_id", input$grafoModeloEstructuralOut_selectedNodes[1])]
   #
   dygraph(score_data, main = "Flujo del Score A", xlab = "Fila.SCR", group = "mediacionRegreSerieGroup",
@@ -43,6 +47,10 @@ output$mediacionRegreSerie2BPlotOut <- renderDygraph({
                  "Este tipo de gr\u00E1fico aplica para TRES variables solamente.")
   )
   #
+  if(!existenColumnas(semModelScoreData(), input$grafoModeloEstructuralOut_selectedNodes)) {
+    return(NULL)
+  }
+  #
   score_data <- semModelScoreData()[c("row_id", input$grafoModeloEstructuralOut_selectedNodes[2])]
   #
   dygraph(score_data, main = "Flujo del Score B", xlab = "Fila.SCR", group = "mediacionRegreSerieGroup",
@@ -68,6 +76,10 @@ output$mediacionRegreSerie3CPlotOut <- renderDygraph({
      shiny::need(sum(lengths(input$grafoModeloEstructuralOut_selectedNodes)) == 3,
                  "Este tipo de gr\u00E1fico aplica para TRES variables solamente.")
   )
+  #
+  if(!existenColumnas(semModelScoreData(), input$grafoModeloEstructuralOut_selectedNodes)) {
+    return(NULL)
+  }
   #
   score_data <- semModelScoreData()[c("row_id", input$grafoModeloEstructuralOut_selectedNodes[3])]
   #

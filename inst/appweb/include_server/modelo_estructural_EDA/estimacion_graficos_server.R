@@ -9,6 +9,7 @@ output$seriesEstructuralPlotOut <- renderDygraph({
   if(!existenColumnas(semModelScoreData(), input$grafoModeloEstructuralOut_selectedNodes)) {
     return(NULL)
   }
+  #
   score_data <- semModelScoreData()[c("row_id", input$grafoModeloEstructuralOut_selectedNodes)]
   #
   scr_names <- paste(colnames(score_data), "SCR", sep=".")
@@ -44,6 +45,10 @@ output$seriesEstructuralPlotOut <- renderDygraph({
 output$barrasEstructuralPlotOut<- renderAmCharts({
   # verifica que tenga informacion. Cancela la invocacion dado el caso, y evita cualquier proceso "reactive" asociado
   req(input$grafoModeloEstructuralOut_selectedNodes)
+  #
+  if(!existenColumnas(semModelScoreData(), input$grafoModeloEstructuralOut_selectedNodes)) {
+    return(NULL)
+  }
   #
   score_data <- semModelScoreData()[input$grafoModeloEstructuralOut_selectedNodes]
   scr_names <- paste(colnames(score_data), "SCR", sep=".")
@@ -84,6 +89,10 @@ output$barrasEstructuralPlotOut<- renderAmCharts({
 output$densidad2DEstructPlotOut <- renderPlotly({
   # Verifica el objeto indicado. Dado el caso NULL: cancela cualquier proceso "reactive" asociado
   req(input$grafoModeloEstructuralOut_selectedNodes)
+  #
+  if(!existenColumnas(semModelScoreData(), input$grafoModeloEstructuralOut_selectedNodes)) {
+    return(NULL)
+  }
   #
   score_data <- semModelScoreData()[c("row_id", input$grafoModeloEstructuralOut_selectedNodes)]
   scr_names <- paste(colnames(score_data), "SCR", sep=".")
@@ -150,6 +159,10 @@ output$prediccionSeriesEstructPlotOut <- renderDygraph({
     shiny::need(nodo_sel[1,"latent"] == TRUE, "Este tipo de gr\u00E1fico aplica a UNA variable LANTENTE solamente.")
   )
   #
+  if(!existenColumnas(semModelScoreData(), input$grafoModeloEstructuralOut_selectedNodes)) {
+    return(NULL)
+  }
+  #
   score_data <- semModelScoreData()[c("row_id", input$grafoModeloEstructuralOut_selected)]
   #
   dygraph(score_data, main = "Flujo del Score", xlab = "Fila.SCR",
@@ -173,6 +186,10 @@ output$prediccionScatterEstructPlotOut <- renderPlotly({
   shiny::validate(
     shiny::need(nodo_sel[1,]$latent == TRUE, "Este tipo de gr\u00E1fico aplica a UNA variable LANTENTE solamente.")
   )
+  #
+  if(!existenColumnas(semModelScoreData(), input$grafoModeloEstructuralOut_selectedNodes)) {
+    return(NULL)
+  }
   #
   score_data <- semModelScoreData()[c("row_id", input$grafoModeloEstructuralOut_selected)]
   #

@@ -62,7 +62,7 @@ output$fitElementSEMTxtOut <- renderPrint({
 # })
 #
 # Aqui se observan cambios en la seleccion de un solo NODO (para varios se debe usar un Boton):
-observeEvent(input$grafoAvanzSEMOut_selected, ignoreNULL = TRUE, ignoreInit = TRUE,
+observeEvent(input$dashAvanzSEMBtn, ignoreNULL = TRUE, ignoreInit = TRUE,
 {
   visNetworkProxy("grafoAvanzSEMOut") %>% visGetSelectedNodes() # actualiza contenedores...
 })
@@ -70,9 +70,9 @@ observeEvent(input$grafoAvanzSEMOut_selected, ignoreNULL = TRUE, ignoreInit = TR
 # paste0(..) es una funcion vetorizadas, luego recorre _selectedNodes
 # por cada item que tenga y concatenada por cada fila:
 output$nodesListTxtOut <- renderText({
-  paste(input$grafoAvanzSEMOut_selectedNodes, ":Agrupado-por:",  # Obtiene lista de nodos seleccionados
-         #input$grafoAvanzSEMOut_selected, "::",  # Obtiene un nodo (por nombre-ID) seleccionado
-         input$grafoAvanzSEMOut_selectedBy, sep = "\n") # Obtiene un grupo (por nombre-ID) seleccionado
+  nodesListTxt <- paste(input$grafoAvanzSEMOut_selectedNodes, collapse = ",")
+  # NOTA: La info para HTML(..) debe ser resultado de un paste(..):
+  HTML(paste("Variables SEM:", nodesListTxt))
 })
 #
 output$correlogramSEMOut <- renderPlot({
@@ -101,6 +101,9 @@ output$convenNodosTablaOut <- renderFormattable({
    #
    #  Multiples condiciones en el filtro equivalen a un AND,
    #  por tanto se debe usar el operador: & (and) u | (or):
+   #  TIP: "variable" es una columna de nodesLabels.
+   #  NOTA: Se filtra por 'lhs' y 'rhs' debido a las columnas 'desde' y 'hacia' de la
+   #        tabla presentada que contienen nombres de variables.
    selected_labels <- nodesLabels %>%
                       filter(variable %in% param_data$lhs |
                              variable %in% param_data$rhs) %>% arrange(variable)
@@ -114,5 +117,5 @@ observeEvent(input$convenNodosSwitch, ignoreNULL = TRUE, ignoreInit = TRUE,
 {
   shinyjs::toggle(id = "convenNodosDIV", anim = TRUE, animType = "fade")
 })
-
+#
 

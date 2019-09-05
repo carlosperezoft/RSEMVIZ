@@ -13,7 +13,10 @@ tabItem(tabName = "modEstPredSubMTab",
           visNetworkOutput("grafoModeloEstructuralOut", height=400) %>% withSpinner(type=8, color="cadetblue"),
           title = tagList(shiny::icon("gears"), "Modelo SEM"),  status = "success",
           collapsible = TRUE, solidHeader = TRUE, width = 5 # width: es por columnas en Shiny, de 1 a 12
-        ),
+        ) %>%
+        popify(title = "Modelo SEM Interactivo",
+               content = "Seleccione usando CTRL+clic los elementos que desea analizar...",
+               placement = "top", trigger = "hover"),
         tabBox(height = 400, width = 7,
           title = tagList(shiny::icon("gear"), "Observado vs Score"),
           tabPanel("Flujo (Series)",
@@ -55,6 +58,14 @@ tabItem(tabName = "modEstPredSubMTab",
        )
     ),
     box(htmlOutput("estructuralSelectedNodesTxtOut"), hr(),
+      materialSwitch(inputId = "convenModelEstructSwitch", label = tags$b("Ver Convenciones"),
+                     status = "info", right = TRUE, value = FALSE),
+      shinyjs::hidden( # Inicialmente oculta las convenciones:
+        # Usar el DIV es mejor para shiny-js y el materialSwitch:
+        div(id="convenModelEstructDIV", tags$b("Convenciones de Elementos SEM presentados:"),
+            formattableOutput("convenModelEstructTablaOut", width = "70%") %>% withSpinner(type=5, color="cadetblue")
+        )
+      ),
       tags$div(tags$style(HTML( ".selectize-dropdown, .selectize-dropdown.form-control{z-index:10000;}"))),
       selectInput("pregEstructuralSel", tags$b("Preguntas de an\u00E1lisis:"),
                   width = "60%", selected = 0,

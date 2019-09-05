@@ -6,6 +6,10 @@ output$violinMedidaPlotOut <- renderPlotly({
   # verifica que tenga informacion. Cancela la invocacion dado el caso, y evita cualquier proceso "reactive" asociado
   req(input$grafoModeloMedicionOut_selectedNodes)
   #
+  if(!existenColumnas(semModelScoreData(), input$grafoModeloMedicionOut_selectedNodes)) {
+    return(NULL)
+  }
+  #
   melt_data <- melt(semModelScoreData()[c("row_id", input$grafoModeloMedicionOut_selectedNodes)],
                     id = "row_id", variable.name = "variable", value.name = "score")
   #
@@ -26,6 +30,10 @@ output$densidad2DMedidaPlotOut <- renderPlotly({
   # verifica que tenga informacion. Cancela la invocacion dado el caso, y evita cualquier proceso "reactive" asociado
   req(input$grafoModeloMedicionOut_selectedNodes)
   #
+  if(!existenColumnas(semModelScoreData(), input$grafoModeloMedicionOut_selectedNodes)) {
+    return(NULL)
+  }
+  #
   melt_data <- melt(semModelScoreData()[c("row_id", input$grafoModeloMedicionOut_selectedNodes)],
                     id = "row_id", variable.name = "variable", value.name = "score")
   # alpha: 0.2 (colores claros) / 0.55 (colores intermedios),
@@ -38,6 +46,10 @@ output$densidad2DMedidaPlotOut <- renderPlotly({
 output$histogramaMedidaPlotOut <- renderPlotly({
   # verifica que tenga informacion. Cancela la invocacion dado el caso, y evita cualquier proceso "reactive" asociado
   req(input$grafoModeloMedicionOut_selectedNodes)
+  #
+  if(!existenColumnas(semModelScoreData(), input$grafoModeloMedicionOut_selectedNodes)) {
+    return(NULL)
+  }
   #
   melt_data <- melt(semModelScoreData()[c("row_id", input$grafoModeloMedicionOut_selectedNodes)],
                     id = "row_id", variable.name = "variable", value.name = "score")
@@ -72,6 +84,10 @@ output$boxplotMedidaPlotOut <- renderPlotly({
   # verifica que tenga informacion. Cancela la invocacion dado el caso, y evita cualquier proceso "reactive" asociado
   req(input$grafoModeloMedicionOut_selectedNodes)
   #
+  if(!existenColumnas(semModelScoreData(), input$grafoModeloMedicionOut_selectedNodes)) {
+    return(NULL)
+  }
+  #
   melt_data <- melt(semModelScoreData()[c("row_id", input$grafoModeloMedicionOut_selectedNodes)],
                     id = "row_id", variable.name = "variable", value.name = "score")
   # ggplot(melt_data, aes(x=variable, y=score, fill=variable)) + geom_boxplot(alpha=0.3) # ok !
@@ -93,6 +109,10 @@ output$ridgelineMedidaPlotOut <- renderPlot({
   # verifica que tenga informacion. Cancela la invocacion dado el caso, y evita cualquier proceso "reactive" asociado
   req(input$grafoModeloMedicionOut_selectedNodes)
   #
+  if(!existenColumnas(semModelScoreData(), input$grafoModeloMedicionOut_selectedNodes)) {
+    return(NULL)
+  }
+  #
   melt_data <- melt(semModelScoreData()[c("row_id", input$grafoModeloMedicionOut_selectedNodes)],
                     id = "row_id", variable.name = "variable", value.name = "score")
   #
@@ -106,15 +126,5 @@ output$ridgelineMedidaPlotOut <- renderPlot({
     scale_y_discrete(expand=c(0.01, 0)) +
     scale_x_continuous(expand=c(0.01, 0))
   #
-})
-#
-observeEvent(input$hideMenu, {
-  hideTab(inputId = "tabs", target = "distribMenu")
-  hideTab(inputId = "tabs", target = "correlaMenu")
-})
-#
-observeEvent(input$showMenu, {
-  showTab(inputId = "tabs", target = "distribMenu")
-  showTab(inputId = "tabs", target = "correlaMenu")
 })
 #

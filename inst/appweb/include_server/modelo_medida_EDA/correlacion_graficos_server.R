@@ -6,6 +6,10 @@ output$scatterMedidaPlotOut <- renderPlotly({
   # verifica que tenga informacion. Cancela la invocacion dado el caso, y evita cualquier proceso "reactive" asociado
   req(input$grafoModeloMedicionOut_selectedNodes)
   #
+  if(!existenColumnas(semModelScoreData(), input$grafoModeloMedicionOut_selectedNodes)) {
+    return(NULL)
+  }
+  #
   cast_data <- semModelScoreData()[input$grafoModeloMedicionOut_selectedNodes]
   #
   shiny::validate(
@@ -27,6 +31,10 @@ output$scatterMedidaPlotOut <- renderPlotly({
 output$scatterRegresMedidaPlotOut <- renderPlot({
   # verifica que tenga informacion. Cancela la invocacion dado el caso, y evita cualquier proceso "reactive" asociado
   req(input$grafoModeloMedicionOut_selectedNodes)
+  #
+  if(!existenColumnas(semModelScoreData(), input$grafoModeloMedicionOut_selectedNodes)) {
+    return(NULL)
+  }
   #
   cast_data <- semModelScoreData()[input$grafoModeloMedicionOut_selectedNodes]
   #
@@ -50,6 +58,11 @@ output$scatterRegresMedidaPlotOut <- renderPlot({
 output$splomMedidaPlotOut <- renderPlotly({
   # verifica que tenga informacion. Cancela la invocacion dado el caso, y evita cualquier proceso "reactive" asociado
   req(input$grafoModeloMedicionOut_selectedNodes)
+  #
+  if(!existenColumnas(semModelScoreData(), input$grafoModeloMedicionOut_selectedNodes)) {
+    return(NULL)
+  }
+  #
   # ::ggpairs(..)
   # DEFINIR SENTIDO: matriz de duo entre: valores orginales de las OBS,
   #   valores de las cargas (coef betas) de cada factor, valores de los score de cada factor? (la corr no da mucho)
@@ -63,6 +76,10 @@ output$splomMedidaPlotOut <- renderPlotly({
 output$heatmapMedidaPlotOut <- renderPlotly({
   # verifica que tenga informacion. Cancela la invocacion dado el caso, y evita cualquier proceso "reactive" asociado
   req(input$grafoModeloMedicionOut_selectedNodes)
+  #
+  if(!existenColumnas(semModelScoreData(), input$grafoModeloMedicionOut_selectedNodes)) {
+    return(NULL)
+  }
   #
   cast_data <- semModelScoreData()[input$grafoModeloMedicionOut_selectedNodes]
   if(input$heatmapMedidaTransType == "Normalizar") {
@@ -87,6 +104,10 @@ output$correlogramaMedidaPlotOut <- renderPlot({
   # verifica que tenga informacion. Cancela la invocacion dado el caso, y evita cualquier proceso "reactive" asociado
   req(input$grafoModeloMedicionOut_selectedNodes)
   #
+  if(!existenColumnas(semModelScoreData(), input$grafoModeloMedicionOut_selectedNodes)) {
+    return(NULL)
+  }
+  #
   corrplot(cor(semModelScoreData()[input$grafoModeloMedicionOut_selectedNodes]),
            method = input$correlogramaMedidaMethod, type = input$correlogramaMedidaSection,  mar = c(1, 1, 2, 1))
 })
@@ -94,6 +115,10 @@ output$correlogramaMedidaPlotOut <- renderPlot({
 output$bubleMedidaPlotOut <- renderPlotly({
   # verifica que tenga informacion. Cancela la invocacion dado el caso, y evita cualquier proceso "reactive" asociado
   req(input$grafoModeloMedicionOut_selectedNodes)
+  #
+  if(!existenColumnas(semModelScoreData(), input$grafoModeloMedicionOut_selectedNodes)) {
+    return(NULL)
+  }
   #
   cast_data <- semModelScoreData()[input$grafoModeloMedicionOut_selectedNodes]
   #
@@ -114,6 +139,10 @@ output$bubleMedidaPlotOut <- renderPlotly({
 output$contourMedidaPlotOut <- renderPlotly({
   # verifica que tenga informacion. Cancela la invocacion dado el caso, y evita cualquier proceso "reactive" asociado
   req(input$grafoModeloMedicionOut_selectedNodes)
+  #
+  if(!existenColumnas(semModelScoreData(), input$grafoModeloMedicionOut_selectedNodes)) {
+    return(NULL)
+  }
   #
   cast_data <- semModelScoreData()[input$grafoModeloMedicionOut_selectedNodes]
   #

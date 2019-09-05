@@ -31,8 +31,19 @@ tabItem(tabName = "modMedDesSubMTab",
         visNetworkOutput("grafoModeloMedicionOut", height=350) %>% withSpinner(type=8, color="cadetblue"),
         title = tagList(shiny::icon("gears"), "Modelo SEM"), status="primary",
         collapsible=TRUE, solidHeader=TRUE, width=NULL # NULL, ajusta el Box a su contenedor
-    ),
+    ) %>%
+    popify(title = "Modelo SEM Interactivo",
+        content = "Seleccione usando CTRL+clic los elementos que desea analizar...",
+        placement = "top", trigger = "hover"),
     box(htmlOutput("medicionSelectedNodesTxtOut"), hr(),
+      materialSwitch(inputId = "convenModelMedicionSwitch", label = tags$b("Ver Convenciones"),
+                     status = "info", right = TRUE, value = FALSE),
+      shinyjs::hidden( # Inicialmente oculta las convenciones:
+        # Usar el DIV es mejor para shiny-js y el materialSwitch:
+        div(id="convenModelMedicionDIV", tags$b("Convenciones de Elementos SEM presentados:"),
+            formattableOutput("convenModelMedicionTablaOut", width = "70%") %>% withSpinner(type=5, color="cadetblue")
+        )
+      ),
       tags$div(tags$style(HTML( ".selectize-dropdown, .selectize-dropdown.form-control{z-index:10000;}"))),
       selectInput("preguntasBaseSel", tags$b("Preguntas de an\u00E1lisis:"),
                    width = "60%", selected = 0,

@@ -27,6 +27,26 @@ observeEvent(input$modeloLinealPanelToggle, ignoreNULL = TRUE, ignoreInit = TRUE
   shinyjs::toggle(id = "modeloLinealTabSet", anim = TRUE, animType = "slide")
 })
 #
+output$convenModelEstructTablaOut <- renderFormattable({
+   varFormat <- formatter("span", style = style(color = "green", font.weight = "bold"))
+   descFormat <- formatter("span", style = style(color = "blue", font.weight = "bold"))
+   nodesLabels <- datasetLabelsInput()
+   #
+   #  Multiples condiciones en el filtro equivalen a un AND,
+   #  por tanto se debe usar el operador: & (and) u | (or):
+   #  NOTA: Se filtra por 'grafoModeloEstructuralOut_selectedNodes' ya que contiene la lista de
+   #  los nombres de los nodos seleccionados.
+   selected_labels <- nodesLabels %>%
+                      filter(variable %in% input$grafoModeloEstructuralOut_selectedNodes) %>% arrange(variable)
+   #
+   formattable(selected_labels, list(variable = varFormat, desc = descFormat))
+})
+#
+observeEvent(input$convenModelEstructSwitch, ignoreNULL = TRUE, ignoreInit = TRUE,
+{
+  shinyjs::toggle(id = "convenModelEstructDIV", anim = TRUE, animType = "slide")
+})
+#
 # Presentacion de menu grafico de forma dinamica, segun la pregunta de analisis seleccionada:
 source('include_server/modelo_estructural_EDA/menu-dinamico-graficos.R', local=TRUE)
 #
@@ -36,4 +56,3 @@ source('include_server/modelo_estructural_EDA/estimacion_graficos_server.R', loc
 # Graficos para el menu de Mediacion en el Modelo Estructural:
 source('include_server/modelo_estructural_EDA/mediacion_graficos_server.R', local=TRUE)
 #
-
