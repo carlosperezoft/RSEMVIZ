@@ -124,8 +124,8 @@ output$gfiBoxOut <- renderUI({
                       value = FALSE, status = item_color),
       shinyjs::hidden( # Oculta el criterio inicialmente
         helpText(id = "gfiHelpTxt",
-                 paste("Goodness of Fit Index (GFI): Eval\u00FAa si el modelo debe ser ajustado.",
-                 "Entre m\u00E1s se acerque a cero (0) indica un MAL ajuste."
+                 paste("Goodness of Fit Index (GFI): Presenta el nivel de bondad de ajuste del modelo.",
+                 "Un nivel por encima de 0.95 es muy recomendado (aceptable). Niveles no inferiores a 0.75 son de ajuste medio."
                  )
         )
       ) # cierra hidden
@@ -221,8 +221,8 @@ output$rmseaBoxOut <- renderUI({
                       value = FALSE, status = item_color),
       shinyjs::hidden( # Oculta el criterio inicialmente
         helpText(id = "rmseaHelpTxt",
-                 paste("Root Mean Square Error of	Approximation (RMSEA): Eval\u00FAa s\u00ED el modelo debe ser ajustado.",
-                 "Entre m\u00E1s se acerque a cero (0) indica un MAL ajuste."
+                 paste("Root Mean Square Error of	Approximation (RMSEA): Aproximaci\u00F3n del error cuadr\u00E1tico medio.",
+                 "Un nivel por debajo de 0.05 es muy recomendado (aceptable). Niveles inferiores a 0.10 son de ajuste medio."
                  )
         )
       ) # cierra hidden
@@ -308,8 +308,8 @@ output$srmrBoxOut <- renderUI({
                       value = FALSE, status = item_color),
       shinyjs::hidden( # Oculta el criterio inicialmente
         helpText(id = "srmrHelpTxt",
-                 paste("(Standardized) Root Mean Square Residual (SRMR): Eval\u00FAa si el modelo debe ser ajustado.",
-                 "Entre m\u00E1s se acerque a cero (0) indica un MAL ajuste."
+                 paste("(Standardized) Root Mean Square Residual (SRMR): Error medio cuadr\u00E1tico de los residuales.",
+                 "Un nivel por debajo de 0.08 es muy recomendado (aceptable). Niveles inferiores a 0.15 son de ajuste medio."
                  )
         )
       ) # cierra hidden
@@ -393,8 +393,8 @@ output$cfiBoxOut <- renderUI({
                       value = FALSE, status = item_color),
       shinyjs::hidden( # Oculta el criterio inicialmente
         helpText(id = "cfiHelpTxt",
-                 paste("Comparative	Fit	Index (CFI): Eval\u00FAa si el modelo debe ser ajustado.",
-                 "Entre m\u00E1s se acerque a cero (0) indica un MAL ajuste."
+                 paste("Comparative	Fit	Index (CFI): Indice de ajuste comparativo.",
+                 "Un nivel por encima de 0.95 es muy recomendado (aceptable). Niveles no inferiores a 0.75 son de ajuste medio.."
                  )
         )
       ) # cierra hidden
@@ -478,8 +478,8 @@ output$nfiBoxOut <- renderUI({
                       value = FALSE, status = item_color),
       shinyjs::hidden( # Oculta el criterio inicialmente
         helpText(id = "nfiHelpTxt",
-                 paste("?? (NFI): Eval\u00FAa si el modelo debe ser ajustado.",
-                 "Entre m\u00E1s se acerque a cero (0) indica un MAL ajuste."
+                 paste("Normed Fit Index (NFI): Indice de ajuste normalizado.",
+                 "Un nivel por encima de 0.95 es muy recomendado (aceptable). Niveles no inferiores a 0.75 son de ajuste medio."
                  )
         )
       ) # cierra hidden
@@ -564,8 +564,8 @@ output$tliBoxOut <- renderUI({
                       value = FALSE, status = item_color),
       shinyjs::hidden( # Oculta el criterio inicialmente
         helpText(id = "tliHelpTxt",
-                 paste("?? (NNFI-TLI): Eval\u00FAa si el modelo debe ser ajustado.",
-                 "Entre m\u00E1s se acerque a cero (0) indica un MAL ajuste."
+                 paste("Non-normed Fit Index - Tucker-Lewis Index (NNFI-TLI): Indice Tucker-Lewis (Indice de ajuste no normalizado).",
+                 "Un nivel por encima de 0.90 es muy recomendado (aceptable). Niveles no inferiores a 0.70 son de ajuste medio."
                  )
         )
       ) # cierra hidden
@@ -650,8 +650,8 @@ output$agfiBoxOut <- renderUI({
                       value = FALSE, status = item_color),
       shinyjs::hidden( # Oculta el criterio inicialmente
         helpText(id = "agfiHelpTxt",
-                 paste("?? (AGFI): Eval\u00FAa si el modelo debe ser ajustado.",
-                 "Entre m\u00E1s se acerque a cero (0) indica un MAL ajuste."
+                 paste("Adjusted Goodness-of-Fit Index (AGFI): Indice de Bondad de Ajuste ajustado.",
+                 "Un nivel por encima de 0.90 es muy recomendado (aceptable). Niveles no inferiores a 0.70 son de ajuste medio."
                  )
         )
       ) # cierra hidden
@@ -735,8 +735,8 @@ output$gfiCmpBoxOut <- renderUI({
                       value = FALSE, status = item_color),
       shinyjs::hidden( # Oculta el criterio inicialmente
         helpText(id = "gfiCmpHelpTxt",
-                 paste("?? (GFI): Eval\u00FAa si el modelo debe ser ajustado.",
-                 "Entre m\u00E1s se acerque a cero (0) indica un MAL ajuste."
+                 paste("Goodness-of-Fit Index (GFI): Indice de Bondad de Ajuste.",
+                 "Un nivel por encima de 0.95 es muy recomendado (aceptable). Niveles no inferiores a 0.75 son de ajuste medio."
                  )
         )
       ) # cierra hidden

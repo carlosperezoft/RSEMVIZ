@@ -25,8 +25,8 @@ semFitLocal <- eventReactive(input$runSEMBtn, {
     # meanstructure: activa la estimacion de los "interceptos" para cada ecuacion de regresion asociada.
     # * En estimadorList: Se debe usar un entero como indice.El input$tipoEstimacionSEM tiene valor tipo String.
     #
-    lavaanFit <- lavaan::sem(model = input$modeloSEMTxt, data = datasetInput(), mimic = "lavaan",
-                             std.ov = FALSE, std.lv=TRUE, meanstructure=TRUE, likelihood = "wishart",
+    lavaanFit <- lavaan::sem(model = input$modeloSEMTxt, data = datasetInput(), mimic = "Mplus",
+                             #std.ov=FALSE, std.lv=TRUE, meanstructure=TRUE, likelihood = "wishart",
                              estimator = estimadorList[as.integer(input$tipoEstimacionSEM)])
     },
     error = function(e) {
