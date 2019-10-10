@@ -78,7 +78,7 @@ options(digits=4)
 theme_set(theme_bw())  # tema black_white !
 #
 # se invoca esta opcion de devtools para que se inicialice correctamente los DATOS del paquete:
-# devtools::load_all(".")
+#  devtools::load_all(".")
 #
 semviz_data_path <- "C:\\PEREZOFT_MAESTRIA\\4_SEMESTRE_2018_2\\1_RSEMVIZ_DLLO\\semviz\\data\\"
 load(paste0(semviz_data_path,"poli_dem_data.rda"))
