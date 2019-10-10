@@ -1,4 +1,4 @@
-## SEMVIZ Aplicaci&oacute;n Shiny Dashboard. v 1.0 
+## SEMVIZ Aplicaci&oacute;n Shiny Dashboard. v 1.0.
 
 ### Visualizaci&oacute;n de alto nivel para el an&aacute;lisis e interpretaci&oacute;n de modelos de Ecuaciones Estructurales.
 
