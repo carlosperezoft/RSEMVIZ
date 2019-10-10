@@ -8,8 +8,6 @@
 # Se inicializa esta variable de entorno en R-Studio para que permita un tope maximo
 # de DLLs (WINDOWS) cargadas por Session LOCAL de R:
 Sys.setenv(R_MAX_NUM_DLLS = 512)
-# se invoca esta opcion de devtools para que se inicialice correctamente los DATOS del paquete:
-devtools::load_all(".")
 #
 suppressPackageStartupMessages({
   library(markdown, quietly=TRUE)
@@ -78,4 +76,15 @@ options(digits=4)
 #
 # Se establece el tema de fondo por defecto para los graficos con ggplot:
 theme_set(theme_bw())  # tema black_white !
+#
+# se invoca esta opcion de devtools para que se inicialice correctamente los DATOS del paquete:
+# devtools::load_all(".")
+#
+semviz_data_path <- "C:\\PEREZOFT_MAESTRIA\\4_SEMESTRE_2018_2\\1_RSEMVIZ_DLLO\\semviz\\data\\"
+load(paste0(semviz_data_path,"poli_dem_data.rda"))
+load(paste0(semviz_data_path,"poli_dem_labels.rda"))
+load(paste0(semviz_data_path,"political_democracy_model.rda"))
+load(paste0(semviz_data_path,"DATOS_GRUPOS_INVEST_UdeA.rda"))
+load(paste0(semviz_data_path,"GRUPOS_UdeA_VAR_Labels.rda"))
+load(paste0(semviz_data_path,"grupos_invest_udea_model.rda"))
 #

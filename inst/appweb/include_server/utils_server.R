@@ -13,6 +13,7 @@
 # -- Esto implica que son llamadas solo cuando la estimacion del modelo cambia al usar el boton: "input$runSEMBtn"
 #    del TAB en al UI: "modelo_sem_tab.R"
 #
+#
 rutasModeloSEM <- function(fitModel) {
   param_edges <- fitModel %>% # "op" se refiere a la columa "operator"
     # Usando el filtro con o sin nodos iguales (lhs != rhs), en SEM se usa para correlaciones
