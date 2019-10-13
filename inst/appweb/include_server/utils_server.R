@@ -111,7 +111,7 @@ rutasGrafoSEM <- function(fitModel) {
     title = dplyr::case_when(
       param_edges$type == "loading" ~ paste("lambda:", format(round(param_edges$val, 3), nsmall=3)),
       param_edges$type == "regression"  ~ paste("beta:", format(round(param_edges$val, 3), nsmall=3)),
-      param_edges$type == "correlation" ~ paste("phi:", format(round(param_edges$val, 3), nsmall=3))
+      param_edges$type == "correlation" ~ paste("corr.:", format(round(param_edges$val, 3), nsmall=3))
     ),
     # El "case" de la flecha segun el "type" es para ubicar la "cabeza" de la flecha en el extremo indicado:
     arrows = dplyr::case_when(

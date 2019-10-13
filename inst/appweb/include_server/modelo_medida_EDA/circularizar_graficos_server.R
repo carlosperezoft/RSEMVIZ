@@ -42,10 +42,10 @@ output$circlePackJerarqMedidaPlotOut <- renderCirclepackeR({
   )
   #
   fitModel <- paramsSemFit()
-  # rutasModeloSEM: Se deben filrtar los enlaces circulares:
-  edgesVis <- rutasModeloSEM(fitModel) %>% filter(from != to)
+  # rutasModeloSEM: Se deben filtrar los enlaces circulares:
+  #
+  edgesVis <- rutasModeloSEM(fitModel) %>% filter(from != to, type == "regression")
   # FromDataFrameNetwork crea un objeto data.tree a partir de un data.frame tipo [from, to, value]
-  # print(edgesVis)
   tree_net <- FromDataFrameNetwork(edgesVis, "val")
   # es necesario asignar un valor a size!
   circlepackeR(tree_net, size = "val")
@@ -83,7 +83,8 @@ output$circlePackSunMedidaPlotOut <- renderPlot({
   #
   fitModel <- paramsSemFit()
   # rutasModeloSEM: Se deben filrtar los enlaces circulares:
-  edgesVis <- rutasModeloSEM(fitModel) %>% filter(from != to)
+  edgesVis <- rutasModeloSEM(fitModel) %>% filter(from != to, type == "regression")
+  print(edgesVis)
   #
   links <- data.frame(target=edgesVis$to, source=edgesVis$from, value=(edgesVis$val))
   # nodes <- data.frame(name=c(as.character(links$source), as.character(links$target)) %>% unique())
