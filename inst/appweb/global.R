@@ -13,7 +13,10 @@ suppressPackageStartupMessages({
   library(markdown, quietly=TRUE)
   library(shinydashboard, quietly=TRUE)
   library(shinydashboardPlus, quietly=TRUE)
-  library(flexdashboard, quietly=TRUE)
+  # NOTA: flexdashboard define un valueBox, no debe usarse explicitamente. Pues causa un conflicto con el valueBox
+  #       del shinydashboard. Actualmente funciona en ambos casos pues se usa la invocacion cualificada:
+  #       shinydashboard::valueBox(..)
+  #library(flexdashboard, quietly=TRUE)
   library(shinyjs, quietly=TRUE)
   library(shinyBS, quietly=TRUE)
   library(shinycssloaders, quietly=TRUE)

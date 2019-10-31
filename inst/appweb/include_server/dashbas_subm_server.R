@@ -19,11 +19,11 @@ output$statChi2Out <- renderValueBox({
     colorChi2 <- "red"
   }
   #
-  valueBox(
+  shinydashboard::valueBox(
     value = sprintf("%.2f", chi2Value),
     subtitle = paste("Ajuste Chi2:", subTChi2),
     icon = icon("superscript"),
-    color = colorChi2
+    color = colorChi2, width = NULL
   )
 })
 #
@@ -44,11 +44,11 @@ output$pValueChi2Out <- renderValueBox({
     icon_pVal <- "thumbs-down"
     color_pVal <- "red"
   }
-  valueBox(
+  shinydashboard::valueBox(
     value = sprintf("%.3f", pValue),
     subtitle = paste("P-Value:", subT_pVal),
     icon = shiny::icon(icon_pVal),
-    color = color_pVal
+    color = color_pVal, width = NULL
   )
 })
 #
@@ -71,11 +71,11 @@ output$statRazonChi2Out <- renderValueBox({
     colorChi2 <- "red"
   }
   #
-  valueBox(
+  shinydashboard::valueBox(
     value = sprintf("%.2f", razonChi2),
     subtitle = paste("Raz\u00F3n (Chi2 / GL):", subTChi2),
     icon = shiny::icon(iconChi2),
-    color = colorChi2
+    color = colorChi2, width = NULL
   )
 })
 #
@@ -797,11 +797,11 @@ output$pgfiBoxOut <- renderValueBox({
     item_color <- "red"
   }
   #
-  valueBox(
+  shinydashboard::valueBox(
     value = sprintf("%.2f", item_val),
     subtitle = paste("Indice de bondad de ajuste de parsimonia (PGFI):", item_subT),
     icon = icon(item_icon),
-    color = item_color
+    color = item_color, width = NULL
   )
 })
 #
@@ -822,11 +822,11 @@ output$pnfiBoxOut <- renderValueBox({
     item_color <- "red"
   }
   #
-  valueBox(
+  shinydashboard::valueBox(
     value = sprintf("%.2f", item_val),
     subtitle = paste("Indice normalizado de ajuste de parsimonia (PNFI):", item_subT),
     icon = icon(item_icon),
-    color = item_color
+    color = item_color, width = NULL
   )
 })
 #
@@ -846,11 +846,11 @@ output$aicInfoOut <- renderValueBox({
     item_color <- "red"
   }
   #
-  valueBox(
+  shinydashboard::valueBox(
     value = sprintf("%.2f", item_val),
     subtitle = paste("Criterio de Informaci\u00F3n de Akaike (AIC):", item_subT),
     icon = icon(item_icon),
-    color = item_color
+    color = item_color, width = NULL
   )
 })
 #
@@ -870,11 +870,11 @@ output$bicInfoOut <- renderValueBox({
     item_color <- "red"
   }
   #
-  valueBox(
+  shinydashboard::valueBox(
     value = sprintf("%.2f", item_val),
     subtitle = paste("Criterio de Informaci\u00F3n Bayesiano (BIC):", item_subT),
     icon = icon(item_icon),
-    color = item_color
+    color = item_color, width = NULL
   )
 })
 #

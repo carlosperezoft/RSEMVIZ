@@ -33,9 +33,11 @@ tabItem(tabName = "hipotesisTab",
             tabBox(width = "100%", height = "100%", # tabsetPanel(type = "tabs",
                    title = tagList(shiny::icon("check-circle"), "Inferencias"),
               tabPanel("H0 vs H1 - FACTORES",
-                 h4("Tabla Estimaci\u00F3n Factorial Confirmatorio"),
+                 h4("Tabla Estimaci\u00F3n Modelo de Medici\u00F3n"),
                  materialSwitch(inputId = "convenNodosHipoFacSwitch", label = tags$b("Ver Convenciones"),
                                 status = "info", right = TRUE, value = FALSE),
+                 bsPopover(id="tablaHipotesisModeloOut", title="Hip\u00F3tesis a nivel de Factores",placement="top",trigger="hover",
+                       content = "Por lo comun cargas de factores mayor a 0.7 std y con significancia p-value <= 0.05"),
                  formattableOutput("tablaHipotesisModeloOut", width = "100%") %>% withSpinner(),
                  htmlOutput("ecuacionFactHipoTxtOut"), br(), # antes: verbatimTextOutput(..)
                  shinyjs::hidden( # Inicialmente oculta las convenciones:
@@ -49,6 +51,8 @@ tabItem(tabName = "hipotesisTab",
                  h4("Tabla Estimaci\u00F3n Modelo Estructural (Regresiones)"),
                  materialSwitch(inputId = "convenNodosHipoRegSwitch", label = tags$b("Ver Convenciones"),
                                 status = "info", right = TRUE, value = FALSE),
+                 bsPopover(id="tablaHipotesisParamsOut", title="Hip\u00F3tesis a nivel de Constructos",placement="top",trigger="hover",
+                       content = "Por lo comun cargas entre variables latentes positivos (o no) y con significancia p-value <= 0.05"),
                  formattableOutput("tablaHipotesisParamsOut", width = "100%") %>% withSpinner(),
                  htmlOutput("ecuacionEstrHipoTxtOut"), br(), # antes: verbatimTextOutput(..)
                  shinyjs::hidden( # Inicialmente oculta las convenciones:

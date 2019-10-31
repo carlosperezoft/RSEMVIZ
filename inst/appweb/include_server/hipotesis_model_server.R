@@ -5,7 +5,7 @@
 # IMPORTANTE: Validar el caso de que trae los datos NO estandarizados (hipotSEMFit) para su validación:
 # ** El modelo SEM se visualiza con los datos estimados en formato estandarizado.
 hipotSEMFit <- function() {
-  lavaan::parameterEstimates(semFitLocal(), standardized = FALSE, rsquare = FALSE)
+  lavaan::parameterEstimates(semFitLocal(), standardized = TRUE, rsquare = FALSE)
   #lavaan::standardizedSolution(semFitLocal()) # Validar si usar siempre estandarizado, se deden ajustar las ecuaciones!
 }
 #
