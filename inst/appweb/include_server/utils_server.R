@@ -141,8 +141,8 @@ getParamEstimatesByName <- function(fitModel, paramName) {
         op == "~"  ~ "regresi\u00F3n",
         op == "~~" ~ "correl./varianza",
         TRUE ~ NA_character_),
-      hacia = rhs, estimado = est, # est.std
-      ic.inferior = ci.lower, ic.superior = ci.upper,
+      hacia = rhs, est.base = est, est.stand = std.all,
+      ic.inf = ci.lower, ic.sup = ci.upper,
       error = se, valor_p = pvalue, valor_z = z
     )
   return(paramData)

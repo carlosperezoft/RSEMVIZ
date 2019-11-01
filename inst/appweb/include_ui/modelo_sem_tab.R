@@ -26,7 +26,7 @@ tabItem(tabName = "modeloSEMTab",
              ),
              selected = 1
           ),
-          actionButton("runSEMBtn", "Ejecutar...")
+          actionBttn("runSEMBtn", "Ejecutar...", style = "gradient", color = "primary")
         )
       ), # fin sidebarPanel
 
@@ -36,7 +36,7 @@ tabItem(tabName = "modeloSEMTab",
                title = tagList(shiny::icon("calculator"), "Estimaci\u00F3n por medio de LAVAAN"),
           tabPanel("Resumen General",h4("Informaci\u00F3n General (Estimaci\u00F3n del Modelo)"),
             # Input: Indica el uso de datos estandarizados ----
-            checkboxInput("modSEMStandChk", "Estandarizado", TRUE),
+            awesomeCheckbox("modSEMStandChk", "Estandarizado", TRUE),
             verbatimTextOutput("modeloSEMLavaanTxtOut") %>% withSpinner()
           ),
           tabPanel("Puntuaciones (Score)",

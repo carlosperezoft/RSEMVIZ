@@ -24,7 +24,7 @@ tabItem(tabName = "casosEstudioTab",
                  "U. de A.: Grupos de Investigaci\u00F3n en la Universidad" = "Grupos_INVESTIGACION"
               )
            ),
-           checkboxInput("usarCasoEstudioChk", "Usar Caso de Estudio seleccionado en SEMVIZ", value = FALSE)
+           awesomeCheckbox("usarCasoEstudioChk", "Usar Caso de Estudio seleccionado en SEMVIZ", value = FALSE)
          )
       )), # fin sidebarPanel
       # Main panel for displaying outputs ----

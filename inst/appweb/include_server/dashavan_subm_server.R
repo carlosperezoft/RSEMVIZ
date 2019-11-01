@@ -31,27 +31,28 @@ output$tablaGeneralSEMOut <- renderFormattable({
                     op == "~~" ~ "correl./varianza",
                     op == "~1" ~ "intercepto",
                     TRUE ~ NA_character_),
-                  hacia = rhs, estimado = est.std,
-                  ic.inferior = ci.lower, ic.superior = ci.upper,
+                  hacia = rhs, est.stand = est.std,
+                  ic.inf = ci.lower, ic.sup = ci.upper,
                   error = se, valor_p = pvalue, valor_z = z
                )
   #
   formattable(param_data,
     list(
       desde = latentFormat, tipo = typeFormat, hacia = obsFormat,
-      area(col = c(estimado)) ~ normalize_bar("lightblue", 0.2),
-      ic.inferior = ciLFormat,
-      ic.superior = ciUFormat,
+      area(col = c(est.stand)) ~ normalize_bar("lightblue", 0.2),
+      ic.inf = ciLFormat,
+      ic.sup = ciUFormat,
       area(col = c(error)) ~ proportion_bar("pink"),
       valor_p = pvalueFormat
   ))
 })
 
 output$fitElementSEMTxtOut <- renderPrint({
+  #print(lavInspect(semFitLocal(),"rsquare"))
   # fitMeasures(semFitLocal())
   lavInspect(semFitLocal(),"std")
   # lavInspect(fit2,"coef")
-  # lavInspect(fit2,"rsquare")
+
   # residuals(fit2)
 })
 # Se usa el objeto visNetworkProxy para establecer los elementos seleccionados en el Grafo:

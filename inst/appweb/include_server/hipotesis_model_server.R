@@ -5,8 +5,9 @@
 # IMPORTANTE: Validar el caso de que trae los datos NO estandarizados (hipotSEMFit) para su validación:
 # ** El modelo SEM se visualiza con los datos estimados en formato estandarizado.
 hipotSEMFit <- function() {
-  lavaan::parameterEstimates(semFitLocal(), standardized = TRUE, rsquare = FALSE)
-  #lavaan::standardizedSolution(semFitLocal()) # Validar si usar siempre estandarizado, se deden ajustar las ecuaciones!
+   # Activar y agregar la logica para uso de: est.std, el extOut de las ecuaciones tambien se veria afectado.
+   # lavaan::standardizedSolution(semFitLocal())
+   lavaan::parameterEstimates(semFitLocal(), standardized = TRUE, rsquare = FALSE)
 }
 #
 output$grafoHipotSEMOut <- renderVisNetwork({
@@ -50,15 +51,16 @@ output$tablaHipotesisModeloOut <- renderFormattable({
                           op == "~~" ~ "correl./varianza",
                           op == "~1" ~ "intercepto",
                           TRUE ~ NA_character_),
-                      hacia = rhs, estimado = est,
-                      ic.inferior = ci.lower, ic.superior = ci.upper,
+                      hacia = rhs, est.base = est, est.stand = std.all,
+                      ic.inf = ci.lower, ic.sup = ci.upper,
                       error = se, valor_p = pvalue, valor_z = z)
   #
   formattable(param_data, list(
       desde = latentFormat, tipo = typeFormat, hacia = obsFormat,
-      area(col = c(estimado)) ~ normalize_bar("lightblue", 0.2),
-      ic.inferior = ciLFormat,
-      ic.superior = ciUFormat,
+      area(col = c(est.stand)) ~ normalize_bar("lightgreen", 0.2),
+      area(col = c(est.base)) ~ normalize_bar("lightblue", 0.2),
+      ic.inf = ciLFormat,
+      ic.sup = ciUFormat,
       area(col = c(error)) ~ proportion_bar("pink"),
       valor_p = pvalueFormat
   ))
@@ -81,9 +83,10 @@ output$tablaHipotesisParamsOut <- renderFormattable({
   formattable(getParamEstimatesByName(hipotSEMFit(), input$grafoHipotSEMOut_selected),
     list(
       desde = latentFormat, tipo = typeFormat, hacia = obsFormat,
-      area(col = c(estimado)) ~ normalize_bar("lightblue", 0.2),
-      ic.inferior = ciLFormat,
-      ic.superior = ciUFormat,
+      area(col = c(est.stand)) ~ normalize_bar("lightgreen", 0.2),
+      area(col = c(est.base)) ~ normalize_bar("lightblue", 0.2),
+      ic.inf = ciLFormat,
+      ic.sup = ciUFormat,
       area(col = c(error)) ~ proportion_bar("pink"),
       valor_p = pvalueFormat
   ))
@@ -199,5 +202,29 @@ convencionesHipotesis <- function() {
                              variable %in% param_data$rhs) %>% arrange(variable)
    #
    formattable(selected_labels, list(variable = varFormat, desc = descFormat))
+}
+#
+output$r2HipoFacTablaOut <- renderFormattable({
+  r2VarsEcuaciones()
+})
+#
+output$r2HipoEstrTablaOut <- renderFormattable({
+  r2VarsEcuaciones()
+})
+#
+r2VarsEcuaciones <- function() {
+   varFormat <- formatter("span", style = style(color = "blue", font.weight = "bold"))
+   #
+   param_data <- hipotSEMFit() %>% filter(lhs %in% input$grafoHipotSEMOut_selectedNodes)
+   #
+   fit_R2 <- lavaan::parameterEstimates(fit, standardized = F, rsquare = T) %>%
+                                     filter(op == "r2") %>% select("lhs", "est")
+   #
+   selected_R2 <- fit_R2 %>% filter(lhs %in% param_data$lhs |
+                                    lhs %in% param_data$rhs) %>% arrange(lhs)
+   #
+   colnames(selected_R2) <- c("variable", "R_Cuadrado")
+   #
+   formattable(selected_R2, list(variable = varFormat, area(col = c(R_Cuadrado)) ~ normalize_bar("lightblue", 0.2)))
 }
 #

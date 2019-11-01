@@ -38,12 +38,14 @@ tabItem(tabName = "hipotesisTab",
                                 status = "info", right = TRUE, value = FALSE),
                  bsPopover(id="tablaHipotesisModeloOut", title="Hip\u00F3tesis a nivel de Factores",placement="top",trigger="hover",
                        content = "Por lo comun cargas de factores mayor a 0.7 std y con significancia p-value <= 0.05"),
-                 formattableOutput("tablaHipotesisModeloOut", width = "100%") %>% withSpinner(),
+                 formattableOutput("tablaHipotesisModeloOut", width = "100%") %>% withSpinner(type=7, color="cadetblue"),
+                 tags$b("R-cuadrado para los elementos presentados:"), br(),
+                 formattableOutput("r2HipoFacTablaOut", width = "100%") %>% withSpinner(type=7, color="cadetblue"),
                  htmlOutput("ecuacionFactHipoTxtOut"), br(), # antes: verbatimTextOutput(..)
                  shinyjs::hidden( # Inicialmente oculta las convenciones:
                    # Usar el DIV es mejor para shiny-js y el materialSwitch:
                    div(id="convenNodosHipoFacDIV", tags$b("Convenciones de Elementos SEM presentados:"),
-                      formattableOutput("convenNodosHipoFacTablaOut", width = "100%") %>% withSpinner(type=5, color="cadetblue")
+                      formattableOutput("convenNodosHipoFacTablaOut", width = "100%") %>% withSpinner(type=7, color="cadetblue")
                    )
                  )
               ),
@@ -53,12 +55,14 @@ tabItem(tabName = "hipotesisTab",
                                 status = "info", right = TRUE, value = FALSE),
                  bsPopover(id="tablaHipotesisParamsOut", title="Hip\u00F3tesis a nivel de Constructos",placement="top",trigger="hover",
                        content = "Por lo comun cargas entre variables latentes positivos (o no) y con significancia p-value <= 0.05"),
-                 formattableOutput("tablaHipotesisParamsOut", width = "100%") %>% withSpinner(),
+                 formattableOutput("tablaHipotesisParamsOut", width = "100%") %>% withSpinner(type=7, color="cadetblue"),
+                 tags$b("R-cuadrado para los elementos presentados:"), br(),
+                 formattableOutput("r2HipoEstrTablaOut", width = "100%") %>% withSpinner(type=7, color="cadetblue"),
                  htmlOutput("ecuacionEstrHipoTxtOut"), br(), # antes: verbatimTextOutput(..)
                  shinyjs::hidden( # Inicialmente oculta las convenciones:
                    # Usar el DIV es mejor para shiny-js y el materialSwitch:
                    div(id="convenNodosHipoRegDIV", tags$b("Convenciones de Elementos SEM presentados:"),
-                      formattableOutput("convenNodosHipoRegTablaOut", width = "100%") %>% withSpinner(type=5, color="cadetblue")
+                      formattableOutput("convenNodosHipoRegTablaOut", width = "100%") %>% withSpinner(type=7, color="cadetblue")
                    )
                  )
               )
