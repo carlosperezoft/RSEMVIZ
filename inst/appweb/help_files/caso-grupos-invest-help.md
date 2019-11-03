@@ -1,48 +1,81 @@
----
-output:
-  pdf_document: default
-  html_document: default
----
-## :: SEMVIZ -- CASO DE ESTUDIO <img src="images/UdeA_Escudo.jpg" align="right"/>
+## <img src="images/UdeA_Escudo.jpg" align="right"/>
 
-## Grupos de Investigaci&oacute;n: 
-### Universidad de Antioquia 2018.
+## Análsis de eficiencia de grupos de investigación a nivel Universitario 
 
-### Diagrama elaborado en JAVA ONIX:
+## Estudio relacionado con uso adecuado de recursos en grupos de investigación
 
-### *Presentado con valores de estimaci&oacute;n de prueba:*
-===
+##  Descripción
 
-<img src="images/ONIX_SEM_GRUPOS_Invest_UdeA.png" width = "600px", height = "500px" align="center"/>
+El caso de estudio corresponde a un estudio de fenomenos de Industrializción y de Políticas Democráticas en países
+en vía de desarrollo durante los períodos de 1960 y 1965. Este estudio fue realizado y documentado por Kenneth A. Bollen en 1989
+en su libro __Structural Equations with Latent Variables__.
 
-## Installation
+El enfoque principal del estudio consiste en validar cómo la industrialización y las políticas democráticas en 1960 
+influyen a mediano plazo en los logros de políticas democráticas en los respectivos países cinco años después (1965).
 
-**shinyhelper 0.3.0 now on CRAN!** Go to: [https://cran.r-project.org/package=shinyhelper](https://cran.r-project.org/package=shinyhelper) 
-You can install the package with:
-```
-install.packages("shinyhelper")
-```
+<img src="images/semviz-caso-grupos.png" width = "100%", height = "500px" align="center"/>
 
-To get the latest development version, you can use the `devtools` package to install from GitHub directly:
-```
-devtools::install_github("cwthom/shinyhelper")
-```
+_Figura 1_: Modelo SEM que especifica las relaciones entre variables observadas y los constructos de este caso de estudio (Diseño hecho en el paquete estadístico STATA 14).
 
-In both cases, then load the package in with:
-```
-library(shinyhelper)
-```
+## Definición de las variables de medición
 
-## Demo
+Se tiene un SET de Datos (R data frame) de 75 observaciones (países en vía de desarrollo) con un 
+conjunto de 11 variables. Dichas variables se definen a continuación:
 
-There is a live demo hosted on shinyapps.io. [Click here to go to the demo!](https://cwthom94.shinyapps.io/shinyhelper-demo/)
+### Variables observadas (explicativas)
 
-Alternatively, run the demo locally with:
+## y1
+Calificaciones de expertos sobre la libertad de prensa en 1960
 
-```
-library(shinyhelper)
+## y2
+La libertad de oposición política en 1960
 
-shinyhelper_demo()
-```
+## y3
+La equidad de las elecciones en 1960
 
-# *UNIVERSIDAD DE ANTIOQUIA 2018.*
+## y4
+La efectividad de la legislatura elegida en 1960
+
+## y5
+Calificaciones de expertos sobre la libertad de prensa en 1965
+
+## y6
+La libertad de oposición política en 1965
+
+## y7
+La equidad de las elecciones en 1965
+
+## y8
+La efectividad de la legislatura elegida en 1965
+
+## x1
+El producto nacional bruto (PNB) per cápita en 1960
+
+## x2
+El consumo inanimado de energía per cápita en 1960
+
+## x3
+El porcentaje de la fuerza laboral en la industria en 1960
+
+### Constructos (variables latentes)
+ 
+## dem60
+Variable Latente: Indicadores y1 - y4 de la política democrática en 1960
+
+## dem65
+Variable Latente: Indicadores y5 - y8 de la política democrática en 1965
+
+## ind60
+Variable Latente: Indicadores x1 - x3 de la industrialización en 1960
+
+### Fuente
+La información dispobible de este caso de estudio fue tomada del paqute R LAVAAN, que lo utiliza como un caso
+de ejemplo para sus diferentes análisis.
+
+### Referencias
+
+Bollen, K. A. (1989). Structural Equations with Latent Variables. Wiley Series in Probability and Mathematical Statistics. New York: Wiley.
+
+Bollen, K. A. (1979). Political democracy and the timing of development. American Sociological Review, 44, 572-587.
+
+Bollen, K. A. (1980). Issues in the comparative measurement of political democracy. American Sociological Review, 45, 370-390.

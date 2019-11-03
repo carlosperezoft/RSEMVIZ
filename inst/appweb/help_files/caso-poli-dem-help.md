@@ -1,61 +1,78 @@
-## :: SEMVIZ -- CASO DE ESTUDIO <img src="images/UdeA_Escudo.jpg" align="right"/>
+## <img src="images/UdeA_Escudo.jpg" align="right"/>
 
 ## Políticas Democráticas 
 
-# *lavaan*	R Package
 ## Estudio relacionado con Industrialización y Políticas Democráticas
 
 ##  Descripción
 
-The ‘famous’ Industrialization and Political Democracy dataset. This dataset is used throughout Bollen's 1989 book (see pages 12, 17, 36 in chapter 2, pages 228 and following in chapter 7, pages 321 and following in chapter 8). The dataset contains various measures of political democracy and industrialization in developing countries.
+El caso de estudio corresponde a un estudio de fenomenos de Industrializción y de Políticas Democráticas en países
+en vía de desarrollo durante los períodos de 1960 y 1965. Este estudio fue realizado y documentado por Kenneth A. Bollen en 1989
+en su libro __Structural Equations with Latent Variables__.
+
+El enfoque principal del estudio consiste en validar cómo la industrialización y las políticas democráticas en 1960 
+influyen a mediano plazo en los logros de políticas democráticas en los respectivos países cinco años después (1965).
 
 <img src="images/Poli-Demo-SEM-lavaan.png" width = "600px", height = "500px" align="center"/>
 
-### Usage
-data(PoliticalDemocracy)
+_Figura 1_: Modelo SEM que especifica las relaciones entre variables observadas y los constructos de este caso de estudio.
 
-## Format
+## Definición de las variables de medición
 
-A data frame of 75 observations of 11 variables.
+Se tiene un SET de Datos (R data frame) de 75 observaciones (países en vía de desarrollo) con un 
+conjunto de 11 variables. Dichas variables se definen a continuación:
+
+### Variables observadas (explicativas)
 
 ## y1
-Expert ratings of the freedom of the press in 1960
+Calificaciones de expertos sobre la libertad de prensa en 1960
 
 ## y2
-The freedom of political opposition in 1960
+La libertad de oposición política en 1960
 
 ## y3
-The fairness of elections in 1960
+La equidad de las elecciones en 1960
 
 ## y4
-The effectiveness of the elected legislature in 1960
+La efectividad de la legislatura elegida en 1960
 
 ## y5
-Expert ratings of the freedom of the press in 1965
+Calificaciones de expertos sobre la libertad de prensa en 1965
 
 ## y6
-The freedom of political opposition in 1965
+La libertad de oposición política en 1965
 
 ## y7
-The fairness of elections in 1965
+La equidad de las elecciones en 1965
 
 ## y8
-The effectiveness of the elected legislature in 1965
+La efectividad de la legislatura elegida en 1965
 
-x1
-The gross national product (GNP) per capita in 1960
+## x1
+El producto nacional bruto (PNB) per cápita en 1960
 
 ## x2
-The inanimate energy consumption per capita in 1960
+El consumo inanimado de energía per cápita en 1960
 
 ## x3
-The percentage of the labor force in industry in 1960
+El porcentaje de la fuerza laboral en la industria en 1960
 
-# Source
+### Constructos (variables latentes)
 
-The dataset was retrieved from http://web.missouri.edu/~kolenikovs/Stat9370/democindus.txt (link no longer valid; see discussion on SEMNET 18 Jun 2009)
+## dem60
+Variable Latente: Indicadores y1 - y4 de la política democrática en 1960
 
-# References
+## dem65
+Variable Latente: Indicadores y5 - y8 de la política democrática en 1965
+
+## ind60
+Variable Latente: Indicadores x1 - x3 de la industrialización en 1960
+
+### Fuente
+La información dispobible de este caso de estudio fue tomada del paqute R LAVAAN, que lo utiliza como un caso
+de ejemplo para sus diferentes análisis.
+
+### Referencias
 
 Bollen, K. A. (1989). Structural Equations with Latent Variables. Wiley Series in Probability and Mathematical Statistics. New York: Wiley.
 
