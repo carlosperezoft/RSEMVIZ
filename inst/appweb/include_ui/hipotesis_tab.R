@@ -37,10 +37,12 @@ tabItem(tabName = "hipotesisTab",
                  materialSwitch(inputId = "convenNodosHipoFacSwitch", label = tags$b("Ver Convenciones"),
                                 status = "info", right = TRUE, value = FALSE),
                  bsPopover(id="tablaHipotesisModeloOut", title="Hip\u00F3tesis a nivel de Factores",placement="top",trigger="hover",
-                       content = "Por lo comun cargas de factores mayor a 0.7 std y con significancia p-value <= 0.05"),
+                           content = paste("Revisar los coeficientes estandarizados (lambda) de los factores que deben ser > 0.5.",
+                                  "Dichos coeficientes deben ser significativos: p-value <= 0.05.",
+                                  "Adicionalmente validar el R\u00B2 para cada variable observada y su respectivo factor (>= 0.70).")),
                  formattableOutput("tablaHipotesisModeloOut", width = "100%") %>% withSpinner(type=7, color="cadetblue"),
-                 tags$b("R-cuadrado para los elementos presentados:"), br(),
-                 formattableOutput("r2HipoFacTablaOut", width = "100%") %>% withSpinner(type=7, color="cadetblue"),
+                 tags$b("R\u00B2 para los elementos presentados:"), br(),
+                 formattableOutput("r2HipoFacTablaOut", width = "50%") %>% withSpinner(type=7, color="cadetblue"),
                  htmlOutput("ecuacionFactHipoTxtOut"), br(), # antes: verbatimTextOutput(..)
                  shinyjs::hidden( # Inicialmente oculta las convenciones:
                    # Usar el DIV es mejor para shiny-js y el materialSwitch:
@@ -54,10 +56,12 @@ tabItem(tabName = "hipotesisTab",
                  materialSwitch(inputId = "convenNodosHipoRegSwitch", label = tags$b("Ver Convenciones"),
                                 status = "info", right = TRUE, value = FALSE),
                  bsPopover(id="tablaHipotesisParamsOut", title="Hip\u00F3tesis a nivel de Constructos",placement="top",trigger="hover",
-                       content = "Por lo comun cargas entre variables latentes positivos (o no) y con significancia p-value <= 0.05"),
+                           content = paste("Revisar los coeficientes estandarizados (betas) de las regresiones que deben ser > 0.5.",
+                                       "Dichos coeficientes deben ser significativos: p-value <= 0.05.",
+                                       "Adicionalmente validar el R\u00B2 para cada variable latente (>= 0.70).")),
                  formattableOutput("tablaHipotesisParamsOut", width = "100%") %>% withSpinner(type=7, color="cadetblue"),
-                 tags$b("R-cuadrado para los elementos presentados:"), br(),
-                 formattableOutput("r2HipoEstrTablaOut", width = "100%") %>% withSpinner(type=7, color="cadetblue"),
+                 tags$b("R\u00B2 para los elementos presentados:"), br(),
+                 formattableOutput("r2HipoEstrTablaOut", width = "50%") %>% withSpinner(type=7, color="cadetblue"),
                  htmlOutput("ecuacionEstrHipoTxtOut"), br(), # antes: verbatimTextOutput(..)
                  shinyjs::hidden( # Inicialmente oculta las convenciones:
                    # Usar el DIV es mejor para shiny-js y el materialSwitch:

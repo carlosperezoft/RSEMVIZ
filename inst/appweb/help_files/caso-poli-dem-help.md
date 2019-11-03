@@ -1,11 +1,11 @@
 ## :: SEMVIZ -- CASO DE ESTUDIO <img src="images/UdeA_Escudo.jpg" align="right"/>
 
-## Political Democracy 
+## Políticas Democráticas 
 
 # *lavaan*	R Package
-## Industrialization And Political Democracy Dataset
+## Estudio relacionado con Industrialización y Políticas Democráticas
 
-##  Description
+##  Descripción
 
 The ‘famous’ Industrialization and Political Democracy dataset. This dataset is used throughout Bollen's 1989 book (see pages 12, 17, 36 in chapter 2, pages 228 and following in chapter 7, pages 321 and following in chapter 8). The dataset contains various measures of political democracy and industrialization in developing countries.
 

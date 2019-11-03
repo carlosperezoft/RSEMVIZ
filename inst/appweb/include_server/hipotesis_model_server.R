@@ -217,7 +217,7 @@ r2VarsEcuaciones <- function() {
    #
    param_data <- hipotSEMFit() %>% filter(lhs %in% input$grafoHipotSEMOut_selectedNodes)
    #
-   fit_R2 <- lavaan::parameterEstimates(fit, standardized = F, rsquare = T) %>%
+   fit_R2 <- lavaan::parameterEstimates(semFitLocal(), standardized = F, rsquare = T) %>%
                                      filter(op == "r2") %>% select("lhs", "est")
    #
    selected_R2 <- fit_R2 %>% filter(lhs %in% param_data$lhs |

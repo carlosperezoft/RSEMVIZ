@@ -41,8 +41,8 @@ output$resumenCasoEstudoTxtOut <- renderPrint({
 #
 output$detalleCasoEstudioHTMLOut <- renderPrint({
   switch(input$casoEstudioSelect,
-     "Political_Democracy" = includeMarkdown("help_files/plot_help.md"),
-     "Grupos_INVESTIGACION" = includeMarkdown("help_files/controls_help.md")
+     "Political_Democracy" = includeMarkdown("help_files/caso-poli-dem-help.md"),
+     "Grupos_INVESTIGACION" = includeMarkdown("help_files/caso-grupos-invest-help.md")
   )
 })
 #

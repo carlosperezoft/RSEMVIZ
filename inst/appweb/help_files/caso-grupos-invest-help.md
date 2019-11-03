@@ -1,3 +1,8 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+---
 ## :: SEMVIZ -- CASO DE ESTUDIO <img src="images/UdeA_Escudo.jpg" align="right"/>
 
 ## Grupos de Investigaci&oacute;n: 
