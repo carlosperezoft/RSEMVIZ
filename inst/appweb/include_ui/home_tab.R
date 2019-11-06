@@ -8,14 +8,14 @@ tabItem(tabName = "homeTab",
     tabBox(title = tagList(shiny::icon("sitemap"), "HOME"), # Este titulo es solo para el TABSET
            width = "250px", height = "650px",
         # Lista de TABs:
-        tabPanel(id="inicioTab", title = "INICIO",
+        tabPanel(id="inicioTab", title = tagList(shiny::icon("home"), "INICIO"),
           tags$img(
             src = "images/Creador-Energia-Biblioteca.jpg",
             style = 'position: absolute'
           )
         ),
         # NOTA: Se debe usar un tabPanel para elementos con contenido HTML para que sea procesado correctamente
-        tabPanel(id="acerdaDeTab", title = "ACERCA DE", # Titulo solo para la pestaña del TAB Panel
+        tabPanel(id="acerdaDeTab", title = tagList(shiny::icon("copyright"), "ACERCA DE"), # Titulo solo para la pestaña del TAB Panel
           h4("Visualizaci\u00F3n de alto nivel para el an\u00E1lisis e interpretaci\u00F3n de Modelos de Ecuaciones Estructurales"),
           wellPanel(# El wellPanel adiciona un "contorno Gris" a los elementos contenidos
             helpText(tags$b("Autor:"),
@@ -38,31 +38,29 @@ tabItem(tabName = "homeTab",
             source("include_ui/footer_menu_ui.R", local = TRUE)$value
          ) # FIN wellPanel
        )
-      # , tabPanel(id="instruccionesUsoTab", title = "Instrucciones de Uso",
-      #     h3("Visualizaci\u00F3n de alto nivel para el an\u00E1lisis e interpretaci\u00F3n de Modelos de Ecuaciones Estructurales"),
-      #     navlistPanel(
-      #       "SEMVIZ: Intrucciones de USO",
-      #       tabPanel(title = "INTRO", icon = icon("plug"), h3("INTRO"),
-      #          wellPanel(# El wellPanel adiciona un "contorno Gris" a los elementos contenidos
-      #            # la funcion helpText aplica estilos propios al texto HTML proporcionado
-      #            includeMarkdown("help_files/controls_help.md")
-      #          )
-      #       ),
-      #       tabPanel(title = "DATOS", icon = icon("database"), h3("DATOS"),
-      #          wellPanel(# El wellPanel adiciona un "contorno Gris" a los elementos contenidos
-      #            # la funcion helpText aplica estilos propios al texto HTML proporcionado
-      #            includeMarkdown("help_files/controls_help.md")
-      #          )
-      #       ),
-      #       "-- SECCION SEM --",
-      #       tabPanel(title = "SEM TEST", icon = icon("laptop"), h3("SEM TEST"),
-      #          wellPanel(# El wellPanel adiciona un "contorno Gris" a los elementos contenidos
-      #            # la funcion helpText aplica estilos propios al texto HTML proporcionado
-      #            includeMarkdown("help_files/controls_help.md")
-      #          )
-      #       )
-      #     ) # FIN navlistPanel
-      #  )
+      , tabPanel(id="instruccionesUsoTab", title = tagList(shiny::icon("question-circle"), "Instrucciones de Uso"),
+          h4("Visualizaci\u00F3n de alto nivel para el an\u00E1lisis e interpretaci\u00F3n de Modelos de Ecuaciones Estructurales"),
+          tabsetPanel(type = "tabs",
+            tabPanel(title = "Inicio - Casos de Estudio", icon = icon("plug"),
+               wellPanel(# El wellPanel adiciona un "contorno Gris" a los elementos contenidos
+                 # la funcion helpText aplica estilos propios al texto HTML proporcionado
+                 includeMarkdown("help_files/inicio-casos-estudio-help.md")
+               )
+            ),
+            tabPanel(title = "Datos y Estimaci\u00F3n", icon = icon("database"),
+               wellPanel(# El wellPanel adiciona un "contorno Gris" a los elementos contenidos
+                 # la funcion helpText aplica estilos propios al texto HTML proporcionado
+                 includeMarkdown("help_files/datos-estimacion-help.md")
+               )
+            ),
+            tabPanel(title = "Resultados Modelo SEM", icon = icon("laptop"),
+               wellPanel(# El wellPanel adiciona un "contorno Gris" a los elementos contenidos
+                 # la funcion helpText aplica estilos propios al texto HTML proporcionado
+                 includeMarkdown("help_files/resultados-modelo-sem-help.md")
+               )
+            )
+          ) # FIN navlistPanel
+       )
     ) # fin tabBox
   ) # fin fluidRow
 )

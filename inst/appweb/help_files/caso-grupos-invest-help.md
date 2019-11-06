@@ -1,17 +1,12 @@
 ## <img src="images/UdeA_Escudo.jpg" align="right"/>
 
-## Análsis de eficiencia de grupos de investigación a nivel Universitario 
+## Análisis de desempeño de grupos de investigación a nivel Universitario 
 
-## Estudio relacionado con uso adecuado de recursos en grupos de investigación
+## Estudio relacionado con el uso adecuado de recursos en grupos de investigación
 
 ##  Descripción
 
-El caso de estudio corresponde a un estudio de fenomenos de Industrializción y de Políticas Democráticas en países
-en vía de desarrollo durante los períodos de 1960 y 1965. Este estudio fue realizado y documentado por Kenneth A. Bollen en 1989
-en su libro __Structural Equations with Latent Variables__.
-
-El enfoque principal del estudio consiste en validar cómo la industrialización y las políticas democráticas en 1960 
-influyen a mediano plazo en los logros de políticas democráticas en los respectivos países cinco años después (1965).
+El caso de estudio corresponde a un estudio de “MEDICIÓN  DE DESEMPEÑO DE LOS GRUPOS DE INVESTIGACIÓN DE LA UNIVERSIDAD DE ANTIOQUIA. Elaborado por JUAN DELGADO LASTRA e INGRY NATALIA GÓMEZ MIRANDA, Medellín 2014.
 
 <img src="images/semviz-caso-grupos.png" width = "100%", height = "500px" align="center"/>
 
@@ -19,63 +14,111 @@ _Figura 1_: Modelo SEM que especifica las relaciones entre variables observadas 
 
 ## Definición de las variables de medición
 
-Se tiene un SET de Datos (R data frame) de 75 observaciones (países en vía de desarrollo) con un 
-conjunto de 11 variables. Dichas variables se definen a continuación:
+El análisis se hizo para 248 grupos reconocidos por Colciencias con información de los años 2010, 2011 y 2012, de 22 Indicadores, agrupados estos de acuerdo a los respectivos constructos. El modelo se estimó usando STATA v.14. 
+- Dichas variables se definen a continuación:
 
 ### Variables observadas (explicativas)
 
-## y1
-Calificaciones de expertos sobre la libertad de prensa en 1960
+## arta
+Artículos A
 
-## y2
-La libertad de oposición política en 1960
+## artb
+Artículos B
 
-## y3
-La equidad de las elecciones en 1960
+## caplibr                    
+Número de Capítulos de Libros publicados por los Profesores
 
-## y4
-La efectividad de la legislatura elegida en 1960
+## centrosex                       
+Número de centros de excelencia a los pertenece el grupo
 
-## y5
-Calificaciones de expertos sobre la libertad de prensa en 1965
+## codi                                             
+Monto ejecutado por proyectos CODI
 
-## y6
-La libertad de oposición política en 1965
+## especie                           
+Monto del recurso en especie con que cuenta el grupo5
 
-## y7
-La equidad de las elecciones en 1965
+## est                                                                    
+Estudiantes
 
-## y8
-La efectividad de la legislatura elegida en 1965
+## gmaes                                   
+Número de estudiantes graduados en Maestrías
 
-## x1
-El producto nacional bruto (PNB) per cápita en 1960
+## gmaesdoc                      
+Número de estudiantes graduados de Maestrías y Doctorados
 
-## x2
-El consumo inanimado de energía per cápita en 1960
+## hmax                                                                      
+H. máximo
 
-## x3
-El porcentaje de la fuerza laboral en la industria en 1960
+## inves        
+Número de Profesores con la categoría de investigador según COLCIENCIAS
+
+## invesjun 
+Número de Profesores con la categoría de investigador junior según COLCIENCIAS
+
+## joinvcol        
+Número de estudiantes con el estímulo de Joven Investigador COLCIENCIAS
+
+## jovinpre                    
+Número de estudiantes con el estímulo de Joven Investigador
+
+## libr                                 
+Número de Libros publicados por los Profesores
+
+## lineas                      
+Número de Líneas de investigación declaradas por el grupo
+
+## matripos                                              
+Número de Matrículas en Posgrados
+
+## mov     
+Número de convenios de movilidad en los que han participado los profesores
+
+## numproy                                                            
+Número de Proyectos
+
+## otros                                                                          
+Otros elementos aplicables en el proceso de investigación
+
+## patentes                                          
+Número de patentes que tiene el grupo
+
+## ponint                                 
+Número de ponencias en eventos Internacionales
+
+## ponnal                                      
+Número de ponencias en eventos Nacionales
+
+## profes                          
+Número de profesores de tiempo completo y ocasionales 
+
+## proyext               
+Monto ejecutado por proyectos financiados por entidades externas
+
+## salario                    
+Salario de los profesores durante el período de observación
+
+## sumah                           
+Suma de los índices H de los Profesores según Scopus
 
 ### Constructos (variables latentes)
  
-## dem60
-Variable Latente: Indicadores y1 - y4 de la política democrática en 1960
+## RECUR - Recursos
+Medios disponibles con los que cuenta cada grupo de investigación para la actividad de investigación en el desarrollo de su misión
 
-## dem65
-Variable Latente: Indicadores y5 - y8 de la política democrática en 1965
+## OFERTA - Oferta
+Una capacidad que estos pueden ofrecer a la comunidad
 
-## ind60
-Variable Latente: Indicadores x1 - x3 de la industrialización en 1960
+## RELA - Relaciones
+Resultados de los grupos acerca de actividades en investigación conjunta con pares académicos nacionales o internacionales
+
+## IMPINT - Impacto Internacional
+Resultados y/o productos en ciencia y tecnología de los grupos de investigación que alcanzan un reconocimiento internacional
+
+##  IMPREG - Impacto Regional
+Resultados y/o productos en ciencia y tecnología de los grupos cuyo reconocimiento e importancia sean clasificados de carácter regional
 
 ### Fuente
-La información dispobible de este caso de estudio fue tomada del paqute R LAVAAN, que lo utiliza como un caso
-de ejemplo para sus diferentes análisis.
+La información dispobible de este caso de estudio fue tomada de los datos entregados por el profesor Juan Delgado Lastra.
 
 ### Referencias
-
-Bollen, K. A. (1989). Structural Equations with Latent Variables. Wiley Series in Probability and Mathematical Statistics. New York: Wiley.
-
-Bollen, K. A. (1979). Political democracy and the timing of development. American Sociological Review, 44, 572-587.
-
-Bollen, K. A. (1980). Issues in the comparative measurement of political democracy. American Sociological Review, 45, 370-390.
+Delgado Lastra, Juan; Gómez Miranda Ingry.(2014). Informe final: Medición de Desempeño de los Grupos de Investigación.

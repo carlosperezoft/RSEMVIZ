@@ -1,8 +1,8 @@
 ## <img src="images/UdeA_Escudo.jpg" align="right"/>
 
-## Políticas Democráticas 
+## Validación del modelo SEM estimado y posterior interpretación de los resultados 
 
-## Estudio relacionado con Industrialización y Políticas Democráticas
+## Se tiene disponible un conjunto de gráficos para el análisis del modelo de medición y del estructural
 
 ##  Descripción
 
@@ -25,53 +25,7 @@ conjunto de 11 variables.
 
 ### Variables observadas (explicativas)
 
-## y1
-Calificaciones de expertos sobre la libertad de prensa en 1960
-
-## y2
-La libertad de oposición política en 1960
-
-## y3
-La equidad de las elecciones en 1960
-
-## y4
-La efectividad de la legislatura elegida en 1960
-
-## y5
-Calificaciones de expertos sobre la libertad de prensa en 1965
-
-## y6
-La libertad de oposición política en 1965
-
-## y7
-La equidad de las elecciones en 1965
-
-## y8
-La efectividad de la legislatura elegida en 1965
-
-## x1
-El producto nacional bruto (PNB) per cápita en 1960
-
-## x2
-El consumo inanimado de energía per cápita en 1960
-
-## x3
-El porcentaje de la fuerza laboral en la industria en 1960
-
-### Constructos (variables latentes)
-
-## dem60
-Variable Latente: Indicadores y1 - y4 de la política democrática en 1960
-
-## dem65
-Variable Latente: Indicadores y5 - y8 de la política democrática en 1965
-
-## ind60
-Variable Latente: Indicadores x1 - x3 de la industrialización en 1960
-
-### Fuente
-La información dispobible de este caso de estudio fue tomada del paqute R LAVAAN, que lo utiliza como un caso
-de ejemplo para sus diferentes análisis.
+...
 
 ### Referencias
 

@@ -13,7 +13,7 @@ tabItem(tabName = "dashBASSubMTab",
     uiOutput("tipoGraficoOut"),
     tabBox(width = "100%", height = "100%",
       title = tagList(shiny::icon("random"), "Clasificaci\u00F3n por tipo"),
-      tabPanel("Ajuste Absoluto",h4("Criterios de Referencia para el Ajuste Absoluto"),
+      tabPanel("Ajuste Absoluto",icon=icon("adjust"), h4("Criterios de Referencia para el Ajuste Absoluto"),
          # Para que fucionen los BOX(...) se debe usar un fluidRow layout que los contenga:
          fluidRow(
            # NOTA: NO usar box(..) para contener un elemento tipo valueBoxOutput(..)
@@ -64,7 +64,7 @@ tabItem(tabName = "dashBASSubMTab",
            uiOutput("agfiBoxOut") %>% withSpinner(type=7, color="cadetblue")
          )
       ),
-      tabPanel("Ajuste Incremental",
+      tabPanel("Ajuste Incremental", icon=icon("arrow-up"),
          h4("Criterios de Referencia para el Ajuste Incremental (Comparativo)"),
          fluidRow(
            uiOutput("nfiBoxOut") %>% withSpinner(type=7, color="cadetblue"),
@@ -73,7 +73,8 @@ tabItem(tabName = "dashBASSubMTab",
            uiOutput("gfiCmpBoxOut") %>% withSpinner(type=7, color="cadetblue")
          )
       ),
-      tabPanel("Ajuste Parsimonioso", height = 200, h4("Criterios de Referencia para el Ajuste Parsimonioso"),
+      tabPanel("Ajuste Parsimonioso", height = 200, icon=icon("recycle"),
+         h4("Criterios de Referencia para el Ajuste Parsimonioso"),
          fluidRow(
            column( 3,
              bsPopover(id = "pgfiBoxOut", title="Parsimony Goodness-of-Fit Index (PGFI)",placement="top",trigger="hover",

@@ -34,12 +34,13 @@ tabItem(tabName = "modeloSEMTab",
       mainPanel(
         tabBox(width = "100%", height = "100%",
                title = tagList(shiny::icon("calculator"), "Estimaci\u00F3n por medio de LAVAAN"),
-          tabPanel("Resumen General",h4("Informaci\u00F3n General (Estimaci\u00F3n del Modelo)"),
+          tabPanel("Resumen General", icon = icon("clipboard"),
+            h4("Informaci\u00F3n General (Estimaci\u00F3n del Modelo)"),
             # Input: Indica el uso de datos estandarizados ----
             awesomeCheckbox("modSEMStandChk", "Estandarizado", TRUE),
             verbatimTextOutput("modeloSEMLavaanTxtOut") %>% withSpinner()
           ),
-          tabPanel("Puntuaciones (Score)",
+          tabPanel("Puntuaciones (Score)", icon = icon("subscript"),
             h4("Puntuaciones (Score) estimadas para variables Observadas y Latentes:"),
             DTOutput('semScoreDataDTOut', width = "100%", height = "100%") %>% withSpinner()
           )

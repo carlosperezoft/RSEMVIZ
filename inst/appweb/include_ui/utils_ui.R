@@ -29,7 +29,7 @@ msgHelpMenu <- dropdownMenu(
   badgeStatus = NULL,
   headerText = "AYUDA GENERAL SEMVIZ:",
 
-  notificationItem("AYUDA LOCALHOST", icon = icon("file"),
+  notificationItem("Acerca de", icon = icon("copyright"),
         href = "javascript:window.open('/ayuda/semviz.html', '_blank')"),
   notificationItem("Modelos SEM, TUTORIAL", icon = icon("gears"),
         href = "javascript:window.open('http://www.structuralequations.org/', '_blank')"),

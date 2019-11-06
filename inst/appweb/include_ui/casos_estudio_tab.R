@@ -33,10 +33,10 @@ tabItem(tabName = "casosEstudioTab",
           h3("Informaci\u00F3n sobre el Caso de Estudio seleccionado:"),
           ##
           tabsetPanel(type = "tabs",
-            tabPanel("DETALLES", h3("Detalles del Caso de Estudio"),
+            tabPanel("DETALLES", h3("Detalles del Caso de Estudio"), icon = icon("search-plus"),
               htmlOutput("detalleCasoEstudioHTMLOut")
             ),
-            tabPanel("RESUMEN", h2("Resumen informativo sobre los datos asociados"),
+            tabPanel("RESUMEN", h2("Resumen informativo sobre los datos asociados"), icon = icon("file"),
               verbatimTextOutput("resumenCasoEstudoTxtOut")
             )
           )
