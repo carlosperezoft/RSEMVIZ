@@ -5,32 +5,28 @@
 ## Se tiene disponible un conjunto de gráficos para el análisis del modelo de medición y del estructural
 
 ##  Descripción
+La aplición SEMVIZ tiene para su iniciación de uso dos casos de estudio donde se ha aplicado
+un modelo SEM.
 
-El caso de estudio corresponde a un estudio de fenomenos de Industrializción y de Políticas Democráticas en países
-en vía de desarrollo durante los períodos de 1960 y 1965. Este estudio fue realizado y documentado por Kenneth A. Bollen en 1989
-en su libro __Structural Equations with Latent Variables__.
+Dichos casos de estudio tienen el modelo SEM definido por medio de ecuaciones tipo LAVAAN, ya
+que este es el paquete de R utilizado para la estimación del modelo. Adicionalmente se tienen dos
+SET de datos; uno que corresponde a las mediciones de las variables obervadas y otro que correponde
+a la etiquetas de cada una de las variables (_observadas y latentes_) utilizadas en el modelo SEM.
 
-El enfoque principal del estudio consiste en validar cómo la industrialización y las políticas democráticas en 1960 
-influyen a mediano plazo en los logros de políticas democráticas en los respectivos países cinco años después (1965).
+<img src="images/semviz-resultados-casoe.png" width = "100%", height = "500px" align="center"/>
 
-<img src="images/Poli-Demo-SEM-lavaan.png" width = "600px", height = "500px" align="center"/>
+_Figura 1_: Se presenta el dashboard de bondad de ajustes del modelo SEM. Adicionalmente, las demás opciones de análisis en SEMVIZ.
 
-_Figura 1_: Modelo SEM que especifica las relaciones entre variables observadas y los constructos de este caso de estudio.
+La figura 1 presenta la opción de menú de __casos de estudio__, de allí el sistema presenta el formulario
+donde se especifican los casos de estudio disponibles en SEMVIZ. Adicionalmente, se debe activar
+la caja de selección _Usar Caso de Estudio seleccionado en SEMVIZ_ con el objetivo que éste sea
+tomado como base actual para el análisis dentro de la aplicación.
 
-## Definición de las variables de medición
+## Información sobre el caso de estudio seleccionado
+Sobre el caso de uso seleccionado se presentan dos secciones (_pestañas_):
 
-Se tiene un SET de Datos (R data frame) de 75 observaciones (países en vía de desarrollo) con un 
-conjunto de 11 variables. 
-- Dichas variables se definen a continuación:
+- DETALLES: Se presenta de manera general la información contextual del caso de estudio y la definición de cada variable 
+usada en el modelo SEM respectivo.
 
-### Variables observadas (explicativas)
-
-...
-
-### Referencias
-
-Bollen, K. A. (1989). Structural Equations with Latent Variables. Wiley Series in Probability and Mathematical Statistics. New York: Wiley.
-
-Bollen, K. A. (1979). Political democracy and the timing of development. American Sociological Review, 44, 572-587.
-
-Bollen, K. A. (1980). Issues in the comparative measurement of political democracy. American Sociological Review, 45, 370-390.
+- RESUMEN: Se presenta un resumen tabular de los medias de tendencia central de cada variable asocidada al modelo SEM, 
+complemetada por valores de los cuartiles.
