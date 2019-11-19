@@ -19,10 +19,10 @@ en el modelo SEM (_observadas y latentes_).
 
 _Figura 1: SET de datos a ser usados en el modelo SEM. En caso de ser un caso de estudio se presentan los SETs preestablecidos._
 
-La figura 1 presenta las opciones de asiganción de SET de datos en SEMVIZ, tanto para las Varibles explicativas, como
+La figura 1 presenta las opciones de asignación de SET de datos en SEMVIZ, tanto para las Varibles explicativas, como
 para las etiquestas del modelo.
 
-- Los datos de las _variables explicativas_ deben tener una columa especial, que es la primera y debe ser nombrada
+- Los datos de las _variables explicativas_ deben tener una columna especial, que es la primera y debe ser nombrada
 __row_label__. Los valores de ésta por cada fila son utilizados como _etiquetas_ representativas en los grápficos de análisis
 utilizados posteriormente en SEMVIZ. Las demás columnas deben tener por nombre los correspondientes a las variables
 usadas en el modelo LAVAAN respectivo.
