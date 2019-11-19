@@ -30,7 +30,7 @@ sidebarMenu(id = "sidebarMenu",
        menuSubItem(text = "Complementos Ajuste", tabName = "dashAVANSubMTab", icon = icon("wrench"))
     ),
     menuItem(text = "An\u00E1lisis de Hip\u00F3tesis", tabName = "hipotesisTab", icon = icon("check-circle"),
-             badgeLabel = "PARAMS", badgeColor = "maroon"),
+             badgeLabel = "Pruebas", badgeColor = "maroon"),
     hr(), # ":: AVANZADO",
     menuItem(text = "An\u00E1lisis SEM Medici\u00F3n", icon = icon("list-ol"),
        tabName = "modMedDesSubMTab", badgeLabel = "Factores", badgeColor = "blue"
