@@ -13,7 +13,7 @@ que éste es el paquete de R utilizado para la estimación del modelo. Adicional
 SET de datos; uno que corresponde a las mediciones de las variables obervadas y otro que corresponde
 a las etiquetas de cada una de las variables (_observadas y latentes_) utilizadas en el modelo SEM.
 
-<img src="images/semviz-select-casoe.png" width = "100%", height = "500px" align="center"/>
+<img src="images/semviz-select-casoe.png" width = "90%", height = "500px" align="center"/>
 
 _Figura 1: Selección de un caso de estudio por defecto para ser analizado en la aplicación SEMVIZ._
 

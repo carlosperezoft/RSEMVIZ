@@ -105,7 +105,7 @@ tabItem(tabName = "modEstPredSubMTab",
       navbarMenu("Mediaci\u00F3n", menuName="mediacMenu",
         tabPanel("Mediaci\u00F3n-Regresi\u00F3n Latentes", icon = icon("recycle"),
            h4("An\u00E1lisis de Mediaci\u00F3n-Regresi\u00F3n sobre las variables LANTENTES del Modelo SEM"),
-           tags$i("Para activar el gr\u00E1fico seleccionar en el Modelo SEM tres variables LATENTES"),
+           tags$i("Para activar el gr\u00E1fico seleccionar en el Modelo SEM tres variables LATENTES, y en la opción de -Select by Group: LATENTE"),
            fluidRow(
               box(title = "Flujo de Latente.Score A", status = "success", solidHeader = TRUE, collapsible = TRUE,
                 dygraphOutput("mediacionRegreSerie1APlotOut", width = "100%", height = "400") %>%

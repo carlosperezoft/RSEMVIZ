@@ -15,7 +15,7 @@ explicativas (_observadas_)
 - Y el otro tiene las descripciones de cada una de las variables usadas 
 en el modelo SEM (_observadas y latentes_).
 
-<img src="images/semviz-datos-casoe.png" width = "100%", height = "500px" align="center"/>
+<img src="images/semviz-datos-casoe.png" width = "90%", height = "500px" align="center"/>
 
 _Figura 1: SET de datos a ser usados en el modelo SEM. En caso de ser un caso de estudio se presentan los SETs preestablecidos._
 
@@ -38,7 +38,7 @@ Debido a que la aplicación SEMVIZ necesita un modelo SEM estimado para el anál
 (_el cual es su objetivo principal_), es necesario realizar la estimación del modelo SEM para el cual
 se han especificado los SET de datos indicados anteriormente.
 
-<img src="images/semviz-estimar-casoe.png" width = "100%", height = "500px" align="center"/>
+<img src="images/semviz-estimar-casoe.png" width = "90%", height = "500px" align="center"/>
 
 _Figura 2: Opciones de estimación para el modelo SEM actual, para ello se utiliza el paquete R LAVAAN._
 
