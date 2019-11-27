@@ -72,7 +72,8 @@ conjuntos de gráficos según sea la pregunta contextual seleccionada:
 7. **Circularizar** [circular-packing, circular-packing-jerárquico, dendrograma-circularizado, flujo-circular-cuerdas, sunburst-comparativo]
 
 Luego SEMVIZ presenta el gráfico interactivo respectivo, permitiendo al analista de negocio o investigador
-variar la forma de presentación del gráfico por medio del ajuste dinámico de la propiedades del mismo.
+variar la forma de presentación del gráfico por medio del ajuste dinámico de la propiedades del mismo
+(para ello se usa el icono ubicado en la parte *superior izquierda* de cada gráfico **cambiar opciones...** , definido como: **Opciones de Presentación**).
 
 ## Análisis SEM Estructural [Regresión]
 Esta sección permite al analista realizar la interpretación de resultados del modelo SEM estimado, esto a nivel de variables
@@ -93,4 +94,6 @@ conjuntos de gráficos según sea la pregunta contextual seleccionada:
 3. **Mediación** [Mediación-Regresión Latentes]
 
 Luego SEMVIZ presenta el gráfico interactivo respectivo, permitiendo al analista de negocio o investigador
-variar la forma de presentación del gráfico por medio del ajuste dinámico de la propiedades del mismo.
+variar la forma de presentación del gráfico por medio del ajuste dinámico de la propiedades del mismo 
+(para ello se usa el icono ubicado en la parte *superior izquierda* de cada gráfico **cambiar opciones...** , definido como: **Opciones de Presentación**).
+

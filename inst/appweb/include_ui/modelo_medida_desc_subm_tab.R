@@ -62,10 +62,14 @@ tabItem(tabName = "modMedDesSubMTab",
     navbarPage("An\u00E1lisis Gr\u00E1fico:", id = "medidaDescMenu",
        navbarMenu("Distribuci\u00F3n", menuName="distribMenu",
          tabPanel("Viol\u00EDn",icon = icon("music"), h4("Viol\u00EDn"),
-            plotlyOutput("violinMedidaPlotOut", width = "100%", height = "500") %>% withSpinner(type=4, color="cadetblue")
+            plotlyOutput("violinMedidaPlotOut", width = "100%", height = "500") %>% withSpinner(type=4, color="cadetblue"),
+            bsPopover(id="violinMedidaPlotOut", title = "Viol\u00EDn-Plot", placement = "top", trigger = "hover",
+                   content = "Se presenta: Un Box-Plot enmarcado con una distribuci\u00F3n de densidad suavizada (Kernel Density).")
          ),
          tabPanel("Densidad 2D", icon = icon("pause"), h4("Densidad 2D"),
-            plotlyOutput("densidad2DMedidaPlotOut", width = "100%", height = "500") %>% withSpinner(type=5, color="cadetblue")
+            plotlyOutput("densidad2DMedidaPlotOut", width = "100%", height = "500") %>% withSpinner(type=5, color="cadetblue"),
+            bsPopover(id="densidad2DMedidaPlotOut", title = "Densidad 2D", placement = "top", trigger = "hover",
+                  content = "Se presenta: Distribuci\u00F3n de Densidad de los score por cada variable (suavizado - Kernel Density).")
          ),
          tabPanel("Histograma", icon = icon("signal"), h4("Histograma"),
             dropdownButton(inputId = "histogramaMedidaOpsBtn",
@@ -78,7 +82,9 @@ tabItem(tabName = "modMedDesSubMTab",
                circle = TRUE, status = "danger", icon = icon("gear"), width = "250px",
                size = "xs", tooltip = tooltipOptions(title = "Cambiar opciones...")
             ),
-            plotlyOutput("histogramaMedidaPlotOut", width = "100%", height = "500") %>% withSpinner(type=4, color="cadetblue")
+            plotlyOutput("histogramaMedidaPlotOut", width = "100%", height = "500") %>% withSpinner(type=4, color="cadetblue"),
+            bsPopover(id="histogramaMedidaPlotOut", title = "Histrograma", placement = "top", trigger = "hover",
+                      content = "Se presenta: Histograma de frecuencia por score (intervalo, cantidad) para cada variable seleccionada. Usar *cambiar opciones...* para explorar opciones complementarias.")
          ),
          tabPanel("Boxplot", icon = icon("square"), h4("Boxplot"),
             # NOTA: Size of the button: lg, sm, xs.
@@ -91,18 +97,24 @@ tabItem(tabName = "modMedDesSubMTab",
                circle = TRUE, status = "danger", icon = icon("gear"), width = "250px",
                size = "xs", tooltip = tooltipOptions(title = "Cambiar opciones...")
             ),
-            plotlyOutput("boxplotMedidaPlotOut", width = "100%", height = "500") %>% withSpinner(type=5, color="cadetblue")
+            plotlyOutput("boxplotMedidaPlotOut", width = "100%", height = "500") %>% withSpinner(type=5, color="cadetblue"),
+            bsPopover(id="boxplotMedidaPlotOut", title = "Box-Plot", placement = "top", trigger = "hover",
+                   content = "Se presenta: Un Box-Plot de los score para cada variable seleccionada. Usar *cambiar opciones...* para explorar opciones complementarias.")
          ),
          tabPanel("Ridgeline", icon = icon("arrow-right"),h4("Ridgeline (formalmente: Joyplot)"),
             # IMPORTANTE: Para Ridgeline se debe usar la version mas reciente de ggplot2 v 3.0.0
             # -- Adicionalmente, plotly/svgPanZoomOutput no tiene actualmente el WRAPPER para este
             #    tipo de grafico de "ggplot"; por eso usa un "plotOutput" estandar.
-            plotOutput("ridgelineMedidaPlotOut", width = "100%", height = "500") %>% withSpinner(type=4, color="cadetblue")
+            plotOutput("ridgelineMedidaPlotOut", width = "100%", height = "500") %>% withSpinner(type=4, color="cadetblue"),
+            bsPopover(id="ridgelineMedidaPlotOut", title = "Ridgeline", placement = "top", trigger = "hover",
+                   content = "Se presenta: Las distribuci\u00F3n de densidad separadas con Jitter (l\u00EDneas punteadas) de cada variable seleccionada, siendo \u00FAtil para realizar comparaciones de patrones.")
          )
        ),
        navbarMenu("Correlaci\u00F3n", menuName="correlaMenu",
           tabPanel("Dispersi\u00F3n (Scatter)",icon = icon("braille"), h4("Dispersi\u00F3n (Scatter)"),
-            plotlyOutput("scatterMedidaPlotOut", width = "100%", height = "500") %>% withSpinner(type=5, color="cadetblue")
+            plotlyOutput("scatterMedidaPlotOut", width = "100%", height = "500") %>% withSpinner(type=5, color="cadetblue"),
+            bsPopover(id="scatterMedidaPlotOut", title = "Dispersi\u00F3n (Scatter)", placement = "top", trigger = "hover",
+                   content = "Se presenta: Diagrama de dispersi\u00F3n con Jitter (l\u00EDneas punteadas) de las dos variables seleccionadas. Adecuado para detectar correlaciones fuertes (tendencias), positivas o negativas entre las variables.")
           ),
           tabPanel("Dispersi\u00F3n (Regresi\u00F3n)",icon = icon("braille"), h4("Dispersi\u00F3n (Regresi\u00F3n)"),
              dropdownButton(inputId = "scatterRegresMedidaOpsBtn",
@@ -118,10 +130,15 @@ tabItem(tabName = "modMedDesSubMTab",
              ),
              # IMPORTANTE: plotly actualmente no tiene el WRAPPER para ggExtra (ggMarginal).
              # --> Por eso usa un "plotOutput" estandar.
-             plotOutput("scatterRegresMedidaPlotOut", width = "100%", height = "500") %>% withSpinner(type=4, color="cadetblue")
+             plotOutput("scatterRegresMedidaPlotOut", width = "100%", height = "500") %>% withSpinner(type=4, color="cadetblue"),
+             bsPopover(id="scatterRegresMedidaPlotOut", title = "Dispersi\u00F3n (Regresi\u00F3n)",
+                   placement = "top", trigger = "hover",
+                   content = "Se presenta: Diagrama de dispersi\u00F3n con una l\u00EDnea de regresi\u00F3n ajustada para las dos variables seleccionadas. Adicionalmente, se presentan las curvas de distribuci\u00F3n de densidad en los ejes. Usar *cambiar opciones...* para explorar opciones complementarias.")
           ),
           tabPanel("Matriz de Dispersi\u00F3n (SPLOM)",icon = icon("th"), h4("Matriz de Dispersi\u00F3n (SPLOM)"),
-             plotlyOutput("splomMedidaPlotOut", width = "100%", height = "500") %>% withSpinner(type=5, color="cadetblue")
+             plotlyOutput("splomMedidaPlotOut", width = "100%", height = "500") %>% withSpinner(type=5, color="cadetblue"),
+             bsPopover(id="splomMedidaPlotOut", title = "Matriz de Dispersi\u00F3n (SPLOM)", placement = "top", trigger = "hover",
+                   content = "Se presenta: Matriz de dispersi\u00F3n / correlaci\u00F3n (Scatter Plot Matrix) para las variables seleccionadas. En particular, en la diagonal principal se presentan las distribuciones de densidad.")
           ),
           tabPanel("Heatmap", icon = icon("qrcode"),h4("Heatmap"),
              dropdownButton(inputId = "heatmapMedidaOpsBtn",
@@ -130,12 +147,14 @@ tabItem(tabName = "modMedDesSubMTab",
                             choices = c("Ninguna", "Escalar", "Normalizar", "Porcentualizar"),
                             selected = "Ninguna"),
                 selectInput(inputId = 'heatmapMedidaDendroType', label = 'Ver Dendrograma',
-                            choices = c("Ninguno"='none',"Filas"='row',"Columnas"='column',"Ambos"='both'), selected = "none"),
+                            choices = c("Ninguno"='none',"Filas"='row',"Columnas"='column',"Ambos"='both'), selected = "row"),
                 tags$i("Actualizaci\u00F3n autom\u00E1tica..."),
                 circle = TRUE, status = "danger", icon = icon("gear"), width = "250px",
                 size = "xs", tooltip = tooltipOptions(title = "Cambiar opciones...")
              ),
-             plotlyOutput("heatmapMedidaPlotOut", width = "100%", height = "700") %>% withSpinner(type=4, color="cadetblue")
+             plotlyOutput("heatmapMedidaPlotOut", width = "100%", height = "700") %>% withSpinner(type=4, color="cadetblue"),
+             bsPopover(id="heatmapMedidaPlotOut", title = "Heatmap", placement = "top", trigger = "hover",
+                   content = "Se presenta: Heatmap con variaciones de color para el score de las variables seleccionadas (columnas). Adicionalmente, se usa un dendrograma por filas o columnas, lo cual permite visualizar patrones. Usar *cambiar opciones...* para explorar opciones complementarias.")
           ),
           tabPanel("Correlograma", icon = icon("th-large"),h4("Correlograma"),
              dropdownButton(inputId = "correlogramaMedidaOpsBtn",
@@ -151,10 +170,14 @@ tabItem(tabName = "modMedDesSubMTab",
                 size = "xs", tooltip = tooltipOptions(title = "Cambiar opciones...")
              ),
              # IMPORTANTE: corrplot genera un grafico estandar para el cual plotly no tiene WRAPPER...
-             plotOutput("correlogramaMedidaPlotOut", width = "100%", height = "500") %>% withSpinner(type=5, color="cadetblue")
+             plotOutput("correlogramaMedidaPlotOut", width = "100%", height = "500") %>% withSpinner(type=5, color="cadetblue"),
+             bsPopover(id="correlogramaMedidaPlotOut", title = "Correlograma", placement = "top", trigger = "hover",
+                   content = "Se presenta: Correlograma para los score de las variables seleccionadas. Adicionalmente, se permite la presentaci\u00F3n de figuras para representar gr\u00E1ficamente el nivel de la correlaci\u00F3n. Usar *cambiar opciones...* para explorar opciones complementarias.")
           ),
           tabPanel("Burbujas", icon = icon("comments"),h4("Burbujas"),
-             plotlyOutput("bubleMedidaPlotOut", width = "100%", height = "700") %>% withSpinner(type=4, color="cadetblue")
+             plotlyOutput("bubleMedidaPlotOut", width = "100%", height = "700") %>% withSpinner(type=4, color="cadetblue"),
+            bsPopover(id="bubleMedidaPlotOut", title = "Burbujas", placement = "top", trigger = "hover",
+                   content = "Se presenta: Diagrama de dispersi\u00F3n tipo Burbujas (el di\u00E1metro corresponde a la magnitud del score) para las dos variables seleccionadas. Adecuado para detectar correlaciones fuertes (tendencias) por magnitud.")
           ),
           tabPanel("Contorno (Densidad 2D)", icon = icon("pause"),h4("Contorno (Densidad 2D)"),
              dropdownButton(inputId = "contornoMedidaOpsBtn",
@@ -167,7 +190,9 @@ tabItem(tabName = "modMedDesSubMTab",
                 circle = TRUE, status = "danger", icon = icon("gear"), width = "250px",
                 size = "xs", tooltip = tooltipOptions(title = "Cambiar opciones...")
              ),
-             plotlyOutput("contourMedidaPlotOut", width = "100%", height = "500") %>% withSpinner(type=5, color="cadetblue")
+             plotlyOutput("contourMedidaPlotOut", width = "100%", height = "500") %>% withSpinner(type=5, color="cadetblue"),
+            bsPopover(id="contourMedidaPlotOut", title = "Contorno (Densidad 2D)", placement = "top", trigger = "hover",
+                   content = "Se presenta: Diagrama de dispersi\u00F3n tipo Contorno-2D. En particular, se representa la densidad de puntos en una secci\u00F3n (\u00E1rea del eje) con un color tipo gradiente, permitiendo la visualizaci\u00F3n de patrones de densidad para los score. Usar *cambiar opciones...* para explorar opciones complementarias.")
           )
        ),
        navbarMenu("Barras", menuName="barrasMenu",
