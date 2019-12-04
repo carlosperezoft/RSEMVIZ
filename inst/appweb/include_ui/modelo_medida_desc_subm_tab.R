@@ -457,12 +457,12 @@ tabItem(tabName = "modMedDesSubMTab",
                        trigger = "hover", content = "Se presenta: Diagrama tipo Circular Packing (Dendrograma), permite visualizar organizaciones (c\u00EDrculos anidados) Jer\u00E1rquicas (tipo dendrograma) entre los score de las variables seleccionadas.")
           ),
           # IMPORTANTE: Este diagrama no es muy claro, y tampoco se ve relevante. Considerar ocultarlo, falla con Grupos UdeA.
-          tabPanel("Sunburst Jer\u00E1rquico", icon = icon("instagram"),
-              h4("An\u00E1lisis Jer\u00E1rquico del Flujo de cargas de coeficientes del Modelo SEM (Sunburst-Comparativo)"),
-              tags$i("Para activar el gr\u00E1fico seleccionar en el Modelo SEM el grupo: LATENTE"),
-              plotOutput("circlePackSunMedidaPlotOut", width = "100%", height = "500") %>%
-                         withSpinner(type=5, color="cadetblue")
-          ),
+          # tabPanel("Sunburst Jer\u00E1rquico", icon = icon("instagram"),
+          #     h4("An\u00E1lisis Jer\u00E1rquico del Flujo de cargas de coeficientes del Modelo SEM (Sunburst-Comparativo)"),
+          #     tags$i("Para activar el gr\u00E1fico seleccionar en el Modelo SEM el grupo: LATENTE"),
+          #     plotOutput("circlePackSunMedidaPlotOut", width = "100%", height = "500") %>%
+          #                withSpinner(type=5, color="cadetblue")
+          # ),
           tabPanel("Diagrama de Cuerdas", icon = icon("life-ring"),
               h4("An\u00E1lisis del Flujo de cargas de coeficientes del Modelo SEM (Flujo entre Cuerdas)"),
               tags$i("Para activar el gr\u00E1fico seleccionar en el Modelo SEM el grupo: LATENTE"),

@@ -17,13 +17,13 @@ en el modelo SEM (_observadas y latentes_).
 
 <img src="images/semviz-datos-casoe.png" width = "90%", height = "500px" align="center"/>
 
-_Figura 1: SET de datos a ser usados en el modelo SEM. En caso de ser un caso de estudio se presentan los SETs preestablecidos._
+_Figura 1: SET de datos a ser usado en el modelo SEM. En caso de ser un caso de estudio se presentan los SETs preestablecidos._
 
 La figura 1 presenta las opciones de asignación de SET de datos en SEMVIZ, tanto para las Varibles explicativas, como
 para las etiquestas del modelo.
 
 - Los datos de las _variables explicativas_ deben tener una columna especial, que es la primera y debe ser nombrada
-__row_label__. Los valores de ésta por cada fila son utilizados como _etiquetas_ representativas en los grápficos de análisis
+__row_label__. Los valores de ésta por cada fila son utilizados como _etiquetas_ representativas en los gráficos de análisis
 utilizados posteriormente en SEMVIZ. Las demás columnas deben tener por nombre los correspondientes a las variables
 usadas en el modelo LAVAAN respectivo.
 
@@ -48,7 +48,7 @@ del modelo estructural (_regresión entre constructos_). Igualmente, allí se de
 por medio de LAVAAN para estimar los resultados del modelo (por lo regular se selecciona Máxima Verosimilitud - ML por su
 sigla en inglés).
 
-> Finalmente, se procede a __ejecutar__ la estimación por medio del paquete LAVAAN usando el modelo SEM especificado y el
+> Finalmente, se procede a __ejecutar__ la estimación por medio del paquete LAVAAN usando el modelo SEM especificado y
 el tipo de estimación indicado. Luego de completar exitosamente la estimación, se presenta en el lado derecho las dos
 _secciones_ siguientes:
 

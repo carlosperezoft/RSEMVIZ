@@ -69,7 +69,7 @@ conjuntos de gráficos según sea la pregunta contextual seleccionada:
 4. **Jerárquicos** [cluster-comparativo, dendrograma-básico, dendrograma-comparativo, dendrogrma-interactivo, treemap]
 5. **Redes** [red-arcos, red-correlaciones, red-hive]
 6. **Evolución** [flujo-serie-área-apilada, flujo-series-score, flujos-sankey, flujo-streamgraph-score, flujo-tipo-señal]
-7. **Circularizar** [circular-packing, circular-packing-jerárquico, dendrograma-circularizado, flujo-circular-cuerdas, sunburst-comparativo]
+7. **Circularizar** [circular-packing, circular-packing-jerárquico, dendrograma-circularizado, flujo-circular-cuerdas]
 
 Luego SEMVIZ presenta el gráfico interactivo respectivo, permitiendo al analista de negocio o investigador
 variar la forma de presentación del gráfico por medio del ajuste dinámico de la propiedades del mismo
@@ -78,7 +78,7 @@ variar la forma de presentación del gráfico por medio del ajuste dinámico de 
 ## Análisis SEM Estructural [Regresión]
 Esta sección permite al analista realizar la interpretación de resultados del modelo SEM estimado, esto a nivel de variables
 latentes (*constructo del modelo estructural*). Igualmente, se tienen opciones de análisis para las relaciones entre variables
-observadas y contructos por medio de sus __score__ estimados algunos gráficos especializados para dichos casos.
+observadas y contructos por medio de sus __score__ estimados usando algunos gráficos especializados para dichos casos.
 
 <img src="images/semviz-mod-estructural-casoe.png" width = "80%", height = "400px" align="center"/>
 

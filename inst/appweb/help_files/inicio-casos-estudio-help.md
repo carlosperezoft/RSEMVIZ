@@ -28,5 +28,5 @@ Sobre el caso de estudio seleccionado se presentan las dos _secciones_ siguiente
 - __DETALLES__: Se presenta de manera general la información contextual del caso de estudio y la definición de cada variable 
 usada en el modelo SEM respectivo.
 
-- __RESUMEN__: Se presenta un resumen tabular de los medidas de tendencia central de cada variable asocidada al modelo SEM, 
+- __RESUMEN__: Se presenta un resumen tabular de las medidas de tendencia central de cada variable asocidada al modelo SEM, 
 complemetada por valores de los cuartiles.
