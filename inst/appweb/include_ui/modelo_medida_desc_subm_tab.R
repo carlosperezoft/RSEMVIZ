@@ -191,7 +191,7 @@ tabItem(tabName = "modMedDesSubMTab",
                 size = "xs", tooltip = tooltipOptions(title = "Cambiar opciones...")
              ),
              plotlyOutput("contourMedidaPlotOut", width = "100%", height = "500") %>% withSpinner(type=5, color="cadetblue"),
-            bsPopover(id="contourMedidaPlotOut", title = "Contorno (Densidad 2D)", placement = "top", trigger = "hover",
+             bsPopover(id="contourMedidaPlotOut", title = "Contorno (Densidad 2D)", placement = "top", trigger = "hover",
                    content = "Se presenta: Diagrama de dispersi\u00F3n tipo Contorno-2D. En particular, se representa la densidad de puntos en una secci\u00F3n (\u00E1rea del eje) con un color tipo gradiente, permitiendo la visualizaci\u00F3n de patrones de densidad para los score. Usar *cambiar opciones...* para explorar opciones complementarias.")
           )
        ),
@@ -213,13 +213,19 @@ tabItem(tabName = "modMedDesSubMTab",
                 circle = TRUE, status = "danger", icon = icon("gear"), width = "250px",
                 size = "xs", tooltip = tooltipOptions(title = "Cambiar opciones...")
              ),
-             amChartsOutput("barrasMedidaPlotOut", width = "100%", height = "500") %>% withSpinner(type=4, color="cadetblue")
+             amChartsOutput("barrasMedidaPlotOut", width = "100%", height = "500") %>% withSpinner(type=4, color="cadetblue"),
+             bsPopover(id="barrasMedidaPlotOut", title = "Barras", placement = "top", trigger = "hover",
+                       content = "Se presenta: Diagrama de Barras donde en el eje horizontal est\u00E1n las filas asocidadas con cada variable selecionada, y en el eje vertical el valor se su respectivo score. Usar *cambiar opciones...* para explorar opciones complementarias.")
           ),
           tabPanel("Histograma Circular (b\u00E1sico)", icon = icon("stop-circle"), h4("Barras Circulares (b\u00E1sico)"),
-             plotOutput("histoBarMedidaPlotOut", width = "100%", height = "500") %>% withSpinner(type=5, color="cadetblue")
+             plotOutput("histoBarMedidaPlotOut", width = "100%", height = "500") %>% withSpinner(type=5, color="cadetblue"),
+             bsPopover(id="histoBarMedidaPlotOut", title = "Histograma Circular (b\u00E1sico)", placement = "top", trigger = "hover",
+                       content = "Se presenta: Histograma circular para los score de cada variable seleccionada. Es \u00FAtil para realizar una visi\u00F3n m\u00E1s general y alternativa de los score.")
           ),
           tabPanel("Barras Circular (b\u00E1sico)", icon = icon("stop-circle"), h4("Barras Circulares (b\u00E1sico)"),
-             plotOutput("circleBarMedidaPlotOut", width = "100%", height = "500") %>% withSpinner(type=4, color="cadetblue")
+             plotOutput("circleBarMedidaPlotOut", width = "100%", height = "500") %>% withSpinner(type=4, color="cadetblue"),
+             bsPopover(id="circleBarMedidaPlotOut", title = "Barras Circular (b\u00E1sico)", placement = "top", trigger = "hover",
+                       content = "Se presenta: Diagrama de Barras circular para los score de una variable seleccionada. Es \u00FAtil para realizar una visi\u00F3n m\u00E1s general y alternativa de los score.")
           ),
           tabPanel("Lollipop", icon = icon("map-pin"), h4("Lollipop"),
              dropdownButton(inputId = "lollipopMedidaOpsBtn",
@@ -230,7 +236,9 @@ tabItem(tabName = "modMedDesSubMTab",
                 circle = TRUE, status = "danger", icon = icon("gear"), width = "250px",
                 size = "xs", tooltip = tooltipOptions(title = "Cambiar opciones...")
              ),
-             plotlyOutput("lollipopMedidaPlotOut", width = "100%", height = "500") %>% withSpinner(type=5, color="cadetblue")
+             plotlyOutput("lollipopMedidaPlotOut", width = "100%", height = "500") %>% withSpinner(type=5, color="cadetblue"),
+             bsPopover(id="lollipopMedidaPlotOut", title = "Lollipop", placement = "top", trigger = "hover",
+                       content = "Se presenta: Diagrama de Barras que presenta una l\u00EDnea y un c\u00EDrculo al final del score. Es \u00FAtil para presentar de forma simple patrones de score agrupados por valores cercanos (dispersi\u00F3n).")
           ),
           tabPanel("Coordenadas Paralelas", icon = icon("tasks"), h4("Coordenadas Paralelas"),
              dropdownButton(inputId = "paralelasMedidaOpsBtn",
@@ -241,6 +249,8 @@ tabItem(tabName = "modMedDesSubMTab",
                 circle = TRUE, status = "danger", icon = icon("gear"), width = "250px",
                 size = "xs", tooltip = tooltipOptions(title = "Cambiar opciones...")
              ),
+             bsPopover(id="paralelasMedidaPlotOut", title = "Coordenadas Paralelas", placement = "top", trigger = "hover",
+                       content = "Se presenta: Diagrama de coordenas paralelas usando cada variable seleccionada. Es adecuado para analizar patrones de variaci\u00F3n entre los score de las variables. Usar *cambiar opciones...* para explorar opciones complementarias."),
              parcoordsOutput("paralelasMedidaPlotOut", width = "100%", height = "500") %>%
                  withSpinner(type=4, color="cadetblue") %>%
                  helper(type = "markdown", title = "SEMVIZ: Coordenadas Paralelas", colour = "red",
@@ -250,7 +260,9 @@ tabItem(tabName = "modMedDesSubMTab",
        navbarMenu("Jer\u00E1rquicos", menuName="jerarqMenu",
           tabPanel("Treemap",icon = icon("tree"),
              h4("An\u00E1lisis Jer\u00E1rquico de los Score seleccionados del Modelo SEM (Treemap)"),
-             plotOutput("treemapMedidaPlotOut", width = "100%", height = "500") %>% withSpinner(type=5, color="cadetblue")
+             plotOutput("treemapMedidaPlotOut", width = "100%", height = "500") %>% withSpinner(type=5, color="cadetblue"),
+             bsPopover(id="treemapMedidaPlotOut", title = "Treemap", placement = "top", trigger = "hover",
+                       content = "Se presenta: Diagrama tipo Treemap, agrupa los score de forma Jer\u00E1rquica en un mapa de calor. Es adecuado para analizar grupos de valores anidados de forma propocional a su valor.")
           ),
           tabPanel("Dendrograma B\u00E1sico", icon = icon("sitemap"),
              h4("An\u00E1lisis Jer\u00E1rquico para los Score de los elementos seleccionados (Dendrograma-B\u00E1sico)"),
@@ -265,8 +277,9 @@ tabItem(tabName = "modMedDesSubMTab",
                 size = "xs", tooltip = tooltipOptions(title = "Cambiar opciones...")
              ),
              wellPanel(style = "background-color: #ffffff;",
-                plotOutput("dendrogramMedidaPlotOut", width = "100%", height = "500") %>%
-                      withSpinner(type=5, color="cadetblue")
+                plotOutput("dendrogramMedidaPlotOut", width = "100%", height = "500") %>% withSpinner(type=5, color="cadetblue"),
+                bsPopover(id="dendrogramMedidaPlotOut", title = "Dendrograma B\u00E1sico", placement = "top", trigger = "hover",
+                          content = "Se presenta: Diagrama tipo Dendrograma (\u00E1rbol), agrupa los score de forma Jer\u00E1rquica por medio de una estructura de \u00E1rbol. Es adecuado para analizar grupos de score asociados por su valor. Usar *cambiar opciones...* para explorar opciones complementarias.")
              )
           ),
           tabPanel("Dendrograma Exploratorio", icon = icon("sitemap"),
@@ -284,8 +297,9 @@ tabItem(tabName = "modMedDesSubMTab",
                   size = "xs", tooltip = tooltipOptions(title = "Cambiar opciones...")
              ),
              wellPanel(style = "background-color: #ffffff;",
-                  plotOutput("dendroInterMedidaPlotOut", width = "100%", height = "600") %>%
-                            withSpinner(type=4, color="cadetblue")
+                  plotOutput("dendroInterMedidaPlotOut", width = "100%", height = "600") %>% withSpinner(type=4, color="cadetblue"),
+                  bsPopover(id="dendroInterMedidaPlotOut", title = "Dendrograma Exploratorio", placement = "top", trigger = "hover",
+                          content = "Se presenta: Diagrama tipo Dendrograma (\u00E1rbol), agrupa los score de forma Jer\u00E1rquica por medio de una estructura de \u00E1rbol. Es adecuado para analizar grupos de score asociados por su valor. Usar *cambiar opciones...* para explorar opciones complementarias.")
              )
           ),
           tabPanel("Dendrograma Comparativo", icon = icon("sitemap"),
@@ -301,13 +315,16 @@ tabItem(tabName = "modMedDesSubMTab",
                   size = "xs", tooltip = tooltipOptions(title = "Cambiar opciones...")
              ),
              wellPanel(style = "background-color: #ffffff;",
-                  plotOutput("dendroCompaMedidaPlotOut", width = "100%", height = "600") %>%
-                         withSpinner(type=5, color="cadetblue")
+                  plotOutput("dendroCompaMedidaPlotOut", width = "100%", height = "600") %>% withSpinner(type=5, color="cadetblue"),
+                  bsPopover(id="dendroCompaMedidaPlotOut", title = "Dendrograma Comparativo", placement = "top", trigger = "hover",
+                            content = "Se presenta: Diagrama tipo Dendrograma (\u00E1rbol), agrupa los score de forma Jer\u00E1rquica por medio de una estructura de \u00E1rbol. Es adecuado para comparar los grupos de score de dos variables. Usar *cambiar opciones...* para explorar opciones complementarias.")
              )
           ),
           tabPanel("Cluster Comparativo", icon = icon("object-group"),
              h4("An\u00E1lisis de Cluster para los Score de los elementos seleccionados (Cluster-Comparativo)"),
-             plotlyOutput("clusterMedidaPlotOut", width = "100%", height = "500") %>% withSpinner(type=4, color="cadetblue")
+             plotlyOutput("clusterMedidaPlotOut", width = "100%", height = "500") %>% withSpinner(type=4, color="cadetblue"),
+             bsPopover(id="clusterMedidaPlotOut", title = "Cluster Comparativo", placement = "top", trigger = "hover",
+                       content = "Se presenta: Diagrama de dispersi\u00F3n, agrupa los score por medio de cl\u00FAster usando k-means. Es adecuado para establecer cl\u00FAster de datos entre los score.")
           )
        ),
        navbarMenu("Redes", menuName="redesMenu",
@@ -325,20 +342,25 @@ tabItem(tabName = "modMedDesSubMTab",
                 circle = TRUE, status = "danger", icon = icon("gear"), width = "250px",
                 size = "xs", tooltip = tooltipOptions(title = "Cambiar opciones...")
              ),
-             plotOutput("corrnetMedidaPlotOut", width = "600", height = "600") %>%
-                         withSpinner(type=4, color="cadetblue") %>%
+             bsPopover(id="corrnetMedidaPlotOut", title = "Red de Correlaci\u00F3n", placement = "top", trigger = "hover",
+                       content = "Se presenta: Red de Correlaci\u00F3n que permite realizar un an\u00E1lisis gr\u00E1fico de las correlaciones entre las variables observadas, esto por medio de un grafo. Usar *cambiar opciones...* para explorar opciones complementarias."),
+             plotOutput("corrnetMedidaPlotOut", width = "600", height = "600") %>% withSpinner(type=4, color="cadetblue") %>%
              helper(type = "markdown", title = "SEMVIZ: Red de Correlaci\u00F3n", colour = "red",
                     content = "redCorrelacionMedidaPlot_help", size = "m") # size: define el ancho (s,m,l) del "popup"
           ),
           tabPanel("Red Hive (Nodos en ejes)", icon = icon("forumbee"),
              h4("Red Hive (Nodos en ejes -- An\u00E1lisis para las variables OBSERVADAS iniciales)"),
              tags$i("Para activar el gr\u00E1fico seleccionar en el Modelo SEM el grupo: OBSERVADA"),
-             plotOutput("hiveMedidaPlotOut", width = "100%", height = "500") %>% withSpinner(type=5, color="cadetblue")
+             plotOutput("hiveMedidaPlotOut", width = "100%", height = "500") %>% withSpinner(type=5, color="cadetblue"),
+             bsPopover(id="hiveMedidaPlotOut", title = "Red Hive (Nodos en ejes)", placement = "top", trigger = "hover",
+                       content = "Se presenta: Red Hive (Nodos en ejes) que permite realizar un an\u00E1lisis gr\u00E1fico de los niveles de dependencia entre las variables observadas, esto por medio de una red simple para los tipos de asociaciones.")
           ),
           tabPanel("Arcos", icon = icon("random"),
              h4("Red Arcos (Nodos en ejes -- An\u00E1lisis para las variables OBSERVADAS iniciales)"),
              tags$i("Para activar el gr\u00E1fico seleccionar en el Modelo SEM el grupo: OBSERVADA"),
-             plotOutput("arcosMedidaPlotOut", width = "100%", height = "500") %>% withSpinner(type=4, color="cadetblue")
+             plotOutput("arcosMedidaPlotOut", width = "100%", height = "500") %>% withSpinner(type=4, color="cadetblue"),
+             bsPopover(id="arcosMedidaPlotOut", title = "Arcos", placement = "top", trigger = "hover",
+                       content = "Se presenta: Red tipo Arcos que permite realizar un an\u00E1lisis gr\u00E1fico de la densidad de enlaces entre las variables observadas, esto por medio de una red de arcos para los tipos de asociaciones.")
           )
        ),
        navbarMenu("Evoluci\u00F3n",menuName="evolucionMenu",
@@ -353,8 +375,9 @@ tabItem(tabName = "modMedDesSubMTab",
                 circle = TRUE, status = "danger", icon = icon("gear"), width = "250px",
                 size = "xs", tooltip = tooltipOptions(title = "Cambiar opciones...")
              ),
-             plotlyOutput("sankeyMedidaPlotOut", width = "100%", height = "500") %>%
-                                withSpinner(type=5, color="cadetblue")
+             plotlyOutput("sankeyMedidaPlotOut", width = "100%", height = "500") %>% withSpinner(type=5, color="cadetblue"),
+             bsPopover(id="sankeyMedidaPlotOut", title = "Flujo de cargas de coeficientes (Sankey)", placement = "top",
+                       trigger = "hover", content = "Se presenta: Diagrama de flujo tipo Sankey que permite presentar el flujo de cargas (coeficientes estimados estandarizados) entre las variables del modelo SEM. Usar *cambiar opciones...* para explorar opciones complementarias.")
           ),
           tabPanel("An\u00E1lisis tipo Series (Comparativo)", icon = icon("server"),
              h4("An\u00E1lisis de Flujo de los Score para elementos del Modelo SEM tipo Series (Comparativo)"),
@@ -371,8 +394,9 @@ tabItem(tabName = "modMedDesSubMTab",
                 size = "xs", tooltip = tooltipOptions(title = "Cambiar opciones...")
              ),
              wellPanel(style = "background-color: #ffffff;",
-                 dygraphOutput("seriesMedidaPlotOut", width = "100%", height = "500") %>%
-                               withSpinner(type=5, color="cadetblue")
+                 dygraphOutput("seriesMedidaPlotOut", width = "100%", height = "500") %>% withSpinner(type=5, color="cadetblue"),
+                 bsPopover(id="seriesMedidaPlotOut", title = "An\u00E1lisis tipo Series (Comparativo)", placement = "top",
+                           trigger = "hover", content = "Se presenta: Diagrama de flujo tipo Series que presenta una serie por valores de score para cada variable seleccionada. Usar *cambiar opciones...* para explorar opciones complementarias.")
              )
           ),
           tabPanel("An\u00E1lisis tipo Score-Streamgraph", icon = icon("recycle"),
@@ -389,37 +413,50 @@ tabItem(tabName = "modMedDesSubMTab",
              ),
              wellPanel(style = "background-color: #ffffff;",
                 streamgraphOutput("streamgraphMedidaPlotOut", width = "100%", height = "500") %>%
-                                   withSpinner(type=5, color="cadetblue")
+                                   withSpinner(type=5, color="cadetblue"),
+                bsPopover(id="streamgraphMedidaPlotOut", title = "An\u00E1lisis tipo Score-Streamgraph", placement = "top",
+                           trigger = "hover", content = "Se presenta: Diagrama de flujo tipo Streamgraph (\u00E1reas apiladas) que presenta una serie por valores de score para cada variable seleccionada. Usar *cambiar opciones...* para explorar opciones complementarias.")
              )
           ),
           tabPanel("An\u00E1lisis tipo Score-Se\u00F1al", icon = icon("road"),
              h4("An\u00E1lisis de Flujo de los Score para elementos del Modelo SEM (Tipo Se\u00F1al)"),
              plotlyOutput("signalMedidaPlotOut", width = "100%", height = "500") %>%
-                           withSpinner(type=4, color="cadetblue")
+                           withSpinner(type=4, color="cadetblue"),
+             bsPopover(id="signalMedidaPlotOut", title = "An\u00E1lisis tipo Score-Se\u00F1al", placement = "top",
+                           trigger = "hover", content = "Se presenta: Diagrama de flujo tipo Score-Se\u00F1al (\u00E1reas apiladas) que presenta una serie por valores de score para cada variable seleccionada.")
           ),
           tabPanel("An\u00E1lisis tipo Score-\u00C1reas", icon = icon("align-right"),
              h4("An\u00E1lisis de Flujo de los Score para elementos del Modelo SEM (\u00C1reas apiladas)"),
              plotlyOutput("stackedAreaMedidaPlotOut", width = "100%", height = "500") %>%
-                           withSpinner(type=5, color="cadetblue")
+                           withSpinner(type=5, color="cadetblue"),
+             bsPopover(id="stackedAreaMedidaPlotOut", title = "An\u00E1lisis tipo Score-\u00C1reas", placement = "top",
+                           trigger = "hover", content = "Se presenta: Diagrama de flujo tipo Score-\u00C1reas (\u00E1reas apiladas) que presenta una serie por valores de score para cada variable seleccionada.")
           )
        ),
        navbarMenu("Circularizar",menuName="circularMenu",
           tabPanel("Circular Packing de un Nivel", icon = icon("circle"),
              h4("An\u00E1lisis Circular Packing de un nivel para los Score de los elementos seleccionados"),
              plotlyOutput("circlePackOneLevelMedidaPlotOut", width = "100%", height = "500") %>%
-                         withSpinner(type=4, color="cadetblue")
+                         withSpinner(type=4, color="cadetblue"),
+             bsPopover(id="circlePackOneLevelMedidaPlotOut", title = "Circular Packing de un Nivel", placement = "top",
+                       trigger = "hover", content = "Se presenta: Diagrama tipo Circular Packing (treemap circular), permite visualizar organizaciones (c\u00EDrculos anidados) Jer\u00E1rquicas (tipo dendrograma) entre los score de las variables seleccionadas.")
           ),
           tabPanel("Circular Packing Jer\u00E1rquico", icon = icon("circle"),
              h4("An\u00E1lisis Jer\u00E1rquico del Flujo de cargas de coeficientes del Modelo SEM (Circular Packing)"),
              tags$i("Para activar el gr\u00E1fico seleccionar en el Modelo SEM el grupo: LATENTE"),
              circlepackeROutput("circlePackJerarqMedidaPlotOut", width = "100%", height = "500") %>%
-                                withSpinner(type=5, color="cadetblue")
+                                withSpinner(type=5, color="cadetblue"),
+             bsPopover(id="circlePackJerarqMedidaPlotOut", title = "Circular Packing Jer\u00E1rquico", placement = "top",
+                       trigger = "hover", content = "Se presenta: Diagrama tipo Circular Packing Jer\u00E1rquico, permite visualizar organizaciones (c\u00EDrculos anidados) Jer\u00E1rquicas (tipo dendrograma) entre los score de las variables seleccionadas.")
           ),
           tabPanel("Circular Packing (Dendrograma)",icon = icon("pause-circle"),
               h4("An\u00E1lisis Jer\u00E1rquico para los Score de los elementos seleccionados (Dendrograma-Comparativo)"),
               circlepackeROutput("circlePackDendroMedidaPlotOut", width = "100%", height = "500") %>%
-                                withSpinner(type=4, color="cadetblue")
+                                withSpinner(type=4, color="cadetblue"),
+             bsPopover(id="circlePackDendroMedidaPlotOut", title = "Circular Packing (Dendrograma)", placement = "top",
+                       trigger = "hover", content = "Se presenta: Diagrama tipo Circular Packing (Dendrograma), permite visualizar organizaciones (c\u00EDrculos anidados) Jer\u00E1rquicas (tipo dendrograma) entre los score de las variables seleccionadas.")
           ),
+          # IMPORTANTE: Este diagrama no es muy claro, y tampoco se ve relevante. Considerar ocultarlo, falla con Grupos UdeA.
           tabPanel("Sunburst Jer\u00E1rquico", icon = icon("instagram"),
               h4("An\u00E1lisis Jer\u00E1rquico del Flujo de cargas de coeficientes del Modelo SEM (Sunburst-Comparativo)"),
               tags$i("Para activar el gr\u00E1fico seleccionar en el Modelo SEM el grupo: LATENTE"),
@@ -431,12 +468,24 @@ tabItem(tabName = "modMedDesSubMTab",
               tags$i("Para activar el gr\u00E1fico seleccionar en el Modelo SEM el grupo: LATENTE"),
               fluidRow(
                 box(title = "Cargas de Coeficientes", status = "success", solidHeader = TRUE, collapsible = TRUE,
+                  dropdownButton(inputId = "chordCoefiMedidaOpsBtn",
+                      tags$h4("Opciones de Presentaci\u00F3n:"),
+                      selectInput(inputId = 'chordCoefiMedidaTipoCoef', label = 'Usar Coefientes de',
+                                  choices = c("Factores"="loading","Constructos"="regression"), selected = "loading"),
+                      tags$i("Actualizaci\u00F3n autom\u00E1tica..."),
+                      circle = TRUE, status = "danger", icon = icon("gear"), width = "250px",
+                      size = "xs", tooltip = tooltipOptions(title = "Cambiar opciones...")
+                  ),
                   plotOutput("chordCoefiMedidaPlotOut", width = "100%", height = "400") %>%
-                            withSpinner(type=4, color="cadetblue")
+                            withSpinner(type=4, color="cadetblue"),
+                  bsPopover(id="chordCoefiMedidaPlotOut", title = "Cargas de Coeficientes", placement = "top",
+                            trigger = "hover", content = "Se presenta: Diagrama de Cuerdas usando las Cargas de los Coeficientes estimados para las variables del modelo SEM. Usar *cambiar opciones...* para explorar opciones complementarias.")
                 ),
                 box(title = "Correlaciones por variable", status = "primary", solidHeader = TRUE, collapsible = TRUE,
                   plotOutput("chordCorrMedidaPlotOut", width = "100%", height = "400") %>%
-                            withSpinner(type=4, color="cadetblue")
+                            withSpinner(type=4, color="cadetblue"),
+                  bsPopover(id="chordCorrMedidaPlotOut", title = "Correlaciones por variable", placement = "top",
+                            trigger = "hover", content = "Se presenta: Diagrama de Cuerdas usando las Correlaciones estimadas entre todas las variables del modelo SEM.")
                 )
               ) # FIN fluidRow
           )

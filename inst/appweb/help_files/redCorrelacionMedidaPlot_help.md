@@ -3,7 +3,7 @@
 ##  Descripci&oacute;n
 
 La Red de Correlaci&oacute;n permite realizar un an&aacute;lisis gr&aacute;fico de las relaciones entre las
-variables obervadas, esto por medio de un grafo cuyos nodos son las variables en cuesti&oacute;n y
+variables observadas, esto por medio de un grafo cuyos nodos son las variables en cuesti&oacute;n y
 los arcos son uniones de correlaci&oacute;n (con ancho y color seg&uacute;n el peso y signo de su coeficiente).
 
 ##  Modo de uso del gr&aacute;fico

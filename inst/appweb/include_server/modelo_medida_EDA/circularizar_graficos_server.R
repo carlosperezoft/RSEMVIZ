@@ -82,9 +82,8 @@ output$circlePackSunMedidaPlotOut <- renderPlot({
   )
   #
   fitModel <- paramsSemFit()
-  # rutasModeloSEM: Se deben filrtar los enlaces circulares:
-  edgesVis <- rutasModeloSEM(fitModel) %>% filter(from != to, type == "regression")
-  print(edgesVis)
+  # rutasModeloSEM: Se deben filtrar los enlaces circulares:
+  edgesVis <- rutasModeloSEM(fitModel) %>% filter(from != to)
   #
   links <- data.frame(target=edgesVis$to, source=edgesVis$from, value=(edgesVis$val))
   # nodes <- data.frame(name=c(as.character(links$source), as.character(links$target)) %>% unique())
@@ -121,8 +120,8 @@ output$chordCoefiMedidaPlotOut <- renderPlot({
   )
   #
   fitModel <- paramsSemFit()
-  # rutasModeloSEM: Se deben filrtar los enlaces circulares:
-  edgesVis <- rutasModeloSEM(fitModel) %>% filter(from != to)
+  # rutasModeloSEM: Se deben filtrar los enlaces circulares:
+  edgesVis <- rutasModeloSEM(fitModel) %>% filter(from != to, type == input$chordCoefiMedidaTipoCoef)
   #
   # "directional" = 1, indica que la direccion del arco es de las filas hacia las columnas (desde "from" hacia "to")
   # "directional" = -1, indica que la direccion del arco es de las columnas hacia las filas (desde "to" hacia "from")
