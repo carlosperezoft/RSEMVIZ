@@ -45,11 +45,13 @@ tabItem(tabName = "dashAVANSubMTab",
                  )
               )
             ),
-            tabPanel("Correlaci\u00F3n",h4("An\u00E1lisis de Correlaciones del Modelo SEM"),
+            tabPanel("Correlograma",h4("An\u00E1lisis elementos del Modelo SEM por medio de un Correlograma"),
                dropdownButton(inputId = "corrOpsBtn",
                  tags$h4("Opciones de Presentaci\u00F3n:"),
-                 selectInput(inputId = 'corType', label = 'Datos Correlaci\u00F3n',
-                            choices = c("Corr. Latentes"="cor.lv", "Corr. Observadas"="cor.ov"), selected = "cor.ov"),
+                 selectInput(inputId = 'corType', label = 'Datos del Correlograma',
+                            choices = c("Covar. Observadas"="cov.ov","Covar. Latentes"="cov.lv",
+                                        "Corr. Observadas"="cor.ov","Corr. Latentes"="cor.lv","Residuales"="residual"),
+                                         selected = "cor.ov"),
                  selectInput(inputId = 'corMethod', label = 'Estilo de Representaci\u00F3n',
                             choices = c("C\u00EDrculo"="circle","Cuadrado"="square",
                                         "Elipse"="ellipse","Num\u00E9rico"="number","Torta"="pie"),
@@ -61,21 +63,23 @@ tabItem(tabName = "dashAVANSubMTab",
                  circle = TRUE, status = "danger", icon = icon("gear"), width = "250px",
                  size = "xs", tooltip = tooltipOptions(title = "Cambiar opciones...")
                ),
-               plotOutput("correlogramSEMOut", width = "100%", height = "500") %>% withSpinner()
+               plotOutput("correlogramSEMOut", width = "100%", height = "800") %>% withSpinner()
             ),
             tabPanel("Heatmap",h4("An\u00E1lisis de Matrices del Modelo SEM"),
                dropdownButton(inputId = "heatmapOpsBtn",
                  tags$h4("Opciones de Presentaci\u00F3n:"),
                  selectInput(inputId = 'heatmapType', label = 'Matriz: Covariaza / Correlaci\u00F3n',
                              choices = c("Covar. Observadas"="cov.ov","Covar. Latentes"="cov.lv",
-                                         "Corr. Observadas"="cor.ov","Corr. Latentes"="cor.lv"), selected = "cor.ov"),
+                                         "Corr. Observadas"="cor.ov","Corr. Latentes"="cor.lv","Residuales"="residual"),
+                             selected = "cor.ov"),
                  selectInput(inputId = 'showDendrogram', label = 'Ver Dendrograma',
-                             choices = c("Ninguno"='none',"Filas"='row',"Columnas"='column',"Ambos"='both'), selected = "none"),
+                             choices = c("Ninguno"='none',"Filas"='row',"Columnas"='column',"Ambos"='both'),
+                             selected = "row"),
                  tags$i("Actualizaci\u00F3n autom\u00E1tica..."),
                  circle = TRUE, status = "danger", icon = icon("gear"), width = "250px",
                  size = "xs", tooltip = tooltipOptions(title = "Cambiar opciones...")
                ),
-               plotlyOutput("heatmapSEMOut", width = "500", height = "500") %>% withSpinner(type=5, color="cadetblue")
+               plotlyOutput("heatmapSEMOut", width = "100%", height = "800") %>% withSpinner(type=5, color="cadetblue")
             ),
             tabPanel("Elementos internos SEM", h3("Valores de indicadores de ajuste obtenidos"),
                # Adicionar un SELECT para especificar que elementos leer del FIT SEM:

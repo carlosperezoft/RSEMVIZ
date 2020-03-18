@@ -81,7 +81,8 @@ output$statRazonChi2Out <- renderValueBox({
 #
 output$gradosLibertadOut <- renderInfoBox({
   infoBox(
-    "(GL) Grados de Libertad", getMedidaAjusteValue("df"),
+    "Grados de Libertad (GL). Observ. (N).",
+    paste("GL=",getMedidaAjusteValue("df")," N=",lavInspect(semFitLocal(), "nobs")),
     icon = icon("plus-square"),
     color = "light-blue", fill = TRUE
   )
@@ -119,14 +120,17 @@ output$gfiBoxOut <- renderUI({
     collapsible = TRUE, status = item_color, solidHeader = TRUE, closable = FALSE,
     graficoUI,
     footer = tagList( # SECCION DE EXPLICACION DEL CRITERIO:
-      tags$b("\u00CDndice de Bondad de Ajuste (GFI)"), br(),
+      tags$b("\u00CDndice de Bondad de Ajuste (GFI) ~ R^2"), br(),
       awesomeCheckbox(inputId = "gfiHelpSwitch", label = "Ver Criterio",
                       value = FALSE, status = item_color),
       shinyjs::hidden( # Oculta el criterio inicialmente
         helpText(id = "gfiHelpTxt",
-                 paste("Goodness of Fit Index (GFI): Presenta el nivel de bondad de ajuste del modelo.",
-                 "Un nivel por encima de 0.95 es muy recomendado (aceptable). Niveles no inferiores a 0.75 son de ajuste medio."
-                 )
+           paste("Goodness of Fit Index (GFI): Presenta el nivel de bondad de ajuste del modelo.",
+             "Un nivel por encima de 0.95 es muy recomendado (aceptable). Niveles no inferiores a 0.75 son de ajuste medio.",
+             "GFI explica el nivel de varianza contabilizado por la covarianza poblacional estimada. Equivalente a R^2.",
+             "Es sensible a N (size) de la muestra y NO es penalizado por la complejidad del modelo.",
+             "Referencia: Joreskog & Sorbom (1981)."
+           )
         )
       ) # cierra hidden
     )
@@ -221,8 +225,10 @@ output$rmseaBoxOut <- renderUI({
                       value = FALSE, status = item_color),
       shinyjs::hidden( # Oculta el criterio inicialmente
         helpText(id = "rmseaHelpTxt",
-                 paste("Root Mean Square Error of	Approximation (RMSEA): Aproximaci\u00F3n del error cuadr\u00E1tico medio.",
-                 "Un nivel por debajo de 0.05 es muy recomendado (aceptable). Niveles inferiores a 0.10 son de ajuste medio."
+                 paste("Root Mean Square Error of	Approximation (RMSEA): ",
+                 "Un nivel por debajo de 0.05 es muy recomendado (aceptable). Niveles inferiores a 0.10 son de ajuste medio.",
+                 "Es sensible a N (size) de la muestra y es penalizado por la complejidad del modelo.",
+                 "Referencia: Steiger & Lind (1980)."
                  )
         )
       ) # cierra hidden
@@ -308,8 +314,10 @@ output$srmrBoxOut <- renderUI({
                       value = FALSE, status = item_color),
       shinyjs::hidden( # Oculta el criterio inicialmente
         helpText(id = "srmrHelpTxt",
-                 paste("(Standardized) Root Mean Square Residual (SRMR): Error medio cuadr\u00E1tico de los residuales.",
-                 "Un nivel por debajo de 0.08 es muy recomendado (aceptable). Niveles inferiores a 0.15 son de ajuste medio."
+                 paste("(Standardized) Root Mean Square Residual (SRMR): ",
+                 "Un nivel por debajo de 0.08 es muy recomendado (aceptable). Niveles inferiores a 0.15 son de ajuste medio.",
+                 "Es sensible a N (size) de la muestra y NO es penalizado por la complejidad del modelo.",
+                 "Referencia: Bentler (1985)."
                  )
         )
       ) # cierra hidden
@@ -394,7 +402,9 @@ output$cfiBoxOut <- renderUI({
       shinyjs::hidden( # Oculta el criterio inicialmente
         helpText(id = "cfiHelpTxt",
                  paste("Comparative	Fit	Index (CFI): Indice de ajuste comparativo.",
-                 "Un nivel por encima de 0.95 es muy recomendado (aceptable). Niveles no inferiores a 0.75 son de ajuste medio.."
+                 "Un nivel por encima de 0.95 es muy recomendado (aceptable). Niveles no inferiores a 0.75 son de ajuste medio.",
+                 "NO es sensible a N (size) de la muestra y es penalizado por la complejidad del modelo.",
+                 "Referencia: Bentler (1990)."
                  )
         )
       ) # cierra hidden
@@ -479,7 +489,9 @@ output$nfiBoxOut <- renderUI({
       shinyjs::hidden( # Oculta el criterio inicialmente
         helpText(id = "nfiHelpTxt",
                  paste("Normed Fit Index (NFI): Indice de ajuste normalizado.",
-                 "Un nivel por encima de 0.95 es muy recomendado (aceptable). Niveles no inferiores a 0.75 son de ajuste medio."
+                 "Un nivel por encima de 0.95 es muy recomendado (aceptable). Niveles no inferiores a 0.75 son de ajuste medio.",
+                 "Es sensible a N (size) de la muestra y NO es penalizado por la complejidad del modelo.",
+                 "Referencia: Bentler & Bonett (1980)."
                  )
         )
       ) # cierra hidden
@@ -564,9 +576,11 @@ output$tliBoxOut <- renderUI({
                       value = FALSE, status = item_color),
       shinyjs::hidden( # Oculta el criterio inicialmente
         helpText(id = "tliHelpTxt",
-                 paste("Non-normed Fit Index - Tucker-Lewis Index (NNFI-TLI): Indice Tucker-Lewis (Indice de ajuste no normalizado).",
-                 "Un nivel por encima de 0.90 es muy recomendado (aceptable). Niveles no inferiores a 0.70 son de ajuste medio."
-                 )
+            paste("Non-normed Fit Index - Tucker-Lewis Index (NNFI-TLI): Indice Tucker-Lewis (Indice de ajuste no normalizado).",
+                 "Un nivel por encima de 0.90 es muy recomendado (aceptable). Niveles no inferiores a 0.70 son de ajuste medio.",
+                 "NO es sensible a N (size) de la muestra y es penalizado por la complejidad del modelo.",
+                 "Referencia: Tucker & Lewis (1981)."
+            )
         )
       ) # cierra hidden
     ) # FIN footer
@@ -650,8 +664,10 @@ output$agfiBoxOut <- renderUI({
                       value = FALSE, status = item_color),
       shinyjs::hidden( # Oculta el criterio inicialmente
         helpText(id = "agfiHelpTxt",
-                 paste("Adjusted Goodness-of-Fit Index (AGFI): Indice de Bondad de Ajuste ajustado.",
-                 "Un nivel por encima de 0.90 es muy recomendado (aceptable). Niveles no inferiores a 0.70 son de ajuste medio."
+                 paste("Adjusted Goodness-of-Fit Index (AGFI): ",
+                 "Un nivel por encima de 0.90 es muy recomendado (aceptable). Niveles no inferiores a 0.70 son de ajuste medio.",
+                 "Es sensible a N (size) de la muestra y es penalizado por la complejidad del modelo.",
+                 "Referencia: Joreskog & Sorbom (1981)."
                  )
         )
       ) # cierra hidden
@@ -730,14 +746,17 @@ output$gfiCmpBoxOut <- renderUI({
     collapsible = TRUE, status = item_color, solidHeader = TRUE, closable = FALSE,
     graficoUI, # UI dinamico!
     footer = tagList( # SECCION DE EXPLICACION DEL CRITERIO:
-      tags$b("Indice de bondad de ajuste (GFI)"),
+      tags$b("Indice de bondad de ajuste (GFI) ~ R^2"),
       awesomeCheckbox(inputId = "gfiCmpHelpSwitch", label = "Ver Criterio",
                       value = FALSE, status = item_color),
       shinyjs::hidden( # Oculta el criterio inicialmente
         helpText(id = "gfiCmpHelpTxt",
-                 paste("Goodness-of-Fit Index (GFI): Indice de Bondad de Ajuste.",
-                 "Un nivel por encima de 0.95 es muy recomendado (aceptable). Niveles no inferiores a 0.75 son de ajuste medio."
-                 )
+           paste("Goodness-of-Fit Index (GFI): Indice de Bondad de Ajuste.",
+             "Un nivel por encima de 0.95 es muy recomendado (aceptable). Niveles no inferiores a 0.75 son de ajuste medio.",
+             "GFI explica el nivel de varianza contabilizado por la covarianza poblacional estimada. Equivalente a R^2.",
+             "Es sensible a N (size) de la muestra y NO es penalizado por la complejidad del modelo.",
+             "Referencia: Joreskog & Sorbom (1981)."
+           )
         )
       ) # cierra hidden
     ) # FIN footer
@@ -787,10 +806,15 @@ output$gfiCmpBulletOut <- renderAmCharts({
 output$pgfiBoxOut <- renderValueBox({
   item_val <- getMedidaAjusteValue("pgfi")
   #
-  if((item_val >= 0.50) && (item_val <= 0.70))  {
+  #
+  if(item_val >= 0.90)  {
     item_subT <- "Aceptable"
     item_icon <- "thumbs-up"
     item_color <- "green"
+  } else if(item_val >= 0.60) {
+    item_subT <- "Ajuste Medio"
+    item_icon <- "thumbs-up"
+    item_color <- "orange"
   } else {
     item_subT <- "NO Aceptable"
     item_icon <- "thumbs-down"
@@ -832,11 +856,11 @@ output$pnfiBoxOut <- renderValueBox({
 #
 output$aicInfoOut <- renderValueBox({
   item_val <- getMedidaAjusteValue("aic")
-  if(item_val <= 50)  {
+  if(item_val <= 5000)  {
     item_subT <- "Aceptable"
     item_icon <- "thumbs-up"
     item_color <- "green"
-  } else if(item_val <= 100) {
+  } else if(item_val <= 10000) {
     item_subT <- "Ajuste Medio"
     item_icon <- "thumbs-up"
     item_color <- "orange"
@@ -856,11 +880,11 @@ output$aicInfoOut <- renderValueBox({
 #
 output$bicInfoOut <- renderValueBox({
   item_val <- getMedidaAjusteValue("bic")
-  if(item_val <= 50)  {
+  if(item_val <= 5000)  {
     item_subT <- "Aceptable"
     item_icon <- "thumbs-up"
     item_color <- "green"
-  } else if(item_val <= 100) {
+  } else if(item_val <= 10000) {
     item_subT <- "Ajuste Medio"
     item_icon <- "thumbs-up"
     item_color <- "orange"

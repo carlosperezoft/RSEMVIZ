@@ -18,7 +18,7 @@ rutasModeloSEM <- function(fitModel) {
   param_edges <- fitModel %>% # "op" se refiere a la columa "operator"
     # Usando el filtro con o sin nodos iguales (lhs != rhs), en SEM se usa para correlaciones
     # filter(op %in% c("=~", "~", "~~"), lhs != rhs, pvalue < .10) %>%
-    filter(op %in% c("=~", "~", "~~"), pvalue < .10) %>%
+    filter(op %in% c("=~", "~", "~~")) %>%
     transmute(from = rhs, to = lhs,
               val = est.std, # En standardizedSolution(..) toma todas las estimaciones estandarizadas...
               type = dplyr::case_when(
@@ -111,7 +111,7 @@ rutasGrafoSEM <- function(fitModel) {
     title = dplyr::case_when(
       param_edges$type == "loading" ~ paste("lambda:", format(round(param_edges$val, 3), nsmall=3)),
       param_edges$type == "regression"  ~ paste("beta:", format(round(param_edges$val, 3), nsmall=3)),
-      param_edges$type == "correlation" ~ paste("corr.:", format(round(param_edges$val, 3), nsmall=3))
+      param_edges$type == "correlation" ~ paste("cor/var:", format(round(param_edges$val, 3), nsmall=3))
     ),
     # El "case" de la flecha segun el "type" es para ubicar la "cabeza" de la flecha en el extremo indicado:
     arrows = dplyr::case_when(

@@ -48,12 +48,10 @@ output$tablaGeneralSEMOut <- renderFormattable({
 })
 
 output$fitElementSEMTxtOut <- renderPrint({
-  #print(lavInspect(semFitLocal(),"rsquare"))
   # fitMeasures(semFitLocal())
   lavInspect(semFitLocal(),"std")
-  # lavInspect(fit2,"coef")
-
-  # residuals(fit2)
+  # lavInspect(semFitLocal(),"coef")
+  #residuals(semFitLocal(), type="standardized")$cov
 })
 # Se usa el objeto visNetworkProxy para establecer los elementos seleccionados en el Grafo:
 # Para actualizar la seleccion de varios nodos, se hace necesario el Boton:
@@ -77,20 +75,38 @@ output$nodesListTxtOut <- renderText({
 })
 #
 output$correlogramSEMOut <- renderPlot({
-  # POSIBLE USO PARA PRESENTAR LA MATRIZ C
-  # ## visualize a  matrix in [-100, 100]
-  # ran <- round(matrix(runif(225, -100,100), 15))
-  # corrplot(ran, is.corr = FALSE)
-  # corrplot(ran, is.corr = FALSE, cl.lim = c(-100, 100))
-  corMat <- lavInspect(semFitLocal(), input$corType)
-  # NOTA: numero de lineas para margenes del titulo en el grafico -> mar = c(bottom, left, top, right)
-  corrplot(corMat, title = input$corType, method = input$corMethod, type = input$corSection,  mar = c(1, 1, 2, 1))
+  # Se valida el tipo de datos a presentar:
+  if(input$corType == "residual") {
+    corMat <- lavaan::residuals(semFitLocal())$cov
+  } else {
+    corMat <- lavInspect(semFitLocal(), input$corType)
+  }
+  # Se usa el atributo is.corr = FALSE, indicando que NO es una matriz de correlación, con datos en: [-1,1]
+  if(input$corType %in% c("cov.ov","cov.lv","residual")) {
+    corrplot(corMat, is.corr = FALSE, title = input$corType,
+             method = input$corMethod, type = input$corSection,  mar = c(1, 1, 2, 1))
+  } else {
+    # NOTA: numero de lineas para margenes del titulo en el grafico -> mar = c(bottom, left, top, right)
+    corrplot(corMat, title = input$corType, method = input$corMethod,
+             type = input$corSection,  mar = c(1, 1, 2, 1))
+  }
 })
 #
 output$heatmapSEMOut <- renderPlotly({
-  # Funcion de heatmaply adecuada para matrices de correlacion:
-  heatmaply_cor(lavInspect(semFitLocal(), input$heatmapType), margins = c(80, 80), # Margenes del grafico para titulos
+  # Se valida el tipo de datos a presentar:
+  if(input$heatmapType == "residual") {
+    corMat <- lavaan::residuals(semFitLocal())$cov
+  } else {
+    corMat <- lavInspect(semFitLocal(), input$heatmapType)
+  }
+  if(input$heatmapType %in% c("cov.ov","cov.lv","residual")) {
+    heatmaply(corMat, colors = Oranges, margins = c(80, 80), # Margenes del grafico para titulos
                main = input$heatmapType, k_col = 2, k_row = 2, dendrogram = input$showDendrogram)
+  } else {
+    # Funcion de heatmaply adecuada para matrices de correlacion:
+    heatmaply_cor(corMat, margins = c(80, 80), # Margenes del grafico para titulos
+               main = input$heatmapType, k_col = 2, k_row = 2, dendrogram = input$showDendrogram)
+  }
 })
 #
 output$convenNodosTablaOut <- renderFormattable({
