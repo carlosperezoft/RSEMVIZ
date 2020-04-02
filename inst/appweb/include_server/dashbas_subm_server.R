@@ -220,7 +220,7 @@ output$rmseaBoxOut <- renderUI({
     collapsible = TRUE, status = item_color, solidHeader = TRUE, closable = FALSE,
     graficoUI, # Usa el amChartsOutput dinamico!
     footer = tagList( # SECCION DE EXPLICACION DEL CRITERIO:
-      tags$b("Aproximaci\u00F3n del Error de la Ra\u00EDz de la Media Cuadr\u00E1tica (RMSEA)"),
+      tags$b("Ra\u00EDz de la Media Cuadr\u00E1tica del Error de Aproximaci\u00F3n (RMSEA)"),
       awesomeCheckbox(inputId = "rmseaHelpSwitch", label = "Ver Criterio",
                       value = FALSE, status = item_color),
       shinyjs::hidden( # Oculta el criterio inicialmente
